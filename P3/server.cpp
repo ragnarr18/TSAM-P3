@@ -329,7 +329,7 @@ int main(int argc, char* argv[])
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = true;
-
+               std::cout << "not so special client connected is server: " << clients[clientSock]->isServer<<"\n";
                // Decrement the number of sockets waiting to be dealt with
                n--;
 
@@ -351,6 +351,7 @@ int main(int argc, char* argv[])
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = false;
+               std::cout << "special client connected is server: " << clients[clientSock]->isServer<<"\n"; 
 
                // Decrement the number of sockets waiting to be dealt with
                n--;
