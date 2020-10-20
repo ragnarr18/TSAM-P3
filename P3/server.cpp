@@ -45,7 +45,7 @@ class Client
   public:
     int sock;              // socket of client connection
     std::string name;           // Limit length of name of client's user
-
+    bool isServer;
     Client(int socket) : sock(socket){} 
 
     ~Client(){}            // Virtual destructor defined for base class
@@ -188,6 +188,23 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
      send(clientSocket, msg.c_str(), msg.length()-1, 0);
 
   }
+
+//   else if(tokens[0].compare("WHO Bool") == 0)
+//   {
+//      std::cout << "Who is logged on" << std::endl;
+//      std::string msg;
+
+//      for(auto const& isServer : clients)
+//      {
+//         msg += isServer.second->isServer + ",";
+
+//      }
+//      // Reducing the msg length by 1 loses the excess "," - which
+//      // granted is totally cheating.
+//      send(clientSocket, msg.c_str(), msg.length()-1, 0);
+
+//   }
+
   // This is slightly fragile, since it's relying on the order
   // of evaluation of the if statement.
   else if((tokens[0].compare("MSG") == 0) && (tokens[1].compare("ALL") == 0))
@@ -307,10 +324,11 @@ int main(int argc, char* argv[])
                FD_SET(clientSock, &openSockets);
 
                // And update the maximum file descriptor
-               maxfds = std::max(maxfds, clientSock) ;
+               maxfds = std::max(maxfds, clientSock);
 
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
+               clients[clientSock]->isServer = true;
 
                // Decrement the number of sockets waiting to be dealt with
                n--;
@@ -332,6 +350,7 @@ int main(int argc, char* argv[])
 
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
+               clients[clientSock]->isServer = false;
 
                // Decrement the number of sockets waiting to be dealt with
                n--;
