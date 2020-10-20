@@ -34,8 +34,9 @@
 #include <fcntl.h>
 #define SOCK_NONBLOCK O_NONBLOCK
 #endif
-#define PRESERVED_PORT 4001
-#define BACKLOG  5          // Allowed length of queue of waiting connections
+#define PRESERVED_PORT  4001
+#define GROUP_ID "P3_GROUP_ 85"
+#define BACKLOG  5        // Allowed length of queue of waiting connections
 
 // Simple class for handling connections from clients.
 //
@@ -147,10 +148,20 @@ void closeClient(int clientSocket, fd_set *openSockets, int *maxfds)
 
 }
 
-// Process command from client on the server
+//GET CONNECTED SERVERS
+std::string CONNECTED(std::string PORT){
+    std::string retString = "";
+    retString = "CONNECTED,";
+    retString += GROUP_ID;
+    retString += ",";
+    retString += "127.0.0.1,"; //change to sker
+    retString +=  PORT;
+    return retString;
+}
 
+// Process command from client on the server
 void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds, 
-                  char *buffer) 
+                  char *buffer, std::string PORT) 
 {
   std::vector<std::string> tokens;
   std::string token;
@@ -160,8 +171,27 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
 
   while(stream >> token)
       tokens.push_back(token);
+  
+  //Quearyservers, <from_group_id>
+  if((tokens[0].compare("QUERYSERVERS") == 0) && (tokens.size() == 2))
+  {
+     //CONNECTED(self.groupid, self.ip, self.port)
+     std::string msg = CONNECTED(PORT);
+     std::cout<< msg;
+    //  send(clientSocket, msg.c_str(), msg.length()-1, 0);
+  }
 
-  if((tokens[0].compare("CONNECT") == 0) && (tokens.size() == 2))
+  else if((tokens[0].compare("CONNECTED") == 0))
+  {
+     //CONNECTED()
+    //  std::cout<<"made it to CONNECTED";
+    std::string msgb;
+    // msgb = "connected response hereeeeeeeeeee!";
+    msgb = CONNECTED(PORT);
+    send(clientSocket, msgb.c_str(), msgb.length(), 0);
+  }
+
+  else if((tokens[0].compare("CONNECT") == 0) && (tokens.size() == 2))
   {
      clients[clientSocket]->name = tokens[1];
   }
@@ -188,23 +218,6 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
      send(clientSocket, msg.c_str(), msg.length()-1, 0);
 
   }
-
-//   else if(tokens[0].compare("WHO Bool") == 0)
-//   {
-//      std::cout << "Who is logged on" << std::endl;
-//      std::string msg;
-
-//      for(auto const& isServer : clients)
-//      {
-//         msg += isServer.second->isServer + ",";
-
-//      }
-//      // Reducing the msg length by 1 loses the excess "," - which
-//      // granted is totally cheating.
-//      send(clientSocket, msg.c_str(), msg.length()-1, 0);
-
-//   }
-
   // This is slightly fragile, since it's relying on the order
   // of evaluation of the if statement.
   else if((tokens[0].compare("MSG") == 0) && (tokens[1].compare("ALL") == 0))
@@ -255,6 +268,7 @@ int main(int argc, char* argv[])
     struct sockaddr_in client;
     socklen_t clientLen;
     char buffer[1025];              // buffer for reading from clients
+    std::string PORT;
 
     if(argc != 2)
     {
@@ -263,7 +277,7 @@ int main(int argc, char* argv[])
     }
 
     // Setup socket for server to listen to
-
+    PORT = argv[1];
     listenSock = open_socket(atoi(argv[1]));
     printf("Listening on port: %d\n", atoi(argv[1]));
 
@@ -380,7 +394,7 @@ int main(int argc, char* argv[])
                       else
                       {
                           std::cout << buffer << std::endl;
-                          clientCommand(client->sock, &openSockets, &maxfds, buffer);
+                          clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str());
                       }
                   }
                }
