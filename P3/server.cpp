@@ -178,16 +178,17 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   // Split command from client into tokens for parsing
   std::stringstream stream(buffer);
 
-  while(stream >> token)
+  while(std::getline(stream, token, ',')){
       tokens.push_back(token);
-  
+    }
+
   //Quearyservers, <from_group_id>
-  if((tokens[0].compare("QUERYSERVERS,") == 0) && (tokens.size() == 2))
+  if((tokens[0].compare("QUERYSERVERS") == 0))
   {
      //CONNECTED(self.groupid, self.ip, self.port)
      std::string msg = CONNECTED(PORT);
-     std::cout<< msg;
-    send(clientSocket, msg.c_str(), msg.length()-1, 0);
+     std::cout << "This server just connected: " << tokens[1];
+    send(clientSocket, msg.c_str(), msg.length(), 0);
   }
 
   else if((tokens[0].compare("CONNECTED") == 0))
@@ -259,7 +260,9 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   }
   else
   {
+      std::string msg = "Unknown command.";
       std::cout << "Unknown command from client:" << buffer << std::endl;
+      send(clientSocket, msg.c_str(), msg.length(), 0);
   }
      
 }
