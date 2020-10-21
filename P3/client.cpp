@@ -23,6 +23,7 @@
 #include <thread>
 
 #include <iostream>
+#include <time.h>
 #include <sstream>
 #include <thread>
 #include <map>
@@ -46,9 +47,15 @@ void listenServer(int serverSocket)
        }
        else if(nread > 0)
        {
+          time_t rawtime;
+          struct tm * timeinfo;
+
+          time (&rawtime);
+          timeinfo = localtime (&rawtime);
+          printf ("TIMESTAMP: %s", asctime(timeinfo));
           printf("%s\n", buffer);
        }
-       printf("here\n");
+    //    printf("here\n");
     }
 }
 
