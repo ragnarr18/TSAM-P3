@@ -154,7 +154,7 @@ std::string CONNECTED(std::string PORT){
     retString = "CONNECTED,";
     retString += GROUP_ID;
     retString += ",";
-    retString += "127.0.0.1,"; //change to skel
+    retString += "46.182.189.139,"; //change to skel
     retString +=  PORT;
     retString += ";";
     for(auto const& isServer : clients)
@@ -355,6 +355,10 @@ int main(int argc, char* argv[])
                n--;
 
                printf("Client connected on server: %d\n", clientSock);
+               std::string msg = "QUERYSERVERS,";
+               msg += + GROUP_ID;
+               send(clientSock, msg.c_str(), msg.length(), 0);
+               
             }
             // THIS PART IS THE SPECIAL LOCAL CLIENT FOR US
             if(FD_ISSET(listenSock1, &readSockets))
