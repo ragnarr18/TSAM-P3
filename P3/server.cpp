@@ -154,8 +154,15 @@ std::string CONNECTED(std::string PORT){
     retString = "CONNECTED,";
     retString += GROUP_ID;
     retString += ",";
-    retString += "127.0.0.1,"; //change to sker
+    retString += "127.0.0.1,"; //change to skel
     retString +=  PORT;
+    retString += ";";
+    for(auto const& isServer : clients)
+     {  
+        if(isServer.second->isServer == 1){ //only add data if client is of a external server, not a local client
+            retString += "data";
+        }
+     }
     return retString;
 }
 
