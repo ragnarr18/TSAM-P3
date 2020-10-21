@@ -202,7 +202,7 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
 
   else if((tokens[0].compare("CONNECT") == 0) && (tokens.size() == 2))
   {
-     clients[clientSocket]->name = tokens[1];
+     clients[clientSocket]->groupId = tokens[1];
   }
   else if(tokens[0].compare("LEAVE") == 0)
   {
@@ -219,7 +219,7 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
 
      for(auto const& names : clients)
      {
-        msg += names.second->name + ",";
+        msg += names.second->groupId + ",";
 
      }
      // Reducing the msg length by 1 loses the excess "," - which
@@ -246,7 +246,7 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   {
       for(auto const& pair : clients)
       {
-          if(pair.second->name.compare(tokens[1]) == 0)
+          if(pair.second->groupId.compare(tokens[1]) == 0)
           {
               std::string msg;
               for(auto i = tokens.begin()+2;i != tokens.end();i++) 
