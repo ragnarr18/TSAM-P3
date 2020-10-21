@@ -178,16 +178,19 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   // Split command from client into tokens for parsing
   std::stringstream stream(buffer);
 
-  while(stream >> token)
+  while(std::getline(stream, token, ',')){
+      std::cout <<"this is the token: "<< token;
       tokens.push_back(token);
+  }
+        
   
   //Quearyservers, <from_group_id>
-  if((tokens[0].compare("QUERYSERVERS,") == 0) && (tokens.size() == 2))
+  if((tokens[0].compare("QUERYSERVERS") == 0) && (tokens.size() == 2))
   {
      //CONNECTED(self.groupid, self.ip, self.port)
      std::string msg = CONNECTED(PORT);
      std::cout<< msg;
-    send(clientSocket, msg.c_str(), msg.length()-1, 0);
+    send(clientSocket, msg.c_str(), msg.length(), 0);
   }
 
   else if((tokens[0].compare("CONNECTED") == 0))
@@ -353,6 +356,9 @@ int main(int argc, char* argv[])
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = true;
                std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
+               std::string msg = "QUERYSERVERS,";
+               msg += + GROUP_ID;
+               send(clientSock, msg.c_str(), msg.length(), 0);
                // Decrement the number of sockets waiting to be dealt with
                n--;
 
@@ -375,10 +381,6 @@ int main(int argc, char* argv[])
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = false;
                std::cout << "special client connected is server: " << clients[clientSock]->isServer<<"\n";
-
-               std::string msg = "QUERYSERVERS,";
-               msg += + GROUP_ID;
-               send(clientSock, msg.c_str(), msg.length(), 0);
 
                // Decrement the number of sockets waiting to be dealt with
                n--;
