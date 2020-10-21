@@ -201,7 +201,6 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
       tokens.push_back(token);
   }
         
-  
   //Quearyservers, <from_group_id>
   if((tokens[0].compare("QUERYSERVERS") == 0) && (tokens.size() == 2))
   {
