@@ -162,7 +162,12 @@ std::string CONNECTED(std::string PORT){
     for(auto const& isServer : clients)
      {  
         if(isServer.second->isServer == 1){ //only add data if client is of a external server, not a local client
-            retString += "data";
+            retString += isServer.second->groupId;
+            retString += ",";
+            retString += isServer.second->ip;
+            retString += ",";
+            retString += isServer.second->port;
+            retString += ";";
         }
      }
     return retString;
@@ -171,10 +176,12 @@ std::string CONNECTED(std::string PORT){
 void addInfoToClient(int sock, std::string id, std::string ip, std::string port){
     for(auto const& isServer : clients)
      {  
+        
         if(isServer.second->isServer == 1 && isServer.second->sock == sock){ //only add data if client is of a external server, not a local client
             isServer.second->groupId = id;
             isServer.second->ip = ip;
             isServer.second->port = port;
+            std::cout << isServer.second->groupId<< std::endl;
         }
      }
 }
@@ -190,7 +197,7 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   std::stringstream stream(buffer);
 
   while(std::getline(stream, token, ',')){
-      std::cout <<"this is the token: "<< token;
+      std::cout <<"this is the token: "<< token << std::endl;
       tokens.push_back(token);
   }
         
@@ -212,6 +219,7 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
     std::string ip = tokens[2];
     std::string port = tokens[3];
     addInfoToClient(clientSocket ,id, ip, port);
+    
     // send(clientSocket, msgb.c_str(), msgb.length(), 0);
   }
 
