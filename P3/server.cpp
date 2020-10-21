@@ -35,7 +35,7 @@
 #define SOCK_NONBLOCK O_NONBLOCK
 #endif
 #define PRESERVED_PORT  4001
-#define GROUP_ID "P3_GROUP_ 85"
+#define GROUP_ID "P3_GROUP_85"
 #define BACKLOG  5        // Allowed length of queue of waiting connections
 
 // Simple class for handling connections from clients.
@@ -182,17 +182,17 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
       tokens.push_back(token);
   
   //Quearyservers, <from_group_id>
-  if((tokens[0].compare("QUERYSERVERS") == 0) && (tokens.size() == 2))
+  if((tokens[0].compare("QUERYSERVERS,") == 0) && (tokens.size() == 2))
   {
      //CONNECTED(self.groupid, self.ip, self.port)
      std::string msg = CONNECTED(PORT);
      std::cout<< msg;
-    //  send(clientSocket, msg.c_str(), msg.length()-1, 0);
+    send(clientSocket, msg.c_str(), msg.length()-1, 0);
   }
 
   else if((tokens[0].compare("CONNECTED") == 0))
   {
-     //CONNECTED()
+    //CONNECTED()
     //  std::cout<<"made it to CONNECTED";
     std::string msgb;
     // msgb = "connected response hereeeeeeeeeee!";
@@ -352,15 +352,11 @@ int main(int argc, char* argv[])
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = true;
-               std::cout << "not so special client connected is server: " << clients[clientSock]->isServer<<"\n";
+               std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
                // Decrement the number of sockets waiting to be dealt with
                n--;
 
                printf("Client connected on server: %d\n", clientSock);
-               std::string msg = "QUERYSERVERS,";
-               msg += + GROUP_ID;
-               send(clientSock, msg.c_str(), msg.length(), 0);
-               
             }
             // THIS PART IS THE SPECIAL LOCAL CLIENT FOR US
             if(FD_ISSET(listenSock1, &readSockets))
@@ -378,7 +374,11 @@ int main(int argc, char* argv[])
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = false;
-               std::cout << "special client connected is server: " << clients[clientSock]->isServer<<"\n"; 
+               std::cout << "special client connected is server: " << clients[clientSock]->isServer<<"\n";
+
+               std::string msg = "QUERYSERVERS,";
+               msg += + GROUP_ID;
+               send(clientSock, msg.c_str(), msg.length(), 0);
 
                // Decrement the number of sockets waiting to be dealt with
                n--;
