@@ -168,6 +168,17 @@ std::string CONNECTED(std::string PORT){
     return retString;
 }
 
+void addInfoToClient(int sock, std::string id, std::string ip, std::string port){
+    for(auto const& isServer : clients)
+     {  
+        if(isServer.second->isServer == 1 && isServer.second->sock == sock){ //only add data if client is of a external server, not a local client
+            isServer.second->groupId = id;
+            isServer.second->ip = ip;
+            isServer.second->port = port;
+        }
+     }
+}
+
 // Process command from client on the server
 void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds, 
                   char *buffer, std::string PORT) 
@@ -196,11 +207,12 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   else if((tokens[0].compare("CONNECTED") == 0))
   {
     //CONNECTED()
-    //  std::cout<<"made it to CONNECTED";
-    std::string msgb;
-    // msgb = "connected response hereeeeeeeeeee!";
-    msgb = CONNECTED(PORT);
-    send(clientSocket, msgb.c_str(), msgb.length(), 0);
+    //"connected response hereeeeeeeeeee!";
+    std::string id = tokens[1];
+    std::string ip = tokens[2];
+    std::string port = tokens[3];
+    addInfoToClient(clientSocket ,id, ip, port);
+    // send(clientSocket, msgb.c_str(), msgb.length(), 0);
   }
 
   else if((tokens[0].compare("CONNECT") == 0) && (tokens.size() == 2))
