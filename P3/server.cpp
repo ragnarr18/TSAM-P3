@@ -45,7 +45,9 @@ class Client
 {
   public:
     int sock;              // socket of client connection
-    std::string name;           // Limit length of name of client's user
+    std::string groupId;           // Limit length of name of client's user
+    std::string port;
+    std::string ip;
     bool isServer;
     Client(int socket) : sock(socket){} 
 
