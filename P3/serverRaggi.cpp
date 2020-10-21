@@ -36,7 +36,57 @@
 #endif
 #define PRESERVED_PORT  4001
 #define GROUP_ID "P3_GROUP_85"
+#define KEEP_ALIVE_TIMEOUT 60
 #define BACKLOG  5        // Allowed length of queue of waiting connections
+
+struct Node
+{
+    std::string data;
+    struct Node *next;
+};
+
+class linked_list{
+    private:
+        Node *head,*tail;
+        int size;
+    public:
+        linked_list(){
+            head = NULL;
+            tail = NULL;
+            size = 0;
+            
+        }
+
+        void push(std::string message){
+            Node *tmp = new Node;
+            tmp->data = message;
+
+            if(head == NULL){
+                head = tmp;
+                head->next = NULL;
+            }
+            else{
+                tmp->next = head;
+                head = tmp;
+            }
+            size +=1;
+            return;
+        }
+
+        std::string pop(){
+            if(head != NULL){
+                std::cout<< "head not null" <<std::endl;
+                std::string retValue = head->data;
+                head = head->next;
+                size -=1;
+                return retValue;   
+            }
+            return "NULL";
+        }
+        int getSize(){
+            return size;
+        }
+};
 
 // Simple class for handling connections from clients.
 //
@@ -48,6 +98,7 @@ class Client
     std::string groupId;           // Limit length of name of client's user
     std::string port;
     std::string ip;
+    linked_list messages;
     bool isServer;
     Client(int socket) : sock(socket){} 
 
@@ -291,7 +342,7 @@ int main(int argc, char* argv[])
     bool finished;
     int listenSock;                 // Socket for connections to server
     int clientSock;                 // Socket of connecting client
-    int listenSock1;                // Socket for the connection from the server to the local client
+    int localClientSock;                // Socket for the connection from the server to the local client
     fd_set openSockets;             // Current open sockets 
     fd_set readSockets;             // Socket list for select()        
     fd_set exceptSockets;           // Exception socket list
@@ -312,7 +363,7 @@ int main(int argc, char* argv[])
     listenSock = open_socket(atoi(argv[1]));
     printf("Listening on port: %d\n", atoi(argv[1]));
 
-    listenSock1 = open_socket(PRESERVED_PORT);    
+    localClientSock = open_socket(PRESERVED_PORT);    
 
     if(listen(listenSock, BACKLOG) < 0)
     {
@@ -320,7 +371,7 @@ int main(int argc, char* argv[])
         exit(0);
     }
 
-    if(listen(listenSock1, BACKLOG) < 0)
+    if(listen(localClientSock, BACKLOG) < 0)
     {
         printf("Listen failed on port %s\n", PRESERVED_PORT);
         exit(0);
@@ -329,26 +380,24 @@ int main(int argc, char* argv[])
     // Add listen socket to socket set we are monitoring
     {
         FD_ZERO(&openSockets);
-        std::cout<< "this is the listenSock" << listenSock;
         FD_SET(listenSock, &openSockets);
-        FD_SET(listenSock1, &openSockets);
+        FD_SET(localClientSock, &openSockets);
         maxfds = listenSock;
-        if(listenSock1 > listenSock){
-            maxfds = listenSock1;
+        if(localClientSock > listenSock){
+            maxfds = localClientSock;
         }
     }
 
     finished = false;
-
     while(!finished)
     {
         // Get modifiable copy of readSockets
         readSockets = exceptSockets = openSockets;
         memset(buffer, 0, sizeof(buffer));
-
+        struct timeval timeout = {KEEP_ALIVE_TIMEOUT, 0}; //this is a set timeout, check file descriptors after x, seconds
         // Look at sockets and see which ones have something to be read()
-        int n = select(maxfds + 1, &readSockets, NULL, &exceptSockets, NULL);
-
+        int n = select(maxfds + 1, &readSockets, NULL, &exceptSockets, &timeout);
+        std::cout<<"the select" << n<< std::endl;
         if(n < 0)
         {
             perror("select failed - closing down\n");
@@ -357,8 +406,6 @@ int main(int argc, char* argv[])
         else
         {
             // First, accept  any new connections to the server on the listening socket
-            // if(FD_ISSET(listenSock, &readSockets) || FD_ISSET(listenSock1
-    // , &readSockets))
             if(FD_ISSET(listenSock, &readSockets))
             {
                clientSock = accept(listenSock, (struct sockaddr *)&client,
@@ -383,12 +430,12 @@ int main(int argc, char* argv[])
 
                printf("Client connected on server: %d\n", clientSock);
             }
-            // THIS PART IS THE SPECIAL LOCAL CLIENT FOR US
-            if(FD_ISSET(listenSock1, &readSockets))
+            // THIS PART IS FOR THE SPECIAL LOCAL CLIENT
+            if(FD_ISSET(localClientSock, &readSockets))
             {
-               clientSock = accept(listenSock1, (struct sockaddr *)&client,
+               clientSock = accept(localClientSock, (struct sockaddr *)&client,
                                    &clientLen);
-                std::cout << listenSock1 ;
+                std::cout << localClientSock ;
                printf("accept***\n");
                // Add new client to the list of open sockets
                FD_SET(clientSock, &openSockets);
@@ -426,7 +473,7 @@ int main(int argc, char* argv[])
                       // We don't check for -1 (nothing received) because select()
                       // only triggers if there is something on the socket for us.
                       else
-                      {
+                      {     
                           std::cout << buffer << std::endl;
                           clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str());
                       }
@@ -436,6 +483,19 @@ int main(int argc, char* argv[])
                for(auto const& c : disconnectedClients)
                   clients.erase(c->sock);
             }
+            //maybe do a function called KEEPALIVE()
+            for(auto const& pair : clients){
+                  Client *client = pair.second;
+                  std::string msg = "keep alive: ";
+                  msg += std::to_string(client->messages.getSize());
+                  msg += " messages are waiting";
+                  //push and pop work
+                //   client->messages.push("message");
+                //   client->messages.push("message");
+                //   client->messages.pop();
+                  send(client->sock, msg.c_str(), msg.length(), 0);
+            }
+
         }
     }
 }
