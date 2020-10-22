@@ -45,6 +45,7 @@ struct Node
     struct Node *next;
 };
 
+//LAST IN FIRST OUT
 class linked_list{
     private:
         Node *head,*tail;
@@ -225,21 +226,21 @@ std::string CONNECTED(std::string PORT){
 }
 
 void addInfoToClient(int sock, std::string id, std::string ip, std::string port){
-    for(auto const& isServer : clients)
+    for(auto const& server : clients)
      {  
         
-        if(isServer.second->isServer == 1 && isServer.second->sock == sock){ //only add data if client is of a external server, not a local client
-            isServer.second->groupId = id;
-            isServer.second->ip = ip;
-            isServer.second->port = port;
-            std::cout << isServer.second->groupId<< std::endl;
+        if(server.second->isServer == 1 && server.second->sock == sock){ //only add data if client is of a external server, not a local client
+            server.second->groupId = id;
+            server.second->ip = ip;
+            server.second->port = port;
+            std::cout << server.second->groupId<< std::endl;
         }
      }
 }
 
 // Process command from client on the server
 void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds, 
-                  char *buffer, std::string PORT) 
+                  char *buffer, std::string PORT, bool isServer) 
 {
   std::vector<std::string> tokens;
   std::string token;
@@ -250,6 +251,12 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   while(std::getline(stream, token, ',')){
       std::cout <<"this is the token: "<< token << std::endl;
       tokens.push_back(token);
+  }
+
+  if(!isServer){
+      //here we can have special functionality for the special local client
+      //the rest can be used by our connected servers & our local client
+      //so basically our client can do any command he wants, but our connected servers have limited commands
   }
         
   //Quearyservers, <from_group_id>
@@ -475,7 +482,7 @@ int main(int argc, char* argv[])
                       else
                       {     
                           std::cout << buffer << std::endl;
-                          clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str());
+                          clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
                       }
                   }
                }
