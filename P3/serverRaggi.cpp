@@ -349,7 +349,7 @@ int main(int argc, char* argv[])
     bool finished;
     int listenSock;                 // Socket for connections to server
     int clientSock;                 // Socket of connecting client
-    int localClientSock;                // Socket for the connection from the server to the local client
+    int localClientSock;            // Socket for the connection from the server to the local client
     fd_set openSockets;             // Current open sockets 
     fd_set readSockets;             // Socket list for select()        
     fd_set exceptSockets;           // Exception socket list
@@ -357,7 +357,7 @@ int main(int argc, char* argv[])
     struct sockaddr_in client;
     socklen_t clientLen;
     char buffer[1025];              // buffer for reading from clients
-    std::string PORT;
+    std::string PORT;               // Port of the server
 
     if(argc != 2)
     {
@@ -370,6 +370,7 @@ int main(int argc, char* argv[])
     listenSock = open_socket(atoi(argv[1]));
     printf("Listening on port: %d\n", atoi(argv[1]));
 
+    // setup our special local client, with a hidden port
     localClientSock = open_socket(PRESERVED_PORT);    
 
     if(listen(listenSock, BACKLOG) < 0)
@@ -402,9 +403,9 @@ int main(int argc, char* argv[])
         readSockets = exceptSockets = openSockets;
         memset(buffer, 0, sizeof(buffer));
         struct timeval timeout = {KEEP_ALIVE_TIMEOUT, 0}; //this is a set timeout, check file descriptors after x, seconds
+
         // Look at sockets and see which ones have something to be read()
         int n = select(maxfds + 1, &readSockets, NULL, &exceptSockets, &timeout);
-        std::cout<<"the select" << n<< std::endl;
         if(n < 0)
         {
             perror("select failed - closing down\n");
@@ -437,6 +438,7 @@ int main(int argc, char* argv[])
 
                printf("Client connected on server: %d\n", clientSock);
             }
+
             // THIS PART IS FOR THE SPECIAL LOCAL CLIENT
             if(FD_ISSET(localClientSock, &readSockets))
             {
@@ -497,8 +499,8 @@ int main(int argc, char* argv[])
                   msg += std::to_string(client->messages.getSize());
                   msg += " messages are waiting";
                   //push and pop work
-                //   client->messages.push("message");
-                //   client->messages.push("message");
+                //   client->messages.push("message1");
+                //   client->messages.push("message2");
                 //   client->messages.pop();
                   send(client->sock, msg.c_str(), msg.length(), 0);
             }
