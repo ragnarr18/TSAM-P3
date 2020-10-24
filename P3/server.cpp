@@ -257,6 +257,8 @@ std::string connected(std::string PORT){
             retString += ",";
             retString += isServer.second->port;
             retString += ";";
+            // std::string message = std::cout << isServer.second->groupId << "," << isServer.second->ip << "," << isServer.second->port << ";" << std::endl;
+            retString += message;
         }
      }
     return retString;
@@ -496,7 +498,7 @@ int main(int argc, char* argv[])
                clientSock = accept(listenSock, (struct sockaddr *)&client,
                                    &clientLen);
                 std::cout << listenSock ;
-               printf("accept***\n");
+               // printf("accept***\n");
                // Add new client to the list of open sockets
                FD_SET(clientSock, &openSockets);
 
@@ -522,7 +524,7 @@ int main(int argc, char* argv[])
                clientSock = accept(localClientSock, (struct sockaddr *)&client,
                                    &clientLen);
                 std::cout << localClientSock ;
-               printf("accept***\n");
+               // printf("accept***\n");
                // Add new client to the list of open sockets
                FD_SET(clientSock, &openSockets);
 
