@@ -235,7 +235,7 @@ void closeClient(int clientSocket, fd_set *openSockets, int *maxfds)
 //GET connected SERVERS
 std::string connected(std::string PORT){
     std::string retString = "";
-    retString = "CONNNECTED,";
+    retString = "CONNECTED,";
     retString += GROUP_ID;
     retString += ",";
     retString += "46.182.189.139,"; //change to skel
@@ -266,6 +266,17 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
             std::cout << server.second->groupId<< std::endl;
         }
      }
+}
+
+void removeInfoFromClient(int sock, std::string ip, std::string port) {
+   
+    for(auto const& IsServer: clients)
+    {
+        if(IsServer.second->isServer == 1 && IsServer.second->sock == sock && IsServer.second->ip == ip && IsServer.second->port == port){
+            std::cout<< "Closing connection with IP " << ip << ", port " << port << std::endl;
+            // TODO: Figure out how the fuck to remove this particular connection from the clients list
+        }
+    }
 }
 
 // Process command from client on the server
@@ -303,7 +314,7 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
     send(clientSocket, msg.c_str(), msg.length(), 0);
   }
 
-  else if((tokens[0].compare("connected") == 0))
+  else if((tokens[0].compare("CONNECTED") == 0))
   {
     std::string id = tokens[1];
     std::string ip = tokens[2];
@@ -320,7 +331,9 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
       // Close the socket, and leave the socket handling
       // code to deal with tidying up clients etc. when
       // select() detects the OS has torn down the connection.
- 
+      std::string ip = tokens[1];
+      std::string port = tokens[2];
+      removeInfoFromClient(clientSocket, ip, port);
       closeClient(clientSocket, openSockets, maxfds);
   }
   else if(tokens[0].compare("WHO") == 0)
