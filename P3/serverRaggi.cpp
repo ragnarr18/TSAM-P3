@@ -39,13 +39,15 @@
 #define KEEP_ALIVE_TIMEOUT 60
 #define BACKLOG  5        // Allowed length of queue of waiting connections
 
+//simple node class with data as type std::string
 struct Node
 {
     std::string data;
     struct Node *next;
 };
 
-//LAST IN FIRST OUT
+//Implementation of linked list
+//last in last out
 class linked_list{
     private:
         Node *head,*tail;
@@ -106,6 +108,20 @@ class Client
     ~Client(){}            // Virtual destructor defined for base class
 };
 
+//keep alive message handler for clients
+keepAlive(){
+    for(auto const& pair : clients){
+        Client *client = pair.second;
+        std::string msg = "keep alive: ";
+        msg += std::to_string(client->messages.getSize());
+        msg += " messages are waiting";
+        //push and pop work
+        //   client->messages.push("message1");
+        //   client->messages.push("message2");
+        //   client->messages.pop();
+        send(client->sock, msg.c_str(), msg.length(), 0);
+    }
+}
 // Note: map is not necessarily the most efficient method to use here,
 // especially for a server with large numbers of simulataneous connections,
 // where performance is also expected to be an issue.
@@ -492,19 +508,8 @@ int main(int argc, char* argv[])
                for(auto const& c : disconnectedClients)
                   clients.erase(c->sock);
             }
-            //maybe do a function called KEEPALIVE()
-            for(auto const& pair : clients){
-                  Client *client = pair.second;
-                  std::string msg = "keep alive: ";
-                  msg += std::to_string(client->messages.getSize());
-                  msg += " messages are waiting";
-                  //push and pop work
-                //   client->messages.push("message1");
-                //   client->messages.push("message2");
-                //   client->messages.pop();
-                  send(client->sock, msg.c_str(), msg.length(), 0);
-            }
-
+            //keep alive message handler
+            keepAlive();
         }
     }
 }
