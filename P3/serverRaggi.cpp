@@ -218,10 +218,10 @@ void closeClient(int clientSocket, fd_set *openSockets, int *maxfds)
 
 }
 
-//GET CONNECTED SERVERS
-std::string CONNECTED(std::string PORT){
+//GET connected SERVERS
+std::string connected(std::string PORT){
     std::string retString = "";
-    retString = "CONNECTED,";
+    retString = "CONNNECTED,";
     retString += GROUP_ID;
     retString += ",";
     retString += "46.182.189.139,"; //change to skel
@@ -278,15 +278,15 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   //Quearyservers, <from_group_id>
   if((tokens[0].compare("QUERYSERVERS") == 0) && (tokens.size() == 2))
   {
-     //CONNECTED(self.groupid, self.ip, self.port)
-     std::string msg = CONNECTED(PORT);
+     //connected(self.groupid, self.ip, self.port)
+     std::string msg = connected(PORT);
      std::cout<< msg;
     send(clientSocket, msg.c_str(), msg.length(), 0);
   }
 
-  else if((tokens[0].compare("CONNECTED") == 0))
+  else if((tokens[0].compare("connected") == 0))
   {
-    //CONNECTED()
+    //connected()
     //"connected response hereeeeeeeeeee!";
     std::string id = tokens[1];
     std::string ip = tokens[2];
