@@ -36,7 +36,60 @@
 #endif
 #define PRESERVED_PORT  4001
 #define GROUP_ID "P3_GROUP_85"
+#define KEEP_ALIVE_TIMEOUT 60
 #define BACKLOG  5        // Allowed length of queue of waiting connections
+
+//simple node class with data as type std::string
+struct Node
+{
+    std::string data;
+    struct Node *next;
+};
+
+//Implementation of linked list
+//last in last out
+class linked_list{
+    private:
+        Node *head,*tail;
+        int size;
+    public:
+        linked_list(){
+            head = NULL;
+            tail = NULL;
+            size = 0;
+            
+        }
+
+        void push(std::string message){
+            Node *tmp = new Node;
+            tmp->data = message;
+
+            if(head == NULL){
+                head = tmp;
+                head->next = NULL;
+            }
+            else{
+                tmp->next = head;
+                head = tmp;
+            }
+            size +=1;
+            return;
+        }
+
+        std::string pop(){
+            if(head != NULL){
+                std::cout<< "head not null" <<std::endl;
+                std::string retValue = head->data;
+                head = head->next;
+                size -=1;
+                return retValue;   
+            }
+            return "NULL";
+        }
+        int getSize(){
+            return size;
+        }
+};
 
 // Simple class for handling connections from clients.
 //
@@ -48,12 +101,27 @@ class Client
     std::string groupId;           // Limit length of name of client's user
     std::string port;
     std::string ip;
+    linked_list messages;
     bool isServer;
     Client(int socket) : sock(socket){} 
 
     ~Client(){}            // Virtual destructor defined for base class
 };
 
+//keep alive message handler for clients
+keepAlive(){
+    for(auto const& pair : clients){
+        Client *client = pair.second;
+        std::string msg = "keep alive: ";
+        msg += std::to_string(client->messages.getSize());
+        msg += " messages are waiting";
+        //push and pop work
+        //   client->messages.push("message1");
+        //   client->messages.push("message2");
+        //   client->messages.pop();
+        send(client->sock, msg.c_str(), msg.length(), 0);
+    }
+}
 // Note: map is not necessarily the most efficient method to use here,
 // especially for a server with large numbers of simulataneous connections,
 // where performance is also expected to be an issue.
@@ -150,10 +218,10 @@ void closeClient(int clientSocket, fd_set *openSockets, int *maxfds)
 
 }
 
-//GET CONNECTED SERVERS
-std::string CONNECTED(std::string PORT){
+//GET connected SERVERS
+std::string connected(std::string PORT){
     std::string retString = "";
-    retString = "CONNECTED,";
+    retString = "CONNNECTED,";
     retString += GROUP_ID;
     retString += ",";
     retString += "46.182.189.139,"; //change to skel
@@ -162,15 +230,33 @@ std::string CONNECTED(std::string PORT){
     for(auto const& isServer : clients)
      {  
         if(isServer.second->isServer == 1){ //only add data if client is of a external server, not a local client
-            retString += "data";
+            retString += isServer.second->groupId;
+            retString += ",";
+            retString += isServer.second->ip;
+            retString += ",";
+            retString += isServer.second->port;
+            retString += ";";
         }
      }
     return retString;
 }
 
+void addInfoToClient(int sock, std::string id, std::string ip, std::string port){
+    for(auto const& server : clients)
+     {  
+        
+        if(server.second->isServer == 1 && server.second->sock == sock){ //only add data if client is of a external server, not a local client
+            server.second->groupId = id;
+            server.second->ip = ip;
+            server.second->port = port;
+            std::cout << server.second->groupId<< std::endl;
+        }
+     }
+}
+
 // Process command from client on the server
 void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds, 
-                  char *buffer, std::string PORT) 
+                  char *buffer, std::string PORT, bool isServer) 
 {
   std::vector<std::string> tokens;
   std::string token;
@@ -179,26 +265,35 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   std::stringstream stream(buffer);
 
   while(std::getline(stream, token, ',')){
+      std::cout <<"this is the token: "<< token << std::endl;
       tokens.push_back(token);
-    }
+  }
 
+  if(!isServer){
+      //here we can have special functionality for the special local client
+      //the rest can be used by our connected servers & our local client
+      //so basically our client can do any command he wants, but our connected servers have limited commands
+  }
+        
   //Quearyservers, <from_group_id>
-  if((tokens[0].compare("QUERYSERVERS") == 0))
+  if((tokens[0].compare("QUERYSERVERS") == 0) && (tokens.size() == 2))
   {
-     //CONNECTED(self.groupid, self.ip, self.port)
-     std::string msg = CONNECTED(PORT);
-     std::cout << "This server just connected: " << tokens[1];
+     //connected(self.groupid, self.ip, self.port)
+     std::string msg = connected(PORT);
+     std::cout<< msg;
     send(clientSocket, msg.c_str(), msg.length(), 0);
   }
 
-  else if((tokens[0].compare("CONNECTED") == 0))
+  else if((tokens[0].compare("connected") == 0))
   {
-    //CONNECTED()
-    //  std::cout<<"made it to CONNECTED";
-    std::string msgb;
-    // msgb = "connected response hereeeeeeeeeee!";
-    msgb = CONNECTED(PORT);
-    send(clientSocket, msgb.c_str(), msgb.length(), 0);
+    //connected()
+    //"connected response hereeeeeeeeeee!";
+    std::string id = tokens[1];
+    std::string ip = tokens[2];
+    std::string port = tokens[3];
+    addInfoToClient(clientSocket ,id, ip, port);
+    
+    // send(clientSocket, msgb.c_str(), msgb.length(), 0);
   }
 
   else if((tokens[0].compare("CONNECT") == 0) && (tokens.size() == 2))
@@ -260,9 +355,7 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   }
   else
   {
-      std::string msg = "Unknown command.";
       std::cout << "Unknown command from client:" << buffer << std::endl;
-      send(clientSocket, msg.c_str(), msg.length(), 0);
   }
      
 }
@@ -272,7 +365,7 @@ int main(int argc, char* argv[])
     bool finished;
     int listenSock;                 // Socket for connections to server
     int clientSock;                 // Socket of connecting client
-    int listenSock1;                // Socket for the connection from the server to the local client
+    int localClientSock;            // Socket for the connection from the server to the local client
     fd_set openSockets;             // Current open sockets 
     fd_set readSockets;             // Socket list for select()        
     fd_set exceptSockets;           // Exception socket list
@@ -280,7 +373,7 @@ int main(int argc, char* argv[])
     struct sockaddr_in client;
     socklen_t clientLen;
     char buffer[1025];              // buffer for reading from clients
-    std::string PORT;
+    std::string PORT;               // Port of the server
 
     if(argc != 2)
     {
@@ -293,7 +386,8 @@ int main(int argc, char* argv[])
     listenSock = open_socket(atoi(argv[1]));
     printf("Listening on port: %d\n", atoi(argv[1]));
 
-    listenSock1 = open_socket(PRESERVED_PORT);    
+    // setup our special local client, with a hidden port
+    localClientSock = open_socket(PRESERVED_PORT);    
 
     if(listen(listenSock, BACKLOG) < 0)
     {
@@ -301,7 +395,7 @@ int main(int argc, char* argv[])
         exit(0);
     }
 
-    if(listen(listenSock1, BACKLOG) < 0)
+    if(listen(localClientSock, BACKLOG) < 0)
     {
         printf("Listen failed on port %s\n", PRESERVED_PORT);
         exit(0);
@@ -310,26 +404,24 @@ int main(int argc, char* argv[])
     // Add listen socket to socket set we are monitoring
     {
         FD_ZERO(&openSockets);
-        std::cout<< "this is the listenSock" << listenSock;
         FD_SET(listenSock, &openSockets);
-        FD_SET(listenSock1, &openSockets);
+        FD_SET(localClientSock, &openSockets);
         maxfds = listenSock;
-        if(listenSock1 > listenSock){
-            maxfds = listenSock1;
+        if(localClientSock > listenSock){
+            maxfds = localClientSock;
         }
     }
 
     finished = false;
-
     while(!finished)
     {
         // Get modifiable copy of readSockets
         readSockets = exceptSockets = openSockets;
         memset(buffer, 0, sizeof(buffer));
+        struct timeval timeout = {KEEP_ALIVE_TIMEOUT, 0}; //this is a set timeout, check file descriptors after x, seconds
 
         // Look at sockets and see which ones have something to be read()
-        int n = select(maxfds + 1, &readSockets, NULL, &exceptSockets, NULL);
-
+        int n = select(maxfds + 1, &readSockets, NULL, &exceptSockets, &timeout);
         if(n < 0)
         {
             perror("select failed - closing down\n");
@@ -338,8 +430,6 @@ int main(int argc, char* argv[])
         else
         {
             // First, accept  any new connections to the server on the listening socket
-            // if(FD_ISSET(listenSock, &readSockets) || FD_ISSET(listenSock1
-    // , &readSockets))
             if(FD_ISSET(listenSock, &readSockets))
             {
                clientSock = accept(listenSock, (struct sockaddr *)&client,
@@ -356,17 +446,21 @@ int main(int argc, char* argv[])
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = true;
                std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
+               std::string msg = "QUERYSERVERS,";
+               msg += + GROUP_ID;
+               send(clientSock, msg.c_str(), msg.length(), 0);
                // Decrement the number of sockets waiting to be dealt with
                n--;
 
                printf("Client connected on server: %d\n", clientSock);
             }
-            // THIS PART IS THE SPECIAL LOCAL CLIENT FOR US
-            if(FD_ISSET(listenSock1, &readSockets))
+
+            // THIS PART IS FOR THE SPECIAL LOCAL CLIENT
+            if(FD_ISSET(localClientSock, &readSockets))
             {
-               clientSock = accept(listenSock1, (struct sockaddr *)&client,
+               clientSock = accept(localClientSock, (struct sockaddr *)&client,
                                    &clientLen);
-                std::cout << listenSock1 ;
+                std::cout << localClientSock ;
                printf("accept***\n");
                // Add new client to the list of open sockets
                FD_SET(clientSock, &openSockets);
@@ -378,10 +472,6 @@ int main(int argc, char* argv[])
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = false;
                std::cout << "special client connected is server: " << clients[clientSock]->isServer<<"\n";
-
-               std::string msg = "QUERYSERVERS,";
-               msg += + GROUP_ID;
-               send(clientSock, msg.c_str(), msg.length(), 0);
 
                // Decrement the number of sockets waiting to be dealt with
                n--;
@@ -408,9 +498,9 @@ int main(int argc, char* argv[])
                       // We don't check for -1 (nothing received) because select()
                       // only triggers if there is something on the socket for us.
                       else
-                      {
+                      {     
                           std::cout << buffer << std::endl;
-                          clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str());
+                          clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
                       }
                   }
                }
@@ -418,6 +508,8 @@ int main(int argc, char* argv[])
                for(auto const& c : disconnectedClients)
                   clients.erase(c->sock);
             }
+            //keep alive message handler
+            keepAlive();
         }
     }
 }
