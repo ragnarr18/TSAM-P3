@@ -37,6 +37,7 @@
 #define PRESERVED_PORT  4001
 #define GROUP_ID "P3_GROUP_85"
 #define KEEP_ALIVE_TIMEOUT 60
+#define SELECT_TIMEOUT 5
 #define BACKLOG  5        // Allowed length of queue of waiting connections
 
 //simple node class with data as type std::string
@@ -102,6 +103,7 @@ class Client
     std::string port;
     std::string ip;
     linked_list messages;
+    time_t alive;
     bool isServer;
     bool remove = 0;
     Client(int socket) : sock(socket){} 
@@ -140,18 +142,15 @@ std::string listServers(){
 }
 
 //keep alive message handler for clients
-void keepAlive(){
-    for(auto const& pair : clients){
-        Client *client = pair.second;
-        std::string msg = "keep alive: ";
-        msg += std::to_string(client->messages.getSize());
-        msg += " messages are waiting";
-        //push and pop work
-        //   client->messages.push("message1");
-        //   client->messages.push("message2");
-        //   client->messages.pop();
-        send(client->sock, msg.c_str(), msg.length(), 0);
-    }
+void keepAlive(Client client){
+    std::string msg = "keep alive: ";
+    msg += std::to_string(client.messages.getSize());
+    msg += " messages are waiting";
+    //push and pop work
+    //   client->messages.push("message1");
+    //   client->messages.push("message2");
+    //   client->messages.pop();
+    send(client.sock, msg.c_str(), msg.length(), 0);
 }
 
 // Open socket for specified port.
@@ -464,7 +463,23 @@ int main(int argc, char* argv[])
         // Get modifiable copy of readSockets
         readSockets = exceptSockets = openSockets;
         memset(buffer, 0, sizeof(buffer));
-        struct timeval timeout = {KEEP_ALIVE_TIMEOUT, 0}; //this is a set timeout, check file descriptors after x, seconds
+        struct timeval timeout = {SELECT_TIMEOUT, 0}; //this is a set timeout, check file descriptors after x, seconds
+
+        for(auto const& pair : clients){
+            Client *client = pair.second;
+            time_t now;
+            time(&now);
+            // double diff = difftime(now, client->alive);
+            // std::cout <<"NOW: " <<now << ", " <<"BEFORE: "<< client->alive << std::endl;
+            // std::cout <<diff<< std::endl;
+            if(client->alive > 0){
+                // std::cout << "alive >0" << std::endl;
+                if(difftime(client->alive, now)>=KEEP_ALIVE_TIMEOUT){
+                    Client currClient = *client;
+                    keepAlive(currClient);
+                }
+            }
+        }
 
         // Look at sockets and see which ones have something to be read()
         int n = select(maxfds + 1, &readSockets, NULL, &exceptSockets, &timeout);
@@ -560,8 +575,6 @@ int main(int argc, char* argv[])
                for(auto const& c : disconnectedClients)
                   clients.erase(c->sock);
             }
-            //keep alive message handler
-            keepAlive();
         }
     }
 }
