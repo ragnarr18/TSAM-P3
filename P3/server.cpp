@@ -254,6 +254,10 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
      }
 }
 
+ void removeInfoFromClient(int sock, std::string ip, std::string port) {
+    std::cout << "This function is supposed to run before disconnecting." << std::endl;
+ }
+
 // Process command from client on the server
 void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds, 
                   char *buffer, std::string PORT, bool isServer) 
@@ -305,7 +309,9 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
       // Close the socket, and leave the socket handling
       // code to deal with tidying up clients etc. when
       // select() detects the OS has torn down the connection.
- 
+      std::string ip = tokens[1];
+      std::string port = tokens[2];
+      removeInfoFromClient(cliensocket, ip, port);
       closeClient(clientSocket, openSockets, maxfds);
   }
   else if(tokens[0].compare("WHO") == 0)
