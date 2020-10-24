@@ -97,7 +97,7 @@ class linked_list{
 class Client
 {
   public:
-    int sock;              // socket of client connection
+    int sock;                      // socket of client connection
     std::string groupId;           // Limit length of name of client's user
     std::string port;
     std::string ip;
@@ -108,8 +108,31 @@ class Client
     ~Client(){}            // Virtual destructor defined for base class
 };
 
+// Note: map is not necessarily the most efficient method to use here,
+// especially for a server with large numbers of simulataneous connections,
+// where performance is also expected to be an issue.
+//
+// Quite often a simple array can be used as a lookup table, 
+// (indexed on socket no.) sacrificing memory for speed.
+
+std::map<int, Client*> clients; // Lookup table for per Client information
+std::string listServers(){
+    for(auto const& pair : clients){
+        Client *client = pair.second;
+        std::string msg = "keep alive: ";
+        msg += std::to_string(client->messages.getSize());
+        msg += " messages are waiting";
+        //push and pop work
+        //   client->messages.push("message1");
+        //   client->messages.push("message2");
+        //   client->messages.pop();
+        send(client->sock, msg.c_str(), msg.length(), 0);
+    }
+    return "hello";
+}
+
 //keep alive message handler for clients
-keepAlive(){
+void keepAlive(){
     for(auto const& pair : clients){
         Client *client = pair.second;
         std::string msg = "keep alive: ";
@@ -122,19 +145,10 @@ keepAlive(){
         send(client->sock, msg.c_str(), msg.length(), 0);
     }
 }
-// Note: map is not necessarily the most efficient method to use here,
-// especially for a server with large numbers of simulataneous connections,
-// where performance is also expected to be an issue.
-//
-// Quite often a simple array can be used as a lookup table, 
-// (indexed on socket no.) sacrificing memory for speed.
-
-std::map<int, Client*> clients; // Lookup table for per Client information
 
 // Open socket for specified port.
 //
 // Returns -1 if unable to create the socket for any reason.
-
 int open_socket(int portno)
 {
    struct sockaddr_in sk_addr;   // address settings for bind()
@@ -221,7 +235,7 @@ void closeClient(int clientSocket, fd_set *openSockets, int *maxfds)
 //GET connected SERVERS
 std::string connected(std::string PORT){
     std::string retString = "";
-    retString = "CONNNECTED,";
+    retString = "CONNECTED,";
     retString += GROUP_ID;
     retString += ",";
     retString += "46.182.189.139,"; //change to skel
@@ -254,6 +268,17 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
      }
 }
 
+void removeInfoFromClient(int sock, std::string ip, std::string port) {
+   
+    for(auto const& IsServer: clients)
+    {
+        if(IsServer.second->isServer == 1 && IsServer.second->sock == sock && IsServer.second->ip == ip && IsServer.second->port == port){
+            std::cout<< "Closing connection with IP " << ip << ", port " << port << std::endl;
+            // TODO: Figure out how the fuck to remove this particular connection from the clients list
+        }
+    }
+}
+
 // Process command from client on the server
 void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds, 
                   char *buffer, std::string PORT, bool isServer) 
@@ -273,27 +298,28 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
       //here we can have special functionality for the special local client
       //the rest can be used by our connected servers & our local client
       //so basically our client can do any command he wants, but our connected servers have limited commands
+    //LISTSERVERS
+    if((tokens[0].compare("LISTSERVERS") == 0) && (tokens.size() == 1))
+    {
+        std::string msg = listServers();
+        send(clientSocket, msg.c_str(), msg.length(), 0);
+    }
   }
         
   //Quearyservers, <from_group_id>
   if((tokens[0].compare("QUERYSERVERS") == 0) && (tokens.size() == 2))
   {
-     //connected(self.groupid, self.ip, self.port)
      std::string msg = connected(PORT);
      std::cout<< msg;
     send(clientSocket, msg.c_str(), msg.length(), 0);
   }
 
-  else if((tokens[0].compare("connected") == 0))
+  else if((tokens[0].compare("CONNECTED") == 0))
   {
-    //connected()
-    //"connected response hereeeeeeeeeee!";
     std::string id = tokens[1];
     std::string ip = tokens[2];
     std::string port = tokens[3];
     addInfoToClient(clientSocket ,id, ip, port);
-    
-    // send(clientSocket, msgb.c_str(), msgb.length(), 0);
   }
 
   else if((tokens[0].compare("CONNECT") == 0) && (tokens.size() == 2))
@@ -305,7 +331,9 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
       // Close the socket, and leave the socket handling
       // code to deal with tidying up clients etc. when
       // select() detects the OS has torn down the connection.
- 
+      std::string ip = tokens[1];
+      std::string port = tokens[2];
+      removeInfoFromClient(clientSocket, ip, port);
       closeClient(clientSocket, openSockets, maxfds);
   }
   else if(tokens[0].compare("WHO") == 0)

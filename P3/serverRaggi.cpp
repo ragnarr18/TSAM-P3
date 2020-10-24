@@ -98,7 +98,7 @@ class linked_list{
 class Client
 {
   public:
-    int sock;              // socket of client connection
+    int sock;                      // socket of client connection
     std::string groupId;           // Limit length of name of client's user
     std::string port;
     std::string ip;
