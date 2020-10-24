@@ -118,6 +118,14 @@ class Client
 // (indexed on socket no.) sacrificing memory for speed.
 
 std::map<int, Client*> clients; // Lookup table for per Client information
+
+struct commandStruct
+{
+    int socket;
+    bool removed;
+    Client client;
+};
+
 std::string listServers(){
     for(auto const& pair : clients){
         Client *client = pair.second;
