@@ -103,6 +103,7 @@ class Client
     std::string ip;
     linked_list messages;
     bool isServer;
+    bool remove = 0;
     Client(int socket) : sock(socket){} 
 
     ~Client(){}            // Virtual destructor defined for base class
@@ -114,6 +115,13 @@ class Client
 //
 // Quite often a simple array can be used as a lookup table, 
 // (indexed on socket no.) sacrificing memory for speed.
+
+struct commandStruct
+{
+    int socket;
+    bool removed;
+    Client client;
+};
 
 std::map<int, Client*> clients; // Lookup table for per Client information
 std::string listServers(){
@@ -268,24 +276,29 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
      }
 }
 
-void removeInfoFromClient(int sock, std::string ip, std::string port) {
-    bool removedManually;
+Client removeInfoFromClient(std::string ip, std::string port) {
     for(auto const& IsServer: clients)
     {
-        if(IsServer.second->isServer == 1 && IsServer.second->sock == sock && IsServer.second->ip == ip && IsServer.second->port == port){
-            IsServer.second->isServer = 0;
+        if(IsServer.second->isServer == 1 && IsServer.second->ip == ip && IsServer.second->port == port){
+            // IsServer.second->isServer = 0;
+            IsServer.second->remove = 1;
+            
+            return IsServer.second;
             // TODO: Figure out how the fuck to remove this particular connection from the clients list
         }
     }
+    return NULL;
 }
 
 // Process command from client on the server
-void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds, 
+commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds, 
                   char *buffer, std::string PORT, bool isServer) 
 {
   std::vector<std::string> tokens;
   std::string token;
-
+  commandStruct retStruct;
+  retStruct.removed = 0;
+  retStruct.socket = 0;
   // Split command from client into tokens for parsing
   std::stringstream stream(buffer);
 
@@ -333,8 +346,15 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
       // select() detects the OS has torn down the connection.
       std::string ip = tokens[1];
       std::string port = tokens[2];
-      removeInfoFromClient(clientSocket, ip, port);
-      closeClient(clientSocket, openSockets, maxfds);
+      Client removedSock = removeInfoFromClient(ip, port);
+      if(removedSock == NULL) {
+          std::cout << "This IP address/port combination was not found. Please try again." << std::endl;
+      }
+      else{
+          retStruct.removed = 1;
+          retStruct.socket = removedSock;
+      }
+      // closeClient(clientSocket, openSockets, maxfds);
   }
   else if(tokens[0].compare("WHO") == 0)
   {
@@ -385,7 +405,7 @@ void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   {
       std::cout << "Unknown command from client:" << buffer << std::endl;
   }
-     
+   return retStruct;  
 }
 
 int main(int argc, char* argv[])
@@ -528,7 +548,7 @@ int main(int argc, char* argv[])
                       else
                       {     
                           std::cout << buffer << std::endl;
-                          clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
+                          commandStruct retValue = clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
                         // removedManually = clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
                         //   if(removedManually){
                         //       disconnectedClients.push_back(client);
