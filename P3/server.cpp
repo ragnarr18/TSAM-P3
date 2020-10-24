@@ -269,11 +269,11 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
 }
 
 void removeInfoFromClient(int sock, std::string ip, std::string port) {
-   
+    bool removedManually;
     for(auto const& IsServer: clients)
     {
         if(IsServer.second->isServer == 1 && IsServer.second->sock == sock && IsServer.second->ip == ip && IsServer.second->port == port){
-            std::cout<< "Closing connection with IP " << ip << ", port " << port << std::endl;
+            IsServer.second->isServer = 0;
             // TODO: Figure out how the fuck to remove this particular connection from the clients list
         }
     }
@@ -529,6 +529,12 @@ int main(int argc, char* argv[])
                       {     
                           std::cout << buffer << std::endl;
                           clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
+                        // removedManually = clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
+                        //   if(removedManually){
+                        //       disconnectedClients.push_back(client);
+                        //       closeClient(client->sock, &openSockets, &maxfds);
+                        //   }
+
                       }
                   }
                }
