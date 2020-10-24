@@ -281,11 +281,9 @@ Client* removeInfoFromClient(std::string ip, std::string port) {
     {
         Client *client = IsServer.second;
         if(client->isServer == 1 && client->ip == ip && client->port == port){
-            // IsServer.second->isServer = 0;
             client->remove = 1;
             
             return client;
-            // TODO: Figure out how the fuck to remove this particular connection from the clients list
         }
     }
     return NULL;
@@ -550,7 +548,7 @@ int main(int argc, char* argv[])
                           std::cout << buffer << std::endl;
                           commandStruct retValue = clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
                         // removedManually = clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
-                          if(retValue.removed = 1){
+                          if(retValue.removed == 1){
                             disconnectedClients.push_back(retValue.client);
                             closeClient(retValue.client->sock, &openSockets, &maxfds);
                           }
