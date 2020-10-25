@@ -251,6 +251,7 @@ std::string connected(std::string PORT){
     for(auto const& isServer : clients)
      {  
         if(isServer.second->isServer == 1){ //only add data if client is of a external server, not a local client
+            std::string message = "";
             retString += isServer.second->groupId;
             retString += ",";
             retString += isServer.second->ip;
@@ -513,7 +514,7 @@ int main(int argc, char* argv[])
                msg += + GROUP_ID;
                send(clientSock, msg.c_str(), msg.length(), 0);
                // Decrement the number of sockets waiting to be dealt with
-               n--;
+               //n--;
 
                printf("Client connected on server: %d\n", clientSock);
             }
