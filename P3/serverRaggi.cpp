@@ -299,6 +299,7 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
     retStruct.client = NULL;
     std::stringstream stream(buffer);
     std::stringstream stream1(buffer);
+    
 
     while(std::getline(stream, token, ',')){
         std::cout <<"this is the token: "<< token << std::endl;
