@@ -266,7 +266,7 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
             server.second->ip = ip;
             server.second->port = port;
             time_t alive;
-            double seconds;
+            // double seconds;
             time(&alive);
             server.second->alive = alive; 
             // std::cout << server.second->groupId<< std::endl;
@@ -444,10 +444,10 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
     //if the client is not connected to our server -> save message in datastructure and keep it there until the client connects to our server
     else if(tokens[0].compare("SEND_MSG") == 0 && tokens.size() >=4)
     {
+        
         for(auto const& pair : clients)
         {
             Client *client = pair.second;
-            
         }
     }
     else
@@ -494,7 +494,7 @@ int main(int argc, char* argv[])
 
     if(listen(localClientSock, BACKLOG) < 0)
     {
-        printf("Listen failed on port %s\n", PRESERVED_PORT);
+        printf("Listen failed on port %d\n", PRESERVED_PORT);
         exit(0);
     }
     else 
@@ -520,12 +520,12 @@ int main(int argc, char* argv[])
             Client *client = pair.second;
             time_t now;
             time(&now);
-            double diff = difftime(now, client->alive);
+            double diff = difftime(client->alive, now);
             // std::cout <<"NOW: " <<now << ", " <<"BEFORE: "<< client->alive << std::endl;
             // std::cout <<diff<< std::endl;
             if(client->alive > 0){
                 // std::cout << "alive >0" << std::endl;
-                if(difftime(client->alive, now)>=KEEP_ALIVE_TIMEOUT){
+                if(diff >= KEEP_ALIVE_TIMEOUT){
                     Client currClient = *client;
                     keepAlive(currClient);
                 }
