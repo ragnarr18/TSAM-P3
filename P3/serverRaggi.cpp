@@ -273,10 +273,10 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
      }
 }
 
+// If first item in list starts with *: continue
+// If last item in list ends with #: return true
+// If either one fails: Return false
 bool commandValidation(std::vector<std::string>& wordList){
-    // If first item in list starts with *: continue
-    // If last item in list ends with #: return true
-    // If either one fails: Return false
     std::string firstWord = wordList[0];
     if(firstWord[0] == '*'){
         std::string lastWord = wordList[wordList.size()-1];
@@ -318,9 +318,55 @@ Client* removeInfoFromClient(std::string ip, std::string port) {
     return NULL;
 }
 
+void createNewConnection(fd_set &openSockets, int& maxfds, std::string groupId, std::string ip, std::string port){
+    std::stringstream intPort(port); 
+    int portToInt = 0; 
+    intPort >> portToInt;
+    struct addrinfo hints, *svr;              // Network host entry for server
+   struct sockaddr_in serv_addr;           // Socket address for server
+   int serverSocket;                         // Socket used for server 
+   int nwrite;                               // No. bytes written to server
+   char buffer[1025];                        // buffer for writing to server
+   bool finished;                   
+   int set = 1;                              // Toggle for setsockopt
+   hints.ai_family   = AF_INET;            // IPv4 only addresses
+   hints.ai_socktype = SOCK_STREAM;
+
+   memset(&hints,   0, sizeof(hints));
+
+   if(getaddrinfo("127.0.0.1", "4002", &hints, &svr) != 0)
+   {
+       perror("getaddrinfo failed: ");
+       exit(0);
+   }
+    struct hostent *server;
+    server = gethostbyname("127.0.0.1");
+
+    bzero((char *) &serv_addr, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    bcopy((char *)server->h_addr,
+        (char *)&serv_addr.sin_addr.s_addr,
+        server->h_length);
+    serv_addr.sin_port = 4002;
+        
+    int clientSock = open_socket(4002);
+    // serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if(connect(clientSock, (struct sockaddr *)&serv_addr, sizeof(serv_addr) )< 0){
+       // EINPROGRESS means that the connection is still being setup. Typically this
+       // only occurs with non-blocking sockets. (The serverSocket above is explicitly
+       // not in non-blocking mode, so this check here is just an example of how to
+       // handle this properly.)
+       if(errno != EINPROGRESS){
+         printf("Failed to open socket to server: %s\n", ip);
+         perror("Connect failed: ");
+         exit(0);
+       }
+    }
+}
+
 // Process command from client on the server
 // Returns a type commandstruct
-commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds, 
+commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds, 
                   char *buffer, std::string PORT, bool isServer) {
     std::vector<std::string> tokens;
     std::vector<std::string> tokensNoCommas;
@@ -409,7 +455,6 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
         // Reducing the msg length by 1 loses the excess "," - which
         // granted is totally cheating.
         send(clientSocket, msg.c_str(), msg.length()-1, 0);
-
     }
     // GET_MSG,<GROUP_ID>
     // returns 1 message if 1 or more messages are waiting
@@ -446,6 +491,19 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
             Client *client = pair.second;
             
         }
+    }
+
+    //connect to other server
+    else if(tokens[0].compare("CONNECTTO") == 0 && tokens.size() >=4)
+    {   
+        std::string groupId;
+        std::string ip; 
+        std::string port;
+        groupId = tokens[1]; 
+        ip = tokens[2];
+        port = tokens[3];
+        std::cout <<"connectto: "<< groupId << ip<< port<< std::endl;
+        createNewConnection(openSockets, maxfds, groupId, ip, port);
     }
     else
     {
@@ -610,7 +668,7 @@ int main(int argc, char* argv[])
                       else
                       {     
                           std::cout << buffer << std::endl;
-                          commandStruct retValue = clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
+                          commandStruct retValue = clientCommand(client->sock, openSockets, maxfds, buffer, PORT.c_str(), client->isServer);
                         // removedManually = clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
                           if(retValue.removed == 1){
                             disconnectedClients.push_back(retValue.client);
