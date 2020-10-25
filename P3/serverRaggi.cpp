@@ -411,34 +411,40 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
         send(clientSocket, msg.c_str(), msg.length()-1, 0);
 
     }
-    // This is slightly fragile, since it's relying on the order
-    // of evaluation of the if statement.
-    else if((tokens[0].compare("MSG") == 0) && (tokens[1].compare("ALL") == 0))
+    // GET_MSG,<GROUP_ID>
+    // returns 1 message if 1 or more messages are waiting
+    else if((tokens[0].compare("GET_MSG") == 0) && tokens.size() == 2)
     {
         std::string msg;
-        for(auto i = tokens.begin()+2;i != tokens.end();i++) 
-        {
-            msg += *i + " ";
-        }
-
+        bool found = 0;
         for(auto const& pair : clients)
         {
-            send(pair.second->sock, msg.c_str(), msg.length(),0);
+            Client *client = pair.second;
+            if(client->groupId == tokens[1]){  
+                found = 1;
+                if(client->messages.getSize() > 0){
+                    msg = client->messages.pop();
+                    send(clientSocket, msg.c_str(), msg.length() -1, 0);
+                }
+                else{
+                    send(clientSocket, "No messages waiting", sizeof("No messages waiting"), 0);
+                }
+            }
+        }
+
+        if(found == 0){
+            send(clientSocket, "GroupID not found", sizeof("GroupID not found"), 0);
         }
     }
-    else if(tokens[0].compare("MSG") == 0)
+
+    //add msg to a list of messages waiting for a certain client
+    //if the client is not connected to our server -> save message in datastructure and keep it there until the client connects to our server
+    else if(tokens[0].compare("SEND_MSG") == 0 && tokens.size() >=4)
     {
         for(auto const& pair : clients)
         {
-            if(pair.second->groupId.compare(tokens[1]) == 0)
-            {
-                std::string msg;
-                for(auto i = tokens.begin()+2;i != tokens.end();i++) 
-                {
-                    msg += *i + " ";
-                }
-                send(pair.second->sock, msg.c_str(), msg.length(),0);
-            }
+            Client *client = pair.second;
+            
         }
     }
     else
