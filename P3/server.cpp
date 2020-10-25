@@ -340,6 +340,7 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   {
      clients[clientSocket]->groupId = tokens[1];
   }
+
   else if(tokens[0].compare("LEAVE") == 0)
   {
       // Close the socket, and leave the socket handling
@@ -356,6 +357,7 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
           retStruct.client = removedSock;
       }
   }
+
   else if(tokens[0].compare("WHO") == 0)
   {
      std::cout << "Who is logged on" << std::endl;
@@ -371,6 +373,7 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
      send(clientSocket, msg.c_str(), msg.length()-1, 0);
 
   }
+
   // This is slightly fragile, since it's relying on the order
   // of evaluation of the if statement.
   else if((tokens[0].compare("MSG") == 0) && (tokens[1].compare("ALL") == 0))
@@ -386,6 +389,7 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
           send(pair.second->sock, msg.c_str(), msg.length(),0);
       }
   }
+
   else if(tokens[0].compare("MSG") == 0)
   {
       for(auto const& pair : clients)
@@ -401,6 +405,7 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
           }
       }
   }
+
   else
   {
       std::cout << "Unknown command from client:" << buffer << std::endl;
@@ -428,7 +433,7 @@ int main(int argc, char* argv[])
         printf("Usage: chat_server <ip port>\n");
         exit(0);
     }
-
+    
     // Setup socket for server to listen to
     PORT = argv[1];
     listenSock = open_socket(atoi(argv[1]));
@@ -445,7 +450,7 @@ int main(int argc, char* argv[])
 
     if(listen(localClientSock, BACKLOG) < 0)
     {
-        printf("Listen failed on port %s\n", PRESERVED_PORT);
+        printf("Listen failed on port %d\n", PRESERVED_PORT);
         exit(0);
     }
     else 
