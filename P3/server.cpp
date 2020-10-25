@@ -463,7 +463,7 @@ int main(int argc, char* argv[])
     {
         FD_ZERO(&openSockets);
         FD_SET(listenSock, &openSockets);
-        FD_SET(localClientSock, &openSockets);
+        // FD_SET(localClientSock, &openSockets);
         maxfds = listenSock;
         if(localClientSock > listenSock){
             maxfds = localClientSock;
@@ -495,7 +495,7 @@ int main(int argc, char* argv[])
         }
 
         // Look at sockets and see which ones have something to be read()
-        int n = select(maxfds + 1, &readSockets, NULL, &exceptSockets, &timeout);
+        int n = select(maxfds + 1, &readSockets, NULL, &exceptSockets, NULL);
         if(n < 0)
         {
             perror("select failed - closing down\n");
@@ -506,10 +506,14 @@ int main(int argc, char* argv[])
             // First, accept  any new connections to the server on the listening socket
             if(FD_ISSET(listenSock, &readSockets))
             {
-               clientSock = accept(listenSock, (struct sockaddr *)&client,
-                                   &clientLen);
-                std::cout << listenSock ;
+                std::cout << "listenSock: "<< listenSock<< std::endl;
+               if(clientSock = accept(listenSock, (struct sockaddr *)&client,&clientLen) < 0){
+                                       perror("failed");
+                                       exit(0);
+                                   };
+            
                // printf("accept***\n");
+               std::cout << "clientSock: "<< clientSock<< std::endl;
                // Add new client to the list of open sockets
                FD_SET(clientSock, &openSockets);
 
@@ -522,7 +526,10 @@ int main(int argc, char* argv[])
                std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
                std::string msg = "QUERYSERVERS,";
                msg += + GROUP_ID;
-               send(clientSock, msg.c_str(), msg.length(), 0);
+               if(int sent = send(clientSock, msg.c_str(), msg.length(), 0)<0){
+                   perror("queryservers command failed");
+               }
+            //    std::cout<<"sent: " << sent << std::endl;
                // Decrement the number of sockets waiting to be dealt with
                //n--;
 
@@ -532,12 +539,12 @@ int main(int argc, char* argv[])
             // THIS PART IS FOR THE SPECIAL LOCAL CLIENT
             if(FD_ISSET(localClientSock, &readSockets))
             {
-                if(localClientSock > listenSock){
-                    maxfds = localClientSock;
-                }
-               clientSock = accept(localClientSock, (struct sockaddr *)&client,
-                                   &clientLen);
-                std::cout << localClientSock ;
+                std::cout << "localclientSock: "<< localClientSock<< std::endl;
+
+               if(clientSock = accept(localClientSock, (struct sockaddr *)&client,&clientLen) < 0){
+                                       perror("failed");
+                                       exit(0);
+                                   };
                // printf("accept***\n");
                // Add new client to the list of open sockets
                FD_SET(clientSock, &openSockets);

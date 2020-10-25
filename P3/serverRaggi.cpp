@@ -103,8 +103,9 @@ class Client
     std::string port;
     std::string ip;
     linked_list messages;
-    bool isServer;
     time_t alive;
+    bool isServer;
+    bool remove = 0;
     Client(int socket) : sock(socket){} 
 
     ~Client(){}            // Virtual destructor defined for base class
@@ -123,22 +124,23 @@ struct commandStruct
 {
     int socket;
     bool removed;
-    Client client;
+    Client* client;
 };
 
+//lists the servers connected to the server
 std::string listServers(){
-    for(auto const& pair : clients){
-        Client *client = pair.second;
-        std::string msg = "keep alive: ";
-        msg += std::to_string(client->messages.getSize());
-        msg += " messages are waiting";
-        //push and pop work
-        //   client->messages.push("message1");
-        //   client->messages.push("message2");
-        //   client->messages.pop();
-        send(client->sock, msg.c_str(), msg.length(), 0);
+    std::string retString;
+    for(auto const& isServer : clients){  
+        if(isServer.second->isServer == 1 ){ //only add data if client is of a external server, not a local client
+            retString += isServer.second->groupId;
+            retString += ",";
+            retString += isServer.second->ip;
+            retString += ",";
+            retString += isServer.second->port;
+            retString += ";";
+        }
     }
-    return "hello";
+    return retString;
 }
 
 //keep alive message handler for clients
@@ -239,7 +241,7 @@ void closeClient(int clientSocket, fd_set *openSockets, int *maxfds)
 
 }
 
-//GET connected SERVERS
+//get connected servers
 std::string connected(std::string PORT){
     std::string retString = "";
     retString = "CONNNECTED,";
@@ -248,17 +250,8 @@ std::string connected(std::string PORT){
     retString += "46.182.189.139,"; //change to skel
     retString +=  PORT;
     retString += ";";
-    for(auto const& isServer : clients)
-     {  
-        if(isServer.second->isServer == 1){ //only add data if client is of a external server, not a local client
-            retString += isServer.second->groupId;
-            retString += ",";
-            retString += isServer.second->ip;
-            retString += ",";
-            retString += isServer.second->port;
-            retString += ";";
-        }
-     }
+    std::string extra = listServers(); //add list of servers connected to the server
+    retString += extra;
     return retString;
 }
 
@@ -274,116 +267,144 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
             double seconds;
             time(&alive);
             server.second->alive = alive; 
-            std::cout << server.second->groupId<< std::endl;
+            // std::cout << server.second->groupId<< std::endl;
         }
      }
 }
 
-// Process command from client on the server
-void clientCommand(int clientSocket, fd_set *openSockets, int *maxfds, 
-                  char *buffer, std::string PORT, bool isServer) 
-{
-  std::vector<std::string> tokens;
-  std::string token;
-
-  // Split command from client into tokens for parsing
-  std::stringstream stream(buffer);
-
-  while(std::getline(stream, token, ',')){
-      std::cout <<"this is the token: "<< token << std::endl;
-      tokens.push_back(token);
-  }
-
-  if(!isServer){
-      //here we can have special functionality for the special local client
-      //the rest can be used by our connected servers & our local client
-      //so basically our client can do any command he wants, but our connected servers have limited commands
-    //LISTSERVERS
-    if((tokens[0].compare("LISTSERVERS") == 0) && (tokens.size() == 1))
+Client* removeInfoFromClient(std::string ip, std::string port) {
+    for(auto const& IsServer: clients)
     {
+        Client *client = IsServer.second;
+        if(client->isServer == 1 && client->ip == ip && client->port == port){
+            client->remove = 1;
+            
+            return client;
+        }
+    }
+    return NULL;
+}
+
+// Process command from client on the server
+// Returns a type commandstruct
+commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds, 
+                  char *buffer, std::string PORT, bool isServer) {
+    std::vector<std::string> tokens;
+    std::vector<std::string> tokensNoCommas;
+    std::string token;
+    std::string tokenNoComma;
+    commandStruct retStruct;
+    retStruct.removed = 0;
+    retStruct.socket = 0;
+    retStruct.client = NULL;
+    std::stringstream stream(buffer);
+    std::stringstream stream1(buffer);
+
+    while(std::getline(stream, token, ',')){
+        std::cout <<"this is the token: "<< token << std::endl;
+        std::cout <<"this is the tokensize: "<< token.size() << std::endl;
+        tokens.push_back(token);
+    }
+
+    while(stream1 >> tokenNoComma)
+        tokensNoCommas.push_back(tokenNoComma);
+
+    //LISTSERVERS
+    if((tokensNoCommas[0].compare("LISTSERVERS") == 0))
+    {   
+        std::cout << "made it" << std::endl;
         std::string msg = listServers();
+        std::cout<< "listservers msg: " << msg <<std::endl;
         send(clientSocket, msg.c_str(), msg.length(), 0);
     }
-  }
-        
-  //Quearyservers, <from_group_id>
-  if((tokens[0].compare("QUERYSERVERS") == 0) && (tokens.size() == 2))
-  {
-     std::string msg = connected(PORT);
-     std::cout<< msg;
-    send(clientSocket, msg.c_str(), msg.length(), 0);
-  }
+       
+    //Quearyservers, <from_group_id>
+    else if((tokens[0].compare("QUERYSERVERS") == 0) && (tokens.size() == 2))
+    {
+        std::string msg = connected(PORT);
+        std::cout<< msg;
+        send(clientSocket, msg.c_str(), msg.length(), 0);
+    }
 
-  else if((tokens[0].compare("CONNECTED") == 0))
-  {
-    std::string id = tokens[1];
-    std::string ip = tokens[2];
-    std::string port = tokens[3];
-    addInfoToClient(clientSocket ,id, ip, port);
-  }
+    //CONNECTED
+    else if((tokens[0].compare("CONNECTED") == 0))
+    {
+        std::string id = tokens[1];
+        std::string ip = tokens[2];
+        std::string port = tokens[3];
+        addInfoToClient(clientSocket ,id, ip, port);
+    }
 
-  else if((tokens[0].compare("CONNECT") == 0) && (tokens.size() == 2))
-  {
-     clients[clientSocket]->groupId = tokens[1];
-  }
-  else if(tokens[0].compare("LEAVE") == 0)
-  {
-      // Close the socket, and leave the socket handling
-      // code to deal with tidying up clients etc. when
-      // select() detects the OS has torn down the connection.
- 
-      closeClient(clientSocket, openSockets, maxfds);
-  }
-  else if(tokens[0].compare("WHO") == 0)
-  {
-     std::cout << "Who is logged on" << std::endl;
-     std::string msg;
+    else if((tokens[0].compare("CONNECT") == 0) && (tokens.size() == 2))
+    {
+        clients[clientSocket]->groupId = tokens[1];
+    }
+    else if(tokens[0].compare("LEAVE") == 0)
+    {
+        // Close the socket, and leave the socket handling
+        // code to deal with tidying up clients etc. when
+        // select() detects the OS has torn down the connection.
+        std::string ip = tokens[1];
+        std::string port = tokens[2];
+        Client* removedSock = removeInfoFromClient(ip, port);
+        if(removedSock == NULL) {
+            std::cout << "This IP address/port combination was not found. Please try again." << std::endl;
+        }
+        else{
+            retStruct.removed = 1;
+            retStruct.client = removedSock;
+        }
+    }
+    else if(tokens[0].compare("WHO") == 0)
+    {
+        std::cout << "Who is logged on" << std::endl;
+        std::string msg;
 
-     for(auto const& names : clients)
-     {
-        msg += names.second->groupId + ",";
+        for(auto const& names : clients)
+        {
+            msg += names.second->groupId + ",";
 
-     }
-     // Reducing the msg length by 1 loses the excess "," - which
-     // granted is totally cheating.
-     send(clientSocket, msg.c_str(), msg.length()-1, 0);
+        }
+        // Reducing the msg length by 1 loses the excess "," - which
+        // granted is totally cheating.
+        send(clientSocket, msg.c_str(), msg.length()-1, 0);
 
-  }
-  // This is slightly fragile, since it's relying on the order
-  // of evaluation of the if statement.
-  else if((tokens[0].compare("MSG") == 0) && (tokens[1].compare("ALL") == 0))
-  {
-      std::string msg;
-      for(auto i = tokens.begin()+2;i != tokens.end();i++) 
-      {
-          msg += *i + " ";
-      }
+    }
+    // This is slightly fragile, since it's relying on the order
+    // of evaluation of the if statement.
+    else if((tokens[0].compare("MSG") == 0) && (tokens[1].compare("ALL") == 0))
+    {
+        std::string msg;
+        for(auto i = tokens.begin()+2;i != tokens.end();i++) 
+        {
+            msg += *i + " ";
+        }
 
-      for(auto const& pair : clients)
-      {
-          send(pair.second->sock, msg.c_str(), msg.length(),0);
-      }
-  }
-  else if(tokens[0].compare("MSG") == 0)
-  {
-      for(auto const& pair : clients)
-      {
-          if(pair.second->groupId.compare(tokens[1]) == 0)
-          {
-              std::string msg;
-              for(auto i = tokens.begin()+2;i != tokens.end();i++) 
-              {
-                  msg += *i + " ";
-              }
-              send(pair.second->sock, msg.c_str(), msg.length(),0);
-          }
-      }
-  }
-  else
-  {
-      std::cout << "Unknown command from client:" << buffer << std::endl;
-  }
-     
+        for(auto const& pair : clients)
+        {
+            send(pair.second->sock, msg.c_str(), msg.length(),0);
+        }
+    }
+    else if(tokens[0].compare("MSG") == 0)
+    {
+        for(auto const& pair : clients)
+        {
+            if(pair.second->groupId.compare(tokens[1]) == 0)
+            {
+                std::string msg;
+                for(auto i = tokens.begin()+2;i != tokens.end();i++) 
+                {
+                    msg += *i + " ";
+                }
+                send(pair.second->sock, msg.c_str(), msg.length(),0);
+            }
+        }
+    }
+    else
+    {
+        std::cout << "Unknown command from client:" << buffer << std::endl;
+    }
+   return retStruct;  
 }
 
 int main(int argc, char* argv[])
@@ -542,7 +563,12 @@ int main(int argc, char* argv[])
                       else
                       {     
                           std::cout << buffer << std::endl;
-                          clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
+                          commandStruct retValue = clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
+                        // removedManually = clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
+                          if(retValue.removed == 1){
+                            disconnectedClients.push_back(retValue.client);
+                            closeClient(retValue.client->sock, &openSockets, &maxfds);
+                          }
                       }
                   }
                }
