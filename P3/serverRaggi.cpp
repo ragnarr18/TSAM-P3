@@ -245,7 +245,7 @@ void closeClient(int clientSocket, fd_set *openSockets, int *maxfds)
 //get connected servers
 std::string connected(std::string PORT){
     std::string retString = "";
-    retString = "CONNNECTED,";
+    retString = "*CONNNECTED,";
     retString += GROUP_ID;
     retString += ",";
     retString += "46.182.189.139,"; //change to skel
@@ -253,19 +253,20 @@ std::string connected(std::string PORT){
     retString += ";";
     std::string extra = listServers(); //add list of servers connected to the server
     retString += extra;
+    retString += "#";
     return retString;
 }
 
 void addInfoToClient(int sock, std::string id, std::string ip, std::string port){
     for(auto const& server : clients)
      {  
-        
+      
         if(server.second->isServer == 1 && server.second->sock == sock){ //only add data if client is of a external server, not a local client
             server.second->groupId = id;
             server.second->ip = ip;
             server.second->port = port;
             time_t alive;
-            double seconds;
+            // double seconds;
             time(&alive);
             server.second->alive = alive; 
             // std::cout << server.second->groupId<< std::endl;
@@ -278,11 +279,17 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
 // If either one fails: Return false
 bool commandValidation(std::vector<std::string>& wordList){
     std::string firstWord = wordList[0];
+    if(firstWord.length() == 0){
+        return false;
+    }
     if(firstWord[0] == '*'){
         std::string lastWord = wordList[wordList.size()-1];
+        if(lastWord.length() <= 2){
+            return false;
+        }
         char lastLetter = lastWord[lastWord.size()-2];
         if(lastLetter == '#'){
-            std::cout << "I'll accept your offering, mortal." << std::endl;
+            // std::cout << "I'll accept your offering, mortal." << std::endl;
             std::string newFirstWord = firstWord.erase(0,1);
             std::cout << "Modified first word: " << newFirstWord << std::endl;
             std::string newLastWord = lastWord.substr(0, lastWord.size()-2);
@@ -293,13 +300,13 @@ bool commandValidation(std::vector<std::string>& wordList){
             return true;
         }
         else{
-            std::cout << "This is a Christian server, no non-# strings allowed." << std::endl;
+            // std::cout << "This is a Christian server, no non-# strings allowed." << std::endl;
             return false;
         }
     }
     else
     {
-        std::cout << "What the fuck did you just send me, get that shit outta here." << std::endl;
+        // std::cout << "What the fuck did you just send me, get that shit outta here." << std::endl;
         return false;
     }
     
@@ -390,9 +397,11 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
         tokensNoCommas.push_back(tokenNoComma);
 
     bool isValid = commandValidation(tokens);
-    std::cout << isValid << std::endl;
+    // std::cout << isValid << std::endl;
     if(!isValid){
-        std::cout << "OI I'M VERY STRICT ON WHAT I GET! * IN FRONT AND # IN BACK!" << buffer << std::endl;
+        // std::cout << "OI I'M VERY STRICT ON WHAT I GET! * IN FRONT AND # IN BACK!" << buffer << std::endl;
+        std::string error_msg = "Due to our subpar C++ programming skills, our server is very strict in what it accepts. Please put * in front and # in back of your command.";
+        send(clientSocket, error_msg.c_str(), error_msg.length(), 0);
     }
 
 
@@ -469,10 +478,10 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
                 found = 1;
                 if(client->messages.getSize() > 0){
                     msg = client->messages.pop();
-                    send(clientSocket, msg.c_str(), msg.length() -1, 0);
+                    send(clientSocket, msg.c_str(), msg.length(), 0);
                 }
                 else{
-                    send(clientSocket, "No messages waiting", sizeof("No messages waiting"), 0);
+                    send(clientSocket, "No messages for you. No, we don't feel bad for you.", sizeof("No messages for you. No, we don't feel bad for you."), 0);
                 }
             }
         }
@@ -486,10 +495,25 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
     //if the client is not connected to our server -> save message in datastructure and keep it there until the client connects to our server
     else if(tokens[0].compare("SEND_MSG") == 0 && tokens.size() >=4)
     {
+        bool found = 0;
+        std::string sent_msg = "";
+        sent_msg += "Message from: ";
+        sent_msg += tokens[2];
+        sent_msg += " , Message Contents: ";
+        sent_msg += tokens[3];
         for(auto const& pair : clients)
         {
             Client *client = pair.second;
-            
+            if(client->groupId == tokens[1]){
+                found = 1;
+                client->messages.push(sent_msg);
+                std::string msg = "Message successfully sent. Hopefully. We don't really know for sure.";
+                send(clientSocket, msg.c_str(), msg.length(), 0);
+            }
+        }
+
+        if(found == 0){
+            send(clientSocket, "GroupID not found", sizeof("GroupID not found"), 0);
         }
     }
 
@@ -508,6 +532,10 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
     else
     {
         std::cout << "Unknown command from client:" << buffer << std::endl;
+        if(isValid){
+            std::string msg = "Command not recognized. Our tiny cutesy little server only understands the base commands in the assignment, so please be patient with it. Harassment will only scare the server.";
+            send(clientSocket, msg.c_str(), msg.length(), 0);
+        }
     }
    return retStruct;  
 }
@@ -549,7 +577,7 @@ int main(int argc, char* argv[])
 
     if(listen(localClientSock, BACKLOG) < 0)
     {
-        printf("Listen failed on port %s\n", PRESERVED_PORT);
+        printf("Listen failed on port %d\n", PRESERVED_PORT);
         exit(0);
     }
     else 
@@ -575,12 +603,12 @@ int main(int argc, char* argv[])
             Client *client = pair.second;
             time_t now;
             time(&now);
-            double diff = difftime(now, client->alive);
+            double diff = difftime(client->alive, now);
             // std::cout <<"NOW: " <<now << ", " <<"BEFORE: "<< client->alive << std::endl;
             // std::cout <<diff<< std::endl;
             if(client->alive > 0){
                 // std::cout << "alive >0" << std::endl;
-                if(difftime(client->alive, now)>=KEEP_ALIVE_TIMEOUT){
+                if(diff >= KEEP_ALIVE_TIMEOUT){
                     Client currClient = *client;
                     keepAlive(currClient);
                 }
@@ -602,8 +630,8 @@ int main(int argc, char* argv[])
             {
                clientSock = accept(listenSock, (struct sockaddr *)&client,
                                    &clientLen);
-                std::cout << listenSock ;
-               printf("accept***\n");
+               // std::cout << listenSock;
+               // printf("accept***\n");
                // Add new client to the list of open sockets
                FD_SET(clientSock, &openSockets);
 
@@ -613,14 +641,15 @@ int main(int argc, char* argv[])
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = true;
-               std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
-               std::string msg = "QUERYSERVERS,";
-               msg += + GROUP_ID;
+               // std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
+               std::string msg = "*QUERYSERVERS,";
+               msg += GROUP_ID;
+               msg += "#";
                send(clientSock, msg.c_str(), msg.length(), 0);
                // Decrement the number of sockets waiting to be dealt with
                n--;
 
-               printf("Client connected on server: %d\n", clientSock);
+               printf("Server connected: %d\n", clientSock);
             }
 
             // THIS PART IS FOR THE SPECIAL LOCAL CLIENT
@@ -639,7 +668,7 @@ int main(int argc, char* argv[])
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = false;
-               std::cout << "special client connected is server: " << clients[clientSock]->isServer<<"\n";
+               // std::cout << "special client connected is server: " << clients[clientSock]->isServer<<"\n";
 
                // Decrement the number of sockets waiting to be dealt with
                n--;
