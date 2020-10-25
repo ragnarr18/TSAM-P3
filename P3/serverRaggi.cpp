@@ -279,8 +279,14 @@ bool commandValidation(std::vector<std::string>& wordList){
     // If last item in list ends with #: return true
     // If either one fails: Return false
     std::string firstWord = wordList[0];
+    if(firstWord.length() == 0){
+        return false;
+    }
     if(firstWord[0] == '*'){
         std::string lastWord = wordList[wordList.size()-1];
+        if(lastWord.length() <= 2){
+            return false;
+        }
         char lastLetter = lastWord[lastWord.size()-2];
         if(lastLetter == '#'){
             // std::cout << "I'll accept your offering, mortal." << std::endl;
@@ -468,8 +474,10 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
     else
     {
         std::cout << "Unknown command from client:" << buffer << std::endl;
-        std::string msg = "Command not recognized. Our tiny cutesy little server only understands the base commands in the assignment, so please be patient with it. Harassment will only scare the server.";
-        send(clientSocket, msg.c_str(), msg.length(), 0);
+        if(isValid){
+            std::string msg = "Command not recognized. Our tiny cutesy little server only understands the base commands in the assignment, so please be patient with it. Harassment will only scare the server.";
+            send(clientSocket, msg.c_str(), msg.length(), 0);
+        }
     }
    return retStruct;  
 }
@@ -564,7 +572,7 @@ int main(int argc, char* argv[])
             {
                clientSock = accept(listenSock, (struct sockaddr *)&client,
                                    &clientLen);
-                std::cout << listenSock ;
+               // std::cout << listenSock;
                // printf("accept***\n");
                // Add new client to the list of open sockets
                FD_SET(clientSock, &openSockets);
@@ -575,7 +583,7 @@ int main(int argc, char* argv[])
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = true;
-               std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
+               // std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
                std::string msg = "*QUERYSERVERS,";
                msg += GROUP_ID;
                msg += "#";
@@ -583,7 +591,7 @@ int main(int argc, char* argv[])
                // Decrement the number of sockets waiting to be dealt with
                n--;
 
-               printf("Client connected on server: %d\n", clientSock);
+               printf("Server connected: %d\n", clientSock);
             }
 
             // THIS PART IS FOR THE SPECIAL LOCAL CLIENT
@@ -602,7 +610,7 @@ int main(int argc, char* argv[])
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = false;
-               std::cout << "special client connected is server: " << clients[clientSock]->isServer<<"\n";
+               // std::cout << "special client connected is server: " << clients[clientSock]->isServer<<"\n";
 
                // Decrement the number of sockets waiting to be dealt with
                n--;
