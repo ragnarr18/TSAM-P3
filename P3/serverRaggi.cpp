@@ -348,7 +348,7 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
     // std::cout << isValid << std::endl;
     if(!isValid){
         // std::cout << "OI I'M VERY STRICT ON WHAT I GET! * IN FRONT AND # IN BACK!" << buffer << std::endl;
-        std::string error_msg = "Due to our idiotic programming skills, our server is very strict in what it gets. Please put * in front and # in back of your command.";
+        std::string error_msg = "Due to our subpar C++ programming skills, our server is very strict in what it accepts. Please put * in front and # in back of your command.";
         send(clientSocket, error_msg.c_str(), error_msg.length(), 0);
     }
 
@@ -430,7 +430,7 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
                     send(clientSocket, msg.c_str(), msg.length(), 0);
                 }
                 else{
-                    send(clientSocket, "No messages waiting", sizeof("No messages waiting"), 0);
+                    send(clientSocket, "No messages for you. No, we don't feel bad for you.", sizeof("No messages for you. No, we don't feel bad for you."), 0);
                 }
             }
         }
@@ -456,7 +456,7 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
             if(client->groupId == tokens[1]){
                 found = 1;
                 client->messages.push(sent_msg);
-                std::string msg = "Message successfully sent. Hopefully. We don't really know for sure. Please contact P3_GROUP_02 for further details.";
+                std::string msg = "Message successfully sent. Hopefully. We don't really know for sure.";
                 send(clientSocket, msg.c_str(), msg.length(), 0);
             }
         }
@@ -468,6 +468,8 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
     else
     {
         std::cout << "Unknown command from client:" << buffer << std::endl;
+        std::string msg = "Command not recognized. Our tiny cutesy little server only understands the base commands in the assignment, so please be patient with it. Harassment will only scare the server.";
+        send(clientSocket, msg.c_str(), msg.length(), 0);
     }
    return retStruct;  
 }
