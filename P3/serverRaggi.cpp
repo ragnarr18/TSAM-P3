@@ -273,16 +273,23 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
      }
 }
 
-bool commandValidation(std::vector<std::string> wordList){
+bool commandValidation(std::vector<std::string>& wordList){
     // If first item in list starts with *: continue
     // If last item in list ends with #: return true
     // If either one fails: Return false
     std::string firstWord = wordList[0];
     if(firstWord[0] == '*'){
-        std::cout << "Aight, we still gud." << std::endl;
         std::string lastWord = wordList[wordList.size()-1];
-        if(lastWord.back() == '#'){
+        char lastLetter = lastWord[lastWord.size()-2];
+        if(lastLetter == '#'){
             std::cout << "I'll accept your offering, mortal." << std::endl;
+            std::string newFirstWord = firstWord.erase(0,1);
+            std::cout << "Modified first word: " << newFirstWord << std::endl;
+            std::string newLastWord = lastWord.substr(0, lastWord.size()-2);
+            std::cout << "Modified last word: " << newLastWord << std::endl;
+            // Now we replace these words
+            wordList[0] = newFirstWord;
+            wordList[wordList.size()-1] = newLastWord;
             return true;
         }
         else{
