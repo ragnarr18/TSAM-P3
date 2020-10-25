@@ -273,26 +273,26 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
      }
 }
 
-void commandValidation(std::vector<std::string> wordList; , bool isfirst){
+bool commandValidation(std::vector<std::string> wordList){
     // If first item in list starts with *: continue
     // If last item in list ends with #: return true
     // If either one fails: Return false
-    std::string firstWord; = wordList[0];
-    if(firstWord[0] == "*"){
+    std::string firstWord = wordList[0];
+    if(firstWord[0] == '*'){
         std::cout << "Aight, we still gud." << std::endl;
         std::string lastWord = wordList[wordList.size()-1];
-        if(lastWord.back() == "#"){
+        if(lastWord.back() == '#'){
             std::cout << "I'll accept your offering, mortal." << std::endl;
             return true;
         }
         else{
             std::cout << "This is a Christian server, no non-# strings allowed." << std::endl;
-            return false
+            return false;
         }
     }
     else
     {
-        std::cout << "What the fuck did you just send me, get that shit outta here." std::endl;
+        std::cout << "What the fuck did you just send me, get that shit outta here." << std::endl;
         return false;
     }
     
