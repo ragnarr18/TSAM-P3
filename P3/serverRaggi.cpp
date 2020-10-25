@@ -427,7 +427,7 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
                 found = 1;
                 if(client->messages.getSize() > 0){
                     msg = client->messages.pop();
-                    send(clientSocket, msg.c_str(), msg.length() -1, 0);
+                    send(clientSocket, msg.c_str(), msg.length(), 0);
                 }
                 else{
                     send(clientSocket, "No messages waiting", sizeof("No messages waiting"), 0);
@@ -444,10 +444,25 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
     //if the client is not connected to our server -> save message in datastructure and keep it there until the client connects to our server
     else if(tokens[0].compare("SEND_MSG") == 0 && tokens.size() >=4)
     {
-        
+        bool found = 0;
+        std::string sent_msg = "";
+        sent_msg += "Message from: ";
+        sent_msg += tokens[2];
+        sent_msg += " , Message Contents: ";
+        sent_msg += tokens[3];
         for(auto const& pair : clients)
         {
             Client *client = pair.second;
+            if(client->groupId == tokens[1]){
+                found = 1;
+                client->messages.push(sent_msg);
+                std::string msg = "Message successfully sent. Hopefully. We don't really know for sure. Please contact P3_GROUP_02 for further details.";
+                send(clientSocket, msg.c_str(), msg.length(), 0);
+            }
+        }
+
+        if(found == 0){
+            send(clientSocket, "GroupID not found", sizeof("GroupID not found"), 0);
         }
     }
     else
