@@ -245,7 +245,7 @@ void closeClient(int clientSocket, fd_set *openSockets, int *maxfds)
 //get connected servers
 std::string connected(std::string PORT){
     std::string retString = "";
-    retString = "CONNNECTED,";
+    retString = "*CONNNECTED,";
     retString += GROUP_ID;
     retString += ",";
     retString += "46.182.189.139,"; //change to skel
@@ -253,13 +253,14 @@ std::string connected(std::string PORT){
     retString += ";";
     std::string extra = listServers(); //add list of servers connected to the server
     retString += extra;
+    retString += "#";
     return retString;
 }
 
 void addInfoToClient(int sock, std::string id, std::string ip, std::string port){
     for(auto const& server : clients)
      {  
-        
+      
         if(server.second->isServer == 1 && server.second->sock == sock){ //only add data if client is of a external server, not a local client
             server.second->groupId = id;
             server.second->ip = ip;
@@ -282,7 +283,7 @@ bool commandValidation(std::vector<std::string>& wordList){
         std::string lastWord = wordList[wordList.size()-1];
         char lastLetter = lastWord[lastWord.size()-2];
         if(lastLetter == '#'){
-            std::cout << "I'll accept your offering, mortal." << std::endl;
+            // std::cout << "I'll accept your offering, mortal." << std::endl;
             std::string newFirstWord = firstWord.erase(0,1);
             std::cout << "Modified first word: " << newFirstWord << std::endl;
             std::string newLastWord = lastWord.substr(0, lastWord.size()-2);
@@ -293,13 +294,13 @@ bool commandValidation(std::vector<std::string>& wordList){
             return true;
         }
         else{
-            std::cout << "This is a Christian server, no non-# strings allowed." << std::endl;
+            // std::cout << "This is a Christian server, no non-# strings allowed." << std::endl;
             return false;
         }
     }
     else
     {
-        std::cout << "What the fuck did you just send me, get that shit outta here." << std::endl;
+        // std::cout << "What the fuck did you just send me, get that shit outta here." << std::endl;
         return false;
     }
     
@@ -344,9 +345,11 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
         tokensNoCommas.push_back(tokenNoComma);
 
     bool isValid = commandValidation(tokens);
-    std::cout << isValid << std::endl;
+    // std::cout << isValid << std::endl;
     if(!isValid){
-        std::cout << "OI I'M VERY STRICT ON WHAT I GET! * IN FRONT AND # IN BACK!" << buffer << std::endl;
+        // std::cout << "OI I'M VERY STRICT ON WHAT I GET! * IN FRONT AND # IN BACK!" << buffer << std::endl;
+        std::string error_msg = "Due to our idiotic programming skills, our server is very strict in what it gets. Please put * in front and # in back of your command.";
+        send(clientSocket, error_msg.c_str(), error_msg.length(), 0);
     }
 
 
@@ -545,7 +548,7 @@ int main(int argc, char* argv[])
                clientSock = accept(listenSock, (struct sockaddr *)&client,
                                    &clientLen);
                 std::cout << listenSock ;
-               printf("accept***\n");
+               // printf("accept***\n");
                // Add new client to the list of open sockets
                FD_SET(clientSock, &openSockets);
 
@@ -556,8 +559,9 @@ int main(int argc, char* argv[])
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = true;
                std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
-               std::string msg = "QUERYSERVERS,";
-               msg += + GROUP_ID;
+               std::string msg = "*QUERYSERVERS,";
+               msg += GROUP_ID;
+               msg += "#";
                send(clientSock, msg.c_str(), msg.length(), 0);
                // Decrement the number of sockets waiting to be dealt with
                n--;
