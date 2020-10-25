@@ -337,6 +337,7 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
         tokensNoCommas.push_back(tokenNoComma);
 
     bool isValid = commandValidation(tokens);
+    std::cout << isValid << std::endl;
     if(!isValid){
         std::cout << "OI I'M VERY STRICT ON WHAT I GET! * IN FRONT AND # IN BACK!" << buffer << std::endl;
     }
