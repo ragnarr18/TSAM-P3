@@ -124,7 +124,7 @@ std::map<int, Client*> clients; // Lookup table for per Client information
 struct commandStruct
 {
     int socket;
-    bool removed;
+    int removed;
     Client* client;
 };
 
@@ -527,7 +527,9 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
         ip = tokens[2];
         port = tokens[3];
         std::cout <<"connectto: "<< groupId << ip<< port<< std::endl;
-        createNewConnection(openSockets, maxfds, groupId, ip, port);
+        // createNewConnection(openSockets, maxfds, groupId, ip, port);
+        retStruct.removed = -1;
+        return retStruct;
     }
     else
     {
@@ -668,6 +670,7 @@ int main(int argc, char* argv[])
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
                clients[clientSock]->isServer = false;
+               clients[clientSock]->groupId = GROUP_ID;
                // std::cout << "special client connected is server: " << clients[clientSock]->isServer<<"\n";
 
                // Decrement the number of sockets waiting to be dealt with
@@ -702,6 +705,52 @@ int main(int argc, char* argv[])
                           if(retValue.removed == 1){
                             disconnectedClients.push_back(retValue.client);
                             closeClient(retValue.client->sock, &openSockets, &maxfds);
+                          }
+
+                            //here we try to establish a new connection
+                          if(retValue.removed < 0){
+                            struct addrinfo hints, *svr;              // Network host entry for server
+                            struct sockaddr_in serv_addr;   
+                            hints.ai_family   = AF_INET;            // IPv4 only addresses
+                            hints.ai_socktype = SOCK_STREAM;
+                            int set = 1;
+
+                            memset(&hints,   0, sizeof(hints));
+                            struct hostent *server;
+                            server = gethostbyname("127.0.0.1");
+
+                            bzero((char *) &serv_addr, sizeof(serv_addr));
+                            serv_addr.sin_family = AF_INET;
+                            bcopy((char *)server->h_addr,
+                                (char *)&serv_addr.sin_addr.s_addr,
+                                server->h_length);
+                            serv_addr.sin_port = 4002;
+                            int serverSocket = open_socket(4000);
+                              std::cout<< "antiremove" << std::endl;
+                              inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr);
+                              if(setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(set)) < 0)
+                                {
+                                    printf("Failed to set SO_REUSEADDR for port %s\n", argv[2]);
+                                    perror("setsockopt failed: ");
+                                }
+                            
+                            FD_SET(serverSocket, &openSockets);
+
+                            // And update the maximum file descriptor
+                            maxfds = std::max(maxfds, serverSocket);
+
+                            // create a new client to store information.
+                            clients[serverSocket] = new Client(serverSocket);
+                            clients[serverSocket]->isServer = true;
+                            // std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
+                            if(int myconnect = connect(serverSocket, (struct sockaddr *)&client, clientLen)<0){
+                                perror("connect failed");
+                            }
+                            // std::cout<< myconnect << std::endl;
+                            std::string msg = "*QUERYSERVERS,";
+                            msg += GROUP_ID;
+                            msg += "!#";
+                            send(serverSocket, msg.c_str(), msg.length(), 0);
                           }
                       }
                   }
