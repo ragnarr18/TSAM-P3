@@ -5,6 +5,7 @@
 //
 // Author: Jacky Mallett (jacky@ru.is)
 //
+// For reasons beyond our understanding, this server works. The original doesn't. We have yet to know why.  Please discuss.
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -272,6 +273,31 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
      }
 }
 
+void commandValidation(std::vector<std::string> wordList; , bool isfirst){
+    // If first item in list starts with *: continue
+    // If last item in list ends with #: return true
+    // If either one fails: Return false
+    std::string firstWord; = wordList[0];
+    if(firstWord[0] == "*"){
+        std::cout << "Aight, we still gud." << std::endl;
+        std::string lastWord = wordList[wordList.size()-1];
+        if(lastWord.back() == "#"){
+            std::cout << "I'll accept your offering, mortal." << std::endl;
+            return true;
+        }
+        else{
+            std::cout << "This is a Christian server, no non-# strings allowed." << std::endl;
+            return false
+        }
+    }
+    else
+    {
+        std::cout << "What the fuck did you just send me, get that shit outta here." std::endl;
+        return false;
+    }
+    
+}
+
 Client* removeInfoFromClient(std::string ip, std::string port) {
     for(auto const& IsServer: clients)
     {
@@ -308,6 +334,12 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
 
     while(stream1 >> tokenNoComma)
         tokensNoCommas.push_back(tokenNoComma);
+
+    bool isValid = commandValidation(tokens);
+    if(!isValid){
+        std::cout << "OI I'M VERY STRICT ON WHAT I GET! * IN FRONT AND # IN BACK!" << buffer << std::endl;
+    }
+
 
     //LISTSERVERS
     if((tokensNoCommas[0].compare("LISTSERVERS") == 0))
