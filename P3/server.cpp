@@ -309,13 +309,18 @@ commandStruct clientCommand(int clientSocket, fd_set *openSockets, int *maxfds,
   }
 
   if(!isServer){
+      std::cout<<"localClientCall"<<std::endl;
+      std::cout<<tokens[0]<<std::endl;
+      
       //here we can have special functionality for the special local client
       //the rest can be used by our connected servers & our local client
       //so basically our client can do any command he wants, but our connected servers have limited commands
     //LISTSERVERS
-    if((tokens[0].compare("LISTSERVERS") == 0) && (tokens.size() == 1))
-    {
+    if((tokens[0].compare("LISTSERVERS") == 0))
+    {   
+        std::cout << "made it" << std::endl;
         std::string msg = listServers();
+        std::cout<< "listservers msg: " << msg <<std::endl;
         send(clientSocket, msg.c_str(), msg.length(), 0);
     }
   }
@@ -522,6 +527,9 @@ int main(int argc, char* argv[])
             // THIS PART IS FOR THE SPECIAL LOCAL CLIENT
             if(FD_ISSET(localClientSock, &readSockets))
             {
+                if(localClientSock > listenSock){
+                    maxfds = localClientSock;
+                }
                clientSock = accept(localClientSock, (struct sockaddr *)&client,
                                    &clientLen);
                 std::cout << localClientSock ;
