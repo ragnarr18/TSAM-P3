@@ -287,12 +287,12 @@ bool commandValidation(std::vector<std::string>& wordList){
         if(lastWord.length() <= 2){
             return false;
         }
-        char lastLetter = lastWord[lastWord.size()-2];
+        char lastLetter = lastWord[lastWord.size()-1];
         if(lastLetter == '#'){
             // std::cout << "I'll accept your offering, mortal." << std::endl;
             std::string newFirstWord = firstWord.erase(0,1);
             std::cout << "Modified first word: " << newFirstWord << std::endl;
-            std::string newLastWord = lastWord.substr(0, lastWord.size()-2);
+            std::string newLastWord = lastWord.substr(0, lastWord.size()-1);
             std::cout << "Modified last word: " << newLastWord << std::endl;
             // Now we replace these words
             wordList[0] = newFirstWord;
@@ -404,7 +404,6 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
         send(clientSocket, error_msg.c_str(), error_msg.length(), 0);
     }
 
-
     //LISTSERVERS
     if((tokensNoCommas[0].compare("LISTSERVERS") == 0))
     {   
@@ -451,20 +450,7 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
             retStruct.client = removedSock;
         }
     }
-    else if(tokens[0].compare("WHO") == 0)
-    {
-        std::cout << "Who is logged on" << std::endl;
-        std::string msg;
-
-        for(auto const& names : clients)
-        {
-            msg += names.second->groupId + ",";
-
-        }
-        // Reducing the msg length by 1 loses the excess "," - which
-        // granted is totally cheating.
-        send(clientSocket, msg.c_str(), msg.length()-1, 0);
-    }
+    
     // GET_MSG,<GROUP_ID>
     // returns 1 message if 1 or more messages are waiting
     else if((tokens[0].compare("GET_MSG") == 0) && tokens.size() == 2)
@@ -708,49 +694,62 @@ int main(int argc, char* argv[])
                           }
 
                             //here we try to establish a new connection
+                            //CONNECT TO
                           if(retValue.removed < 0){
-                            struct addrinfo hints, *svr;              // Network host entry for server
-                            struct sockaddr_in serv_addr;   
-                            hints.ai_family   = AF_INET;            // IPv4 only addresses
-                            hints.ai_socktype = SOCK_STREAM;
-                            int set = 1;
+                               struct addrinfo hints, *svr;              // Network host entry for server
+                                struct sockaddr_in serv_addr;           // Socket address for server
+                                int serverSocket;                         // Socket used for server 
+                                int nwrite;                               // No. bytes written to server
+                                char buffer[1025];                        // buffer for writing to server
+                                bool finished;                   
+                                int set = 1;                              // Toggle for setsockopt
 
-                            memset(&hints,   0, sizeof(hints));
-                            struct hostent *server;
-                            server = gethostbyname("127.0.0.1");
+                                hints.ai_family   = AF_INET;            // IPv4 only addresses
+                                hints.ai_socktype = SOCK_STREAM;
 
-                            bzero((char *) &serv_addr, sizeof(serv_addr));
-                            serv_addr.sin_family = AF_INET;
-                            bcopy((char *)server->h_addr,
-                                (char *)&serv_addr.sin_addr.s_addr,
-                                server->h_length);
-                            serv_addr.sin_port = 4002;
-                            int serverSocket = open_socket(4000);
-                              std::cout<< "antiremove" << std::endl;
-                              inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr);
-                              if(setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(set)) < 0)
+                                memset(&hints,   0, sizeof(hints));
+
+                                if(getaddrinfo("127.0.0.1", "5000", &hints, &svr) != 0)
                                 {
-                                    printf("Failed to set SO_REUSEADDR for port %s\n", argv[2]);
+                                    perror("getaddrinfo failed: ");
+                                    exit(0);
+                                }
+
+                                struct hostent *server;
+                                server = gethostbyname("127.0.0.1");
+
+                                bzero((char *) &serv_addr, sizeof(serv_addr));
+                                serv_addr.sin_family = AF_INET;
+                                bcopy((char *)server->h_addr,
+                                    (char *)&serv_addr.sin_addr.s_addr,
+                                    server->h_length);
+                                serv_addr.sin_port = htons(5000); // or 4002
+
+                                serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+
+                                // Turn on SO_REUSEADDR to allow socket to be quickly reused after 
+                                // program exit.
+
+                                if(setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(set)) < 0)
+                                {
+                                    printf("Failed to set SO_REUSEADDR for port %s\n", "4002" ); // or 4002
                                     perror("setsockopt failed: ");
                                 }
-                            
-                            FD_SET(serverSocket, &openSockets);
 
-                            // And update the maximum file descriptor
-                            maxfds = std::max(maxfds, serverSocket);
-
-                            // create a new client to store information.
-                            clients[serverSocket] = new Client(serverSocket);
-                            clients[serverSocket]->isServer = true;
-                            // std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
-                            if(int myconnect = connect(serverSocket, (struct sockaddr *)&client, clientLen)<0){
-                                perror("connect failed");
-                            }
-                            // std::cout<< myconnect << std::endl;
-                            std::string msg = "*QUERYSERVERS,";
-                            msg += GROUP_ID;
-                            msg += "!#";
-                            send(serverSocket, msg.c_str(), msg.length(), 0);
+                                
+                                if(connect(serverSocket, (struct sockaddr *)&serv_addr, sizeof(serv_addr) )< 0)
+                                {
+                                    // EINPROGRESS means that the connection is still being setup. Typically this
+                                    // only occurs with non-blocking sockets. (The serverSocket above is explicitly
+                                    // not in non-blocking mode, so this check here is just an example of how to
+                                    // handle this properly.)
+                                    if(errno != EINPROGRESS)
+                                    {
+                                        printf("Failed to open socket to server: %s\n", "localhost");
+                                        perror("Connect failed: ");
+                                        exit(0);
+                                    }
+                                }
                           }
                       }
                   }
