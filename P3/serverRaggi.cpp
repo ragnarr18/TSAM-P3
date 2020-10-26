@@ -149,13 +149,10 @@ std::string listServers(){
 
 //keep alive message handler for clients
 void keepAlive(Client client){
-    std::string msg = "keep alive: ";
+    std::string msg;
+    msg += "*KEEPALIVE,";
     msg += std::to_string(client.messages.getSize());
-    msg += " messages are waiting";
-    //push and pop work
-    //   client->messages.push("message1");
-    //   client->messages.push("message2");
-    //   client->messages.pop();
+    msg += "#";
     send(client.sock, msg.c_str(), msg.length(), 0);
 }
 
@@ -617,12 +614,14 @@ int main(int argc, char* argv[])
             Client *client = pair.second;
             time_t now;
             time(&now);
-            double diff = difftime(client->alive, now);
-            // std::cout <<"NOW: " <<now << ", " <<"BEFORE: "<< client->alive << std::endl;
+            double diff = difftime(now, client->alive);
+            std::cout <<"NOW: " <<now << ", " <<"BEFORE: "<< client->alive << std::endl;
             // std::cout <<diff<< std::endl;
             if(client->alive > 0){
-                // std::cout << "alive >0" << std::endl;
+                std::cout << "alive >0" << std::endl;
+                std::cout << "diff: " << diff << std::endl;
                 if(diff >= KEEP_ALIVE_TIMEOUT){
+                    std::cout<< "send keepalive" << std::endl;
                     Client currClient = *client;
                     keepAlive(currClient);
                 }
