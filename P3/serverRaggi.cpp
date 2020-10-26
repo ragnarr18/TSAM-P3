@@ -315,9 +315,9 @@ void createNewConnection(fd_set &openSockets, int& maxfds, std::string groupId, 
     struct addrinfo hints, *svr;              // Network host entry for server
     struct sockaddr_in serv_addr;           // Socket address for server
     int serverSocket;                         // Socket used for server 
-    int nwrite;                               // No. bytes written to server
-    char buffer[1025];                        // buffer for writing to server
-    bool finished;                   
+    //int nwrite;                               // No. bytes written to server
+    //char buffer[1025];                        // buffer for writing to server
+    //bool finished;                   
     int set = 1;                              // Toggle for setsockopt
 
     hints.ai_family   = AF_INET;            // IPv4 only addresses
@@ -474,23 +474,28 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
     else if((tokens[0].compare("GET_MSG") == 0) && tokens.size() == 2)
     {
         std::string msg;
-        bool found = 0;
+        bool messageFound = 0;
         for(auto const& pair : clients)
         {
             Client *client = pair.second;
             if(client->groupId == tokens[1]){  
-                found = 1;
                 if(client->messages.getSize() > 0){
-                    msg = client->messages.pop();
-                    send(clientSocket, msg.c_str(), msg.length(), 0);
+                    messageFound = 1;
+                    msg += client->messages.pop();
+                    std::cout << msg << std::endl;
                 }
-                else{
+                if(msg == ""){
                     send(clientSocket, "No messages for you. No, we don't feel bad for you.", sizeof("No messages for you. No, we don't feel bad for you."), 0);
                 }
             }
         }
+        if(messageFound){
+            std::string finalMessage = "A message was found with your name. Currently we can only pull one at a time, apologies in advance:\n";
+            finalMessage += msg;
+            send(clientSocket, finalMessage.c_str(), finalMessage.length(), 0);
+        }
 
-        if(found == 0){
+        else{
             send(clientSocket, "GroupID not found", sizeof("GroupID not found"), 0);
         }
     }
