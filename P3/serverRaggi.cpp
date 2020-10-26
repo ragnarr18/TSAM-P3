@@ -37,7 +37,7 @@
 #endif
 #define PRESERVED_PORT  4001
 #define GROUP_ID "P3_GROUP_85"
-#define KEEP_ALIVE_TIMEOUT 5
+#define KEEP_ALIVE_TIMEOUT 60
 #define SELECT_TIMEOUT 5
 #define BACKLOG  5        // Allowed length of queue of waiting connections
 
@@ -620,7 +620,7 @@ int main(int argc, char* argv[])
             time_t now;
             time(&now);
             double diff = difftime(now, client->alive);
-            std::cout <<"NOW: " <<now << ", " <<"BEFORE: "<< client->alive << std::endl;
+            // std::cout <<"NOW: " <<now << ", " <<"BEFORE: "<< client->alive << std::endl;
             // std::cout <<diff<< std::endl;
             if(client->alive > 0){
                 std::cout << "alive >0" << std::endl;
