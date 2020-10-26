@@ -312,7 +312,7 @@ Client* removeInfoFromClient(std::string ip, std::string port) {
     return NULL;
 }
 
-void createNewConnection(fd_set &openSockets, int& maxfds, std::string groupId, std::string ip, std::string port){
+void createNewConnection(fd_set &openSockets, int& maxfds, std::string ip, std::string port){
     struct addrinfo hints, *svr;              // Network host entry for server
     struct sockaddr_in serv_addr;           // Socket address for server
     int serverSocket;                         // Socket used for server 
@@ -446,6 +446,9 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
         std::string id = tokens[1];
         std::string ip = tokens[2];
         std::string port = tokens[3];
+        if(port[port.size()-1] == ';'){
+            port.erase(port.size()-1,1);
+        }
         addInfoToClient(clientSocket ,id, ip, port);
     }
 
@@ -538,19 +541,19 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
     }
 
     //connect to other server
-    else if(tokens[0].compare("CONNECTTO") == 0 && tokens.size() >=4)
+    else if(tokens[0].compare("CONNECTTO") == 0 && tokens.size() >=3)
     {   
-        std::string groupId;
+        // std::string groupId;
         std::string ip; 
         std::string port;
-        groupId = tokens[1]; 
-        ip = tokens[2];
-        port = tokens[3];
-        std::cout <<"connectto: "<< groupId << ip<< port<< std::endl;
+        // groupId = tokens[1]; 
+        ip = tokens[1];
+        port = tokens[2];
+        std::cout <<"connectto: " << ip<< port<< std::endl;
         // createNewConnection(openSockets, maxfds, groupId, ip, port);
         retStruct.removed = -1;
         retStruct.port = port;
-        retStruct.groupId = groupId;
+        // retStruct.groupId = groupId;
         retStruct.ip = ip;
         return retStruct;
     }
@@ -740,7 +743,7 @@ int main(int argc, char* argv[])
                             //here we try to establish a new connection
                             //CONNECT TO
                           if(retStruct.removed < 0){
-                            createNewConnection(openSockets, maxfds, retStruct.groupId, retStruct.ip, retStruct.port);
+                            createNewConnection(openSockets, maxfds, retStruct.ip, retStruct.port);
                           }
                       }
                   }
