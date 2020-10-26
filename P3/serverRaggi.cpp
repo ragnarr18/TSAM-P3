@@ -393,7 +393,7 @@ void createNewConnection(fd_set &openSockets, int& maxfds, std::string ip, std::
         // create a new client to store information.
         clients[serverSocket] = new Client(serverSocket);
         clients[serverSocket]->isServer = true;
-        std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
+        std::cout << "not so special client connected to server: " << clients[serverSocket]->isServer<<"\n";
         std::string msg = "*QUERYSERVERS,";
         msg += GROUP_ID;
         msg += "#";
