@@ -81,10 +81,10 @@ class linked_list{
         std::string pop(){
             if(head != NULL){
                 std::cout<< "head not null" <<std::endl;
-                std::string retValue = head->data;
+                std::string retStruct = head->data;
                 head = head->next;
                 size -=1;
-                return retValue;   
+                return retStruct;   
             }
             return "NULL";
         }
@@ -122,7 +122,10 @@ class Client
 std::map<int, Client*> clients; // Lookup table for per Client information
 
 struct commandStruct
-{
+{   
+    std::string port;
+    std::string ip;
+    std::string groupId;
     int socket;
     int removed;
     Client* client;
@@ -277,41 +280,6 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
 // If first item in list starts with *: continue
 // If last item in list ends with #: return true
 // If either one fails: Return false
-// bool commandValidation(std::vector<std::string>& wordList){
-//     std::string firstWord = wordList[0];
-//     if(firstWord.length() == 0){
-//         return false;
-//     }
-//     if(firstWord[0] == '*'){
-//         std::string lastWord = wordList[wordList.size()-1];
-//         if(lastWord.length() <= 2){
-//             return false;
-//         }
-//         char lastLetter = lastWord[lastWord.size()-2];
-//         if(lastLetter == '#'){
-//             // std::cout << "I'll accept your offering, mortal." << std::endl;
-//             std::string newFirstWord = firstWord.erase(0,1);
-//             std::cout << "Modified first word: " << newFirstWord << std::endl;
-//             std::string newLastWord = lastWord.substr(0, lastWord.size()-2);
-//             std::cout << "Modified last word: " << newLastWord << std::endl;
-//             // Now we replace these words
-//             wordList[0] = newFirstWord;
-//             wordList[wordList.size()-1] = newLastWord;
-//             return true;
-//         }
-//         else{
-//             // std::cout << "This is a Christian server, no non-# strings allowed." << std::endl;
-//             return false;
-//         }
-//     }
-//     else
-//     {
-//         // std::cout << "What the fuck did you just send me, get that shit outta here." << std::endl;
-//         return false;
-//     }
-    
-// }
-
 bool commandValidation(std::vector<std::string>& wordList){
     if(wordList[0][0] != '*'){
         std::cout<< "* is not here"<<std::endl;
@@ -360,21 +328,21 @@ void createNewConnection(fd_set &openSockets, int& maxfds, std::string groupId, 
 
     memset(&hints,   0, sizeof(hints));
 
-    if(getaddrinfo("127.0.0.1", "5000", &hints, &svr) != 0)
+    if(getaddrinfo(ip.c_str(), port.c_str(), &hints, &svr) != 0)
     {
         perror("getaddrinfo failed: ");
         exit(0);
     }
 
     struct hostent *server;
-    server = gethostbyname("127.0.0.1");
+    server = gethostbyname(ip.c_str());
 
     bzero((char *) &serv_addr, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     bcopy((char *)server->h_addr,
         (char *)&serv_addr.sin_addr.s_addr,
         server->h_length);
-    serv_addr.sin_port = htons(5000); // or 4002
+    serv_addr.sin_port = htons(atoi(port.c_str())); // or 4002
 
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -433,6 +401,9 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
     retStruct.removed = 0;
     retStruct.socket = 0;
     retStruct.client = NULL;
+    retStruct.ip = "";
+    retStruct.port = "";
+    retStruct.groupId = "";
     std::stringstream stream(buffer);
     std::stringstream stream1(buffer);
     
@@ -559,8 +530,6 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
         }
     }
 
-
-
     //connect to other server
     else if(tokens[0].compare("CONNECTTO") == 0 && tokens.size() >=4)
     {   
@@ -573,6 +542,9 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
         std::cout <<"connectto: "<< groupId << ip<< port<< std::endl;
         // createNewConnection(openSockets, maxfds, groupId, ip, port);
         retStruct.removed = -1;
+        retStruct.port = port;
+        retStruct.groupId = groupId;
+        retStruct.ip = ip;
         return retStruct;
     }
     else
@@ -746,17 +718,17 @@ int main(int argc, char* argv[])
                       else
                       {     
                           std::cout << buffer << std::endl;
-                          commandStruct retValue = clientCommand(client->sock, openSockets, maxfds, buffer, PORT.c_str(), client->isServer);
+                          commandStruct retStruct = clientCommand(client->sock, openSockets, maxfds, buffer, PORT.c_str(), client->isServer);
                         // removedManually = clientCommand(client->sock, &openSockets, &maxfds, buffer, PORT.c_str(), client->isServer);
-                          if(retValue.removed == 1){
-                            disconnectedClients.push_back(retValue.client);
-                            closeClient(retValue.client->sock, &openSockets, &maxfds);
+                          if(retStruct.removed == 1){
+                            disconnectedClients.push_back(retStruct.client);
+                            closeClient(retStruct.client->sock, &openSockets, &maxfds);
                           }
 
                             //here we try to establish a new connection
                             //CONNECT TO
-                          if(retValue.removed < 0){
-                            createNewConnection(openSockets,maxfds,"g1","ip1","port1");
+                          if(retStruct.removed < 0){
+                            createNewConnection(openSockets, maxfds, retStruct.groupId, retStruct.ip, retStruct.port);
                           }
                       }
                   }
