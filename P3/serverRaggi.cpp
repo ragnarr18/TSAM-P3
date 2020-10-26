@@ -328,7 +328,7 @@ void createNewConnection(fd_set &openSockets, int& maxfds, std::string groupId, 
     if(getaddrinfo(ip.c_str(), port.c_str(), &hints, &svr) != 0)
     {
         perror("getaddrinfo failed: ");
-        exit(0);
+        return;
     }
 
     struct hostent *server;
@@ -623,12 +623,13 @@ int main(int argc, char* argv[])
             // std::cout <<"NOW: " <<now << ", " <<"BEFORE: "<< client->alive << std::endl;
             // std::cout <<diff<< std::endl;
             if(client->alive > 0){
-                std::cout << "alive >0" << std::endl;
-                std::cout << "diff: " << diff << std::endl;
+                // std::cout << "alive >0" << std::endl;
+                // std::cout << "diff: " << diff << std::endl;
                 if(diff >= KEEP_ALIVE_TIMEOUT){
-                    std::cout<< "send keepalive" << std::endl;
+                    // std::cout<< "send keepalive" << std::endl;
                     Client currClient = *client;
                     keepAlive(currClient);
+                    client->alive = now;
                 }
             }
         }
