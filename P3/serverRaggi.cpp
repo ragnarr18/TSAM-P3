@@ -482,8 +482,8 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
         {
             Client *client = pair.second;
             if(client->groupId == tokens[1]){  
-                messageFound = 1;
                 if(client->messages.getSize() > 0){
+                    messageFound = 1;
                     msg += client->messages.pop();
                     std::cout << msg << std::endl;
                     msg += "\n";
@@ -494,7 +494,7 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
             }
         }
         if(messageFound){
-            std::string finalMessage = "These are the messages for specified group:\n";
+            std::string finalMessage = "A message was found with your name. Currently we can only pull one at a time, apologies in advance:\n";
             finalMessage += msg;
             send(clientSocket, finalMessage.c_str(), finalMessage.length(), 0);
         }
