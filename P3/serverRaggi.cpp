@@ -36,6 +36,7 @@
 #define SOCK_NONBLOCK O_NONBLOCK
 #endif
 #define PRESERVED_PORT  4001
+#define PRESERVED_PORT_CHAR "4001"
 #define GROUP_ID "P3_GROUP_85"
 #define KEEP_ALIVE_TIMEOUT 60
 #define SELECT_TIMEOUT 5
@@ -246,11 +247,11 @@ void closeClient(int clientSocket, fd_set *openSockets, int *maxfds)
 std::string connected(std::string PORT){
     std::string retString = "";
     retString = "*CONNECTED,";
-    retString += GROUP_ID;
-    retString += ",";
-    retString += "46.182.189.139,"; //change to skel
-    retString +=  PORT;
-    retString += ";";
+    // retString += GROUP_ID;
+    // retString += ",";
+    // retString += "46.182.189.139,"; //change to skel
+    // retString +=  PORT;
+    // retString += ";";
     std::string extra = listServers(); //add list of servers connected to the server
     retString += extra;
     retString += "#";
@@ -490,7 +491,7 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
             }
         }
         if(messageFound){
-            std::string finalMessage = "A message was found with your name. Currently we can only pull one at a time, apologies in advance:\n";
+            std::string finalMessage = "A message was found with your group ID. Currently we can only pull one at a time, apologies in advance:\n";
             finalMessage += msg;
             send(clientSocket, finalMessage.c_str(), finalMessage.length(), 0);
         }
@@ -508,11 +509,21 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
         std::string sent_msg = "";
         sent_msg += "Message from: ";
         sent_msg += tokens[2];
-        sent_msg += " , Message Contents: ";
-        sent_msg += tokens[3];
+        sent_msg += ", Message Contents: ";
+        //sent_msg += tokens[3];
+        for (size_t i = 3; i < tokens.size(); i++)
+        {
+            sent_msg += tokens[i];
+            if(i+1 < tokens.size()){
+                sent_msg += ",";
+            }
+        }
+        
         for(auto const& pair : clients)
         {
             Client *client = pair.second;
+            std::cout << client->groupId << std::endl;
+            std::cout << tokens[1] << std::endl;
             if(client->groupId == tokens[1]){
                 found = 1;
                 client->messages.push(sent_msg);
@@ -686,8 +697,10 @@ int main(int argc, char* argv[])
 
                // create a new client to store information.
                clients[clientSock] = new Client(clientSock);
-               clients[clientSock]->isServer = false;
+               clients[clientSock]->isServer = true;
                clients[clientSock]->groupId = GROUP_ID;
+               clients[clientSock]->ip = "130.208.243.61";
+               clients[clientSock]->port = PRESERVED_PORT_CHAR;
                // std::cout << "special client connected is server: " << clients[clientSock]->isServer<<"\n";
 
                // Decrement the number of sockets waiting to be dealt with
