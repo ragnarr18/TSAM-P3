@@ -283,7 +283,7 @@ bool commandValidation(std::vector<std::string>& wordList){
         return false;
     }
     std::string lastString = wordList[wordList.size() -1];
-    lastString.erase(remove_if(lastString.begin(), lastString.end(), isspace), lastString.end());
+    lastString.erase(remove_if(lastString.end()-2, lastString.end(), isspace), lastString.end());
     if(lastString[lastString.size() -1] != '#'){
         std::cout<< "# is not here"<<std::endl;
         std::cout<< "lastString: "<< lastString << "size: "<< lastString.size() <<std::endl;
