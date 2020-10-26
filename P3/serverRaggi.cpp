@@ -400,7 +400,7 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
     // std::cout << isValid << std::endl;
     if(!isValid){
         // std::cout << "OI I'M VERY STRICT ON WHAT I GET! * IN FRONT AND # IN BACK!" << buffer << std::endl;
-        std::string error_msg = "Due to our subpar C++ programming skills, our server is very strict in what it accepts. Please put * in front and # in back of your command.";
+        std::string error_msg = "Due to our subpar C++ programming skills, our server is very strict in what it accepts. Please put * in front and # in back of your command, and keep them one at a time. If that doesn't work, we rest our case by our programming skills.";
         send(clientSocket, error_msg.c_str(), error_msg.length(), 0);
     }
 
@@ -502,6 +502,8 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
             send(clientSocket, "GroupID not found", sizeof("GroupID not found"), 0);
         }
     }
+
+
 
     //connect to other server
     else if(tokens[0].compare("CONNECTTO") == 0 && tokens.size() >=4)
