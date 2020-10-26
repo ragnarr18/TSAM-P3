@@ -35,8 +35,8 @@
 #include <fcntl.h>
 #define SOCK_NONBLOCK O_NONBLOCK
 #endif
-#define PRESERVED_PORT  4001
-#define PRESERVED_PORT_CHAR "4001"
+#define PRESERVED_PORT 4097
+#define PRESERVED_PORT_CHAR "4054"
 #define GROUP_ID "P3_GROUP_85"
 #define KEEP_ALIVE_TIMEOUT 60
 #define SELECT_TIMEOUT 5
@@ -553,6 +553,11 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
         retStruct.groupId = groupId;
         retStruct.ip = ip;
         return retStruct;
+    }
+    else if(tokens[0].compare("STATUSREQ") == 0 && tokens.size() >=4)
+    {
+        std::string msg = "Not implemented yet. I know, we suck. We're not great at this.";
+        send(clientSocket, msg.c_str(), msg.length(), 0);
     }
     else
     {
