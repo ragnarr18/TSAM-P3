@@ -486,7 +486,6 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
                     messageFound = 1;
                     msg += client->messages.pop();
                     std::cout << msg << std::endl;
-                    msg += "\n";
                 }
                 if(msg == ""){
                     send(clientSocket, "No messages for you. No, we don't feel bad for you.", sizeof("No messages for you. No, we don't feel bad for you."), 0);
