@@ -279,20 +279,23 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
 // If either one fails: Return false
 bool commandValidation(std::vector<std::string>& wordList){
     std::string firstWord = wordList[0];
+    std::cout << firstWord << std::endl;
     if(firstWord.length() == 0){
         return false;
     }
     if(firstWord[0] == '*'){
         std::string lastWord = wordList[wordList.size()-1];
+        std::cout << lastWord << std::endl;
         if(lastWord.length() <= 2){
             return false;
         }
-        char lastLetter = lastWord[lastWord.size()-1];
+        char lastLetter = lastWord[lastWord.size()-2];
+        std::cout << lastLetter << std::endl;
         if(lastLetter == '#'){
             // std::cout << "I'll accept your offering, mortal." << std::endl;
             std::string newFirstWord = firstWord.erase(0,1);
             std::cout << "Modified first word: " << newFirstWord << std::endl;
-            std::string newLastWord = lastWord.substr(0, lastWord.size()-1);
+            std::string newLastWord = lastWord.substr(0, lastWord.size()-2);
             std::cout << "Modified last word: " << newLastWord << std::endl;
             // Now we replace these words
             wordList[0] = newFirstWord;
@@ -331,9 +334,9 @@ void createNewConnection(fd_set &openSockets, int& maxfds, std::string groupId, 
     intPort >> portToInt;
     struct addrinfo hints, *svr;              // Network host entry for server
    struct sockaddr_in serv_addr;           // Socket address for server
-   int serverSocket;                         // Socket used for server 
-   int nwrite;                               // No. bytes written to server
-   char buffer[1025];                        // buffer for writing to server
+   //int serverSocket;                         // Socket used for server 
+   //int nwrite;                               // No. bytes written to server
+   //char buffer[1025];                        // buffer for writing to server
    bool finished;                   
    int set = 1;                              // Toggle for setsockopt
    hints.ai_family   = AF_INET;            // IPv4 only addresses
@@ -364,7 +367,7 @@ void createNewConnection(fd_set &openSockets, int& maxfds, std::string groupId, 
        // not in non-blocking mode, so this check here is just an example of how to
        // handle this properly.)
        if(errno != EINPROGRESS){
-         printf("Failed to open socket to server: %s\n", ip);
+         printf("Failed to open socket to server: %d\n", ip);
          perror("Connect failed: ");
          exit(0);
        }
@@ -456,23 +459,28 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
     else if((tokens[0].compare("GET_MSG") == 0) && tokens.size() == 2)
     {
         std::string msg;
-        bool found = 0;
+        bool messageFound = 0;
         for(auto const& pair : clients)
         {
             Client *client = pair.second;
             if(client->groupId == tokens[1]){  
-                found = 1;
-                if(client->messages.getSize() > 0){
-                    msg = client->messages.pop();
-                    send(clientSocket, msg.c_str(), msg.length(), 0);
+                messageFound = 1;
+                while(client->messages.getSize() >= 0){
+                    msg += client->messages.pop();
+                    msg += "\n";
                 }
-                else{
+                if(msg == ""){
                     send(clientSocket, "No messages for you. No, we don't feel bad for you.", sizeof("No messages for you. No, we don't feel bad for you."), 0);
                 }
             }
         }
+        if(messageFound){
+            std::string finalMessage = "These are the messages for specified group:\n";
+            finalMessage += msg;
+            send(clientSocket, finalMessage.c_str(), finalMessage.length(), 0);
+        }
 
-        if(found == 0){
+        else{
             send(clientSocket, "GroupID not found", sizeof("GroupID not found"), 0);
         }
     }
