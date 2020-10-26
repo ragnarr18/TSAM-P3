@@ -312,6 +312,21 @@ Client* removeInfoFromClient(std::string ip, std::string port) {
     return NULL;
 }
 
+std::string statusResp(std::string from, std::string to ){
+    std::string msg;
+    msg += from;
+    msg += ",";
+    msg += to;
+    for(auto const& server : clients){
+        if(server.second->groupId != "" && server.second->groupId != GROUP_ID){
+            msg += ",";
+            msg += server.second->groupId;
+            msg += std::to_string(server.second->messages.getSize());
+        }
+    }
+    return msg;
+}
+
 void createNewConnection(fd_set &openSockets, int& maxfds, std::string ip, std::string port){
     struct addrinfo hints, *svr;              // Network host entry for server
     struct sockaddr_in serv_addr;           // Socket address for server
@@ -378,14 +393,14 @@ void createNewConnection(fd_set &openSockets, int& maxfds, std::string ip, std::
         // create a new client to store information.
         clients[serverSocket] = new Client(serverSocket);
         clients[serverSocket]->isServer = true;
-        // std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
+        std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
         std::string msg = "*QUERYSERVERS,";
         msg += GROUP_ID;
         msg += "#";
         send(serverSocket, msg.c_str(), msg.length(), 0);
     }
     
-    }
+    };
 
 // Process command from client on the server
 // Returns a type commandstruct
