@@ -350,9 +350,9 @@ void createNewConnection(fd_set &openSockets, int& maxfds, std::string groupId, 
     struct addrinfo hints, *svr;              // Network host entry for server
     struct sockaddr_in serv_addr;           // Socket address for server
     int serverSocket;                         // Socket used for server 
-    int nwrite;                               // No. bytes written to server
-    char buffer[1025];                        // buffer for writing to server
-    bool finished;                   
+    //int nwrite;                               // No. bytes written to server
+    //char buffer[1025];                        // buffer for writing to server
+    //bool finished;                   
     int set = 1;                              // Toggle for setsockopt
 
     hints.ai_family   = AF_INET;            // IPv4 only addresses
@@ -512,8 +512,9 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
             Client *client = pair.second;
             if(client->groupId == tokens[1]){  
                 messageFound = 1;
-                while(client->messages.getSize() >= 0){
+                if(client->messages.getSize() > 0){
                     msg += client->messages.pop();
+                    std::cout << msg << std::endl;
                     msg += "\n";
                 }
                 if(msg == ""){
