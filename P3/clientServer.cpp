@@ -245,7 +245,7 @@ void closeClient(int clientSocket, fd_set *openSockets, int *maxfds)
 //get connected servers
 std::string connected(std::string PORT){
     std::string retString = "";
-    retString = "*CONNNECTED,";
+    retString = "*CONNECTED,";
     retString += GROUP_ID;
     retString += ",";
     retString += "46.182.189.139,"; //change to skel
@@ -278,40 +278,26 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
 // If last item in list ends with #: return true
 // If either one fails: Return false
 bool commandValidation(std::vector<std::string>& wordList){
-    std::string firstWord = wordList[0];
-    if(firstWord.length() == 0){
+    if(wordList[0][0] != '*'){
+        std::cout<< "* is not here"<<std::endl;
         return false;
     }
-    if(firstWord[0] == '*'){
-        std::string lastWord = wordList[wordList.size()-1];
-        if(lastWord.length() <= 2){
-            return false;
-        }
-        char lastLetter = lastWord[lastWord.size()-2];
-        if(lastLetter == '#'){
-            // std::cout << "I'll accept your offering, mortal." << std::endl;
-            std::string newFirstWord = firstWord.erase(0,1);
-            std::cout << "Modified first word: " << newFirstWord << std::endl;
-            std::string newLastWord = lastWord.substr(0, lastWord.size()-2);
-            std::cout << "Modified last word: " << newLastWord << std::endl;
-            // Now we replace these words
-            wordList[0] = newFirstWord;
-            wordList[wordList.size()-1] = newLastWord;
-            return true;
-        }
-        else{
-            // std::cout << "This is a Christian server, no non-# strings allowed." << std::endl;
-            return false;
-        }
-    }
-    else
-    {
-        // std::cout << "What the fuck did you just send me, get that shit outta here." << std::endl;
-        return false;
-    }
-    
-}
+    std::string lastString = wordList[wordList.size() -1];
+    lastString.erase(remove_if(lastString.begin(), lastString.end(), isspace), lastString.end());
+    if(lastString[lastString.size() -1] != '#'){
+        std::cout<< "# is not here"<<std::endl;
+        std::cout<< "lastString: "<< lastString << "size: "<< lastString.size() <<std::endl;
 
+        return false;
+    }
+    wordList[0].erase(0,1);
+    lastString.erase(lastString.size()-1,1);
+    wordList[wordList.size()-1] = lastString;
+    std::cout << "modified firstString" << wordList[0] <<std::endl;
+    std::cout << "modified firstString" << wordList[wordList.size() -1] <<std::endl;
+
+    return true;
+}
 Client* removeInfoFromClient(std::string ip, std::string port) {
     for(auto const& IsServer: clients)
     {
@@ -375,8 +361,7 @@ void createNewConnection(fd_set &openSockets, int& maxfds, std::string groupId, 
 // Returns a type commandstruct
 commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds, 
                   char *buffer, std::string PORT, bool isServer) {
-    std::vector<std::string> tokens;
-    std::vector<std::string> tokensNoCommas;
+    std::vector<std::string> tokens;    std::vector<std::string> tokensNoCommas;
     std::string token;
     std::string tokenNoComma;
     commandStruct retStruct;
@@ -400,8 +385,8 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
     // std::cout << isValid << std::endl;
     if(!isValid){
         // std::cout << "OI I'M VERY STRICT ON WHAT I GET! * IN FRONT AND # IN BACK!" << buffer << std::endl;
-        std::string error_msg = "Due to our subpar C++ programming skills, our server is very strict in what it accepts. Please put * in front and # in back of your command.";
-        send(clientSocket, error_msg.c_str(), error_msg.length(), 0);
+        std::string error_msg = "*Due to our subpar C++ programming skills, our server is very strict in what it accepts. Please put * in front and # in back of your command.#";
+        // send(clientSocket, error_msg.c_str(), error_msg.length(), 0);
     }
 
 
@@ -534,9 +519,10 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
     else
     {
         std::cout << "Unknown command from client:" << buffer << std::endl;
+        std::cout << "Unknown command tokens[0] and tokens[last]:" << tokens[0] << tokens[0].size() << " ," << tokens[tokens.size() -1] << std::endl;
         if(isValid){
             std::string msg = "Command not recognized. Our tiny cutesy little server only understands the base commands in the assignment, so please be patient with it. Harassment will only scare the server.";
-            send(clientSocket, msg.c_str(), msg.length(), 0);
+            // send(clientSocket, msg.c_str(), msg.length(), 0);
         }
     }
    return retStruct;  

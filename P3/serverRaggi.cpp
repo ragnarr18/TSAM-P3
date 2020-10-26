@@ -245,7 +245,7 @@ void closeClient(int clientSocket, fd_set *openSockets, int *maxfds)
 //get connected servers
 std::string connected(std::string PORT){
     std::string retString = "";
-    retString = "*CONNNECTED,";
+    retString = "*CONNECTED,";
     retString += GROUP_ID;
     retString += ",";
     retString += "46.182.189.139,"; //change to skel
@@ -277,42 +277,60 @@ void addInfoToClient(int sock, std::string id, std::string ip, std::string port)
 // If first item in list starts with *: continue
 // If last item in list ends with #: return true
 // If either one fails: Return false
-bool commandValidation(std::vector<std::string>& wordList){
-    std::string firstWord = wordList[0];
-    std::cout << firstWord << std::endl;
-    if(firstWord.length() == 0){
-        return false;
-    }
-    if(firstWord[0] == '*'){
-        std::string lastWord = wordList[wordList.size()-1];
-        std::cout << lastWord << std::endl;
-        if(lastWord.length() <= 2){
-            return false;
-        }
-        char lastLetter = lastWord[lastWord.size()-2];
-        std::cout << lastLetter << std::endl;
-        if(lastLetter == '#'){
-            // std::cout << "I'll accept your offering, mortal." << std::endl;
-            std::string newFirstWord = firstWord.erase(0,1);
-            std::cout << "Modified first word: " << newFirstWord << std::endl;
-            std::string newLastWord = lastWord.substr(0, lastWord.size()-2);
-            std::cout << "Modified last word: " << newLastWord << std::endl;
-            // Now we replace these words
-            wordList[0] = newFirstWord;
-            wordList[wordList.size()-1] = newLastWord;
-            return true;
-        }
-        else{
-            // std::cout << "This is a Christian server, no non-# strings allowed." << std::endl;
-            return false;
-        }
-    }
-    else
-    {
-        // std::cout << "What the fuck did you just send me, get that shit outta here." << std::endl;
-        return false;
-    }
+// bool commandValidation(std::vector<std::string>& wordList){
+//     std::string firstWord = wordList[0];
+//     if(firstWord.length() == 0){
+//         return false;
+//     }
+//     if(firstWord[0] == '*'){
+//         std::string lastWord = wordList[wordList.size()-1];
+//         if(lastWord.length() <= 2){
+//             return false;
+//         }
+//         char lastLetter = lastWord[lastWord.size()-2];
+//         if(lastLetter == '#'){
+//             // std::cout << "I'll accept your offering, mortal." << std::endl;
+//             std::string newFirstWord = firstWord.erase(0,1);
+//             std::cout << "Modified first word: " << newFirstWord << std::endl;
+//             std::string newLastWord = lastWord.substr(0, lastWord.size()-2);
+//             std::cout << "Modified last word: " << newLastWord << std::endl;
+//             // Now we replace these words
+//             wordList[0] = newFirstWord;
+//             wordList[wordList.size()-1] = newLastWord;
+//             return true;
+//         }
+//         else{
+//             // std::cout << "This is a Christian server, no non-# strings allowed." << std::endl;
+//             return false;
+//         }
+//     }
+//     else
+//     {
+//         // std::cout << "What the fuck did you just send me, get that shit outta here." << std::endl;
+//         return false;
+//     }
     
+// }
+
+bool commandValidation(std::vector<std::string>& wordList){
+    if(wordList[0][0] != '*'){
+        std::cout<< "* is not here"<<std::endl;
+        return false;
+    }
+    std::string lastString = wordList[wordList.size() -1];
+    lastString.erase(remove_if(lastString.begin(), lastString.end(), isspace), lastString.end());
+    if(lastString[lastString.size() -1] != '#'){
+        std::cout<< "# is not here"<<std::endl;
+        std::cout<< "lastString: "<< lastString << "size: "<< lastString.size() <<std::endl;
+
+        return false;
+    }
+    wordList[0].erase(0,1);
+    lastString.erase(lastString.size()-1,1);
+    wordList[wordList.size()-1] = lastString;
+    std::cout << "modified firstString" << wordList[0] <<std::endl;
+    std::cout << "modified firstString" << wordList[wordList.size() -1] <<std::endl;
+    return true;
 }
 
 Client* removeInfoFromClient(std::string ip, std::string port) {
@@ -329,26 +347,25 @@ Client* removeInfoFromClient(std::string ip, std::string port) {
 }
 
 void createNewConnection(fd_set &openSockets, int& maxfds, std::string groupId, std::string ip, std::string port){
-    std::stringstream intPort(port); 
-    int portToInt = 0; 
-    intPort >> portToInt;
     struct addrinfo hints, *svr;              // Network host entry for server
-   struct sockaddr_in serv_addr;           // Socket address for server
-   //int serverSocket;                         // Socket used for server 
-   //int nwrite;                               // No. bytes written to server
-   //char buffer[1025];                        // buffer for writing to server
-   bool finished;                   
-   int set = 1;                              // Toggle for setsockopt
-   hints.ai_family   = AF_INET;            // IPv4 only addresses
-   hints.ai_socktype = SOCK_STREAM;
+    struct sockaddr_in serv_addr;           // Socket address for server
+    int serverSocket;                         // Socket used for server 
+    int nwrite;                               // No. bytes written to server
+    char buffer[1025];                        // buffer for writing to server
+    bool finished;                   
+    int set = 1;                              // Toggle for setsockopt
 
-   memset(&hints,   0, sizeof(hints));
+    hints.ai_family   = AF_INET;            // IPv4 only addresses
+    hints.ai_socktype = SOCK_STREAM;
 
-   if(getaddrinfo("127.0.0.1", "4002", &hints, &svr) != 0)
-   {
-       perror("getaddrinfo failed: ");
-       exit(0);
-   }
+    memset(&hints,   0, sizeof(hints));
+
+    if(getaddrinfo("127.0.0.1", "5000", &hints, &svr) != 0)
+    {
+        perror("getaddrinfo failed: ");
+        exit(0);
+    }
+
     struct hostent *server;
     server = gethostbyname("127.0.0.1");
 
@@ -357,22 +374,52 @@ void createNewConnection(fd_set &openSockets, int& maxfds, std::string groupId, 
     bcopy((char *)server->h_addr,
         (char *)&serv_addr.sin_addr.s_addr,
         server->h_length);
-    serv_addr.sin_port = 4002;
-        
-    int clientSock = open_socket(4002);
-    // serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-    if(connect(clientSock, (struct sockaddr *)&serv_addr, sizeof(serv_addr) )< 0){
-       // EINPROGRESS means that the connection is still being setup. Typically this
-       // only occurs with non-blocking sockets. (The serverSocket above is explicitly
-       // not in non-blocking mode, so this check here is just an example of how to
-       // handle this properly.)
-       if(errno != EINPROGRESS){
-         printf("Failed to open socket to server: %d\n", ip);
-         perror("Connect failed: ");
-         exit(0);
-       }
+    serv_addr.sin_port = htons(5000); // or 4002
+
+    serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+
+    // Turn on SO_REUSEADDR to allow socket to be quickly reused after 
+    // program exit.
+
+    if(setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(set)) < 0)
+    {
+        printf("Failed to set SO_REUSEADDR for port %s\n", "4002" ); // or 4002
+        perror("setsockopt failed: ");
+        return;
     }
-}
+
+    if(connect(serverSocket, (struct sockaddr *)&serv_addr, sizeof(serv_addr) )< 0)
+    {
+        // EINPROGRESS means that the connection is still being setup. Typically this
+        // only occurs with non-blocking sockets. (The serverSocket above is explicitly
+        // not in non-blocking mode, so this check here is just an example of how to
+        // handle this properly.)
+        if(errno != EINPROGRESS)
+        {
+            printf("Failed to open socket to server: %s\n", "localhost");
+            perror("Connect failed: ");
+            return;
+        }
+    }
+    else
+    {
+        //modify file descriptors
+        FD_SET(serverSocket, &openSockets);
+
+        // And update the maximum file descriptor
+        maxfds = std::max(maxfds, serverSocket);
+
+        // create a new client to store information.
+        clients[serverSocket] = new Client(serverSocket);
+        clients[serverSocket]->isServer = true;
+        // std::cout << "not so special client connected to server: " << clients[clientSock]->isServer<<"\n";
+        std::string msg = "*QUERYSERVERS,";
+        msg += GROUP_ID;
+        msg += "#";
+        send(serverSocket, msg.c_str(), msg.length(), 0);
+    }
+    
+    }
 
 // Process command from client on the server
 // Returns a type commandstruct
@@ -403,8 +450,8 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
     // std::cout << isValid << std::endl;
     if(!isValid){
         // std::cout << "OI I'M VERY STRICT ON WHAT I GET! * IN FRONT AND # IN BACK!" << buffer << std::endl;
-        std::string error_msg = "Due to our subpar C++ programming skills, our server is very strict in what it accepts. Please put * in front and # in back of your command, and keep them one at a time. If that doesn't work, we rest our case by our programming skills.";
-        send(clientSocket, error_msg.c_str(), error_msg.length(), 0);
+        std::string error_msg = "*Due to our subpar C++ programming skills, our server is very strict in what it accepts. Please put * in front and # in back of your command, and keep them one at a time. If that doesn't work, we rest our case by our programming skills.#";
+        // send(clientSocket, error_msg.c_str(), error_msg.length(), 0);
     }
 
     //LISTSERVERS
@@ -530,6 +577,8 @@ commandStruct clientCommand(int clientSocket, fd_set &openSockets, int &maxfds,
     else
     {
         std::cout << "Unknown command from client:" << buffer << std::endl;
+        std::cout << "Unknown command tokens[0] and tokens[last]:" << tokens[0] << " ," << tokens[tokens.size() -1] << std::endl;
+        
         if(isValid){
             std::string msg = "Command not recognized. Our tiny cutesy little server only understands the base commands in the assignment, so please be patient with it. Harassment will only scare the server.";
             send(clientSocket, msg.c_str(), msg.length(), 0);
@@ -706,60 +755,7 @@ int main(int argc, char* argv[])
                             //here we try to establish a new connection
                             //CONNECT TO
                           if(retValue.removed < 0){
-                               struct addrinfo hints, *svr;              // Network host entry for server
-                                struct sockaddr_in serv_addr;           // Socket address for server
-                                int serverSocket;                         // Socket used for server 
-                                int nwrite;                               // No. bytes written to server
-                                char buffer[1025];                        // buffer for writing to server
-                                bool finished;                   
-                                int set = 1;                              // Toggle for setsockopt
-
-                                hints.ai_family   = AF_INET;            // IPv4 only addresses
-                                hints.ai_socktype = SOCK_STREAM;
-
-                                memset(&hints,   0, sizeof(hints));
-
-                                if(getaddrinfo("127.0.0.1", "5000", &hints, &svr) != 0)
-                                {
-                                    perror("getaddrinfo failed: ");
-                                    exit(0);
-                                }
-
-                                struct hostent *server;
-                                server = gethostbyname("127.0.0.1");
-
-                                bzero((char *) &serv_addr, sizeof(serv_addr));
-                                serv_addr.sin_family = AF_INET;
-                                bcopy((char *)server->h_addr,
-                                    (char *)&serv_addr.sin_addr.s_addr,
-                                    server->h_length);
-                                serv_addr.sin_port = htons(5000); // or 4002
-
-                                serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-
-                                // Turn on SO_REUSEADDR to allow socket to be quickly reused after 
-                                // program exit.
-
-                                if(setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(set)) < 0)
-                                {
-                                    printf("Failed to set SO_REUSEADDR for port %s\n", "4002" ); // or 4002
-                                    perror("setsockopt failed: ");
-                                }
-
-                                
-                                if(connect(serverSocket, (struct sockaddr *)&serv_addr, sizeof(serv_addr) )< 0)
-                                {
-                                    // EINPROGRESS means that the connection is still being setup. Typically this
-                                    // only occurs with non-blocking sockets. (The serverSocket above is explicitly
-                                    // not in non-blocking mode, so this check here is just an example of how to
-                                    // handle this properly.)
-                                    if(errno != EINPROGRESS)
-                                    {
-                                        printf("Failed to open socket to server: %s\n", "localhost");
-                                        perror("Connect failed: ");
-                                        exit(0);
-                                    }
-                                }
+                            createNewConnection(openSockets,maxfds,"g1","ip1","port1");
                           }
                       }
                   }
