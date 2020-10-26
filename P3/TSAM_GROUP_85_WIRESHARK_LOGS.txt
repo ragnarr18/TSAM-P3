@@ -1,0 +1,1301 @@
+No.     Time           Source                Destination           Protocol Length Info
+      1 0.000000000    127.0.0.1             127.0.0.1             TCP      74     35500 → 4001 [SYN] Seq=0 Win=65495 Len=0 MSS=65495 SACK_PERM=1 TSval=3211830830 TSecr=0 WS=128
+
+Frame 1: 74 bytes on wire (592 bits), 74 bytes captured (592 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 35500, Dst Port: 4001, Seq: 0, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      2 0.000009490    127.0.0.1             127.0.0.1             TCP      54     4001 → 35500 [RST, ACK] Seq=1 Ack=1 Win=0 Len=0
+
+Frame 2: 54 bytes on wire (432 bits), 54 bytes captured (432 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4001, Dst Port: 35500, Seq: 1, Ack: 1, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      3 5.163151858    127.0.0.1             127.0.0.1             TCP      74     45076 → 4000 [SYN] Seq=0 Win=65495 Len=0 MSS=65495 SACK_PERM=1 TSval=3211835993 TSecr=0 WS=128
+
+Frame 3: 74 bytes on wire (592 bits), 74 bytes captured (592 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 0, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      4 5.163253791    127.0.0.1             127.0.0.1             TCP      74     4000 → 45076 [SYN, ACK] Seq=0 Ack=1 Win=65483 Len=0 MSS=65495 SACK_PERM=1 TSval=3211835993 TSecr=3211835993 WS=128
+
+Frame 4: 74 bytes on wire (592 bits), 74 bytes captured (592 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 0, Ack: 1, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      5 5.163262853    127.0.0.1             127.0.0.1             TCP      66     45076 → 4000 [ACK] Seq=1 Ack=1 Win=65536 Len=0 TSval=3211835993 TSecr=3211835993
+
+Frame 5: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 1, Ack: 1, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      6 5.163382573    127.0.0.1             127.0.0.1             TCP      92     4000 → 45076 [PSH, ACK] Seq=1 Ack=1 Win=65536 Len=26 TSval=3211835993 TSecr=3211835993
+
+Frame 6: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 1, Ack: 1, Len: 26
+Data (26 bytes)
+
+0000  2a 51 55 45 52 59 53 45 52 56 45 52 53 2c 50 33   *QUERYSERVERS,P3
+0010  5f 47 52 4f 55 50 5f 38 35 23                     _GROUP_85#
+
+No.     Time           Source                Destination           Protocol Length Info
+      7 5.163386101    127.0.0.1             127.0.0.1             TCP      66     45076 → 4000 [ACK] Seq=1 Ack=27 Win=65536 Len=0 TSval=3211835993 TSecr=3211835993
+
+Frame 7: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 1, Ack: 27, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+      8 8.917155653    127.0.0.1             127.0.0.53            DNS      100    Standard query 0x6f2d AAAA connectivity-check.ubuntu.com OPT
+
+Frame 8: 100 bytes on wire (800 bits), 100 bytes captured (800 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 46498, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+      9 8.921010203    127.0.0.53            127.0.0.1             DNS      100    Standard query response 0x6f2d AAAA connectivity-check.ubuntu.com OPT
+
+Frame 9: 100 bytes on wire (800 bits), 100 bytes captured (800 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 46498
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     10 8.921129189    127.0.0.1             127.0.0.53            DNS      112    Standard query 0x1de5 AAAA connectivity-check.ubuntu.com.localdomain OPT
+
+Frame 10: 112 bytes on wire (896 bits), 112 bytes captured (896 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 46482, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     11 8.930469750    127.0.0.53            127.0.0.1             DNS      112    Standard query response 0x1de5 Server failure AAAA connectivity-check.ubuntu.com.localdomain OPT
+
+Frame 11: 112 bytes on wire (896 bits), 112 bytes captured (896 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 46482
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     12 8.930599859    127.0.0.1             127.0.0.53            DNS      112    Standard query 0x1de5 AAAA connectivity-check.ubuntu.com.localdomain OPT
+
+Frame 12: 112 bytes on wire (896 bits), 112 bytes captured (896 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 33603, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     13 8.937537795    127.0.0.53            127.0.0.1             DNS      112    Standard query response 0x1de5 Server failure AAAA connectivity-check.ubuntu.com.localdomain OPT
+
+Frame 13: 112 bytes on wire (896 bits), 112 bytes captured (896 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 33603
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     14 11.229726823   127.0.0.1             127.0.0.53            DNS      95     Standard query 0xa394 A normandy.cdn.mozilla.net OPT
+
+Frame 14: 95 bytes on wire (760 bits), 95 bytes captured (760 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 59660, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     15 11.230208275   127.0.0.1             127.0.0.53            DNS      95     Standard query 0xedaa AAAA normandy.cdn.mozilla.net OPT
+
+Frame 15: 95 bytes on wire (760 bits), 95 bytes captured (760 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 59660, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     16 11.231034546   127.0.0.1             127.0.0.53            DNS      95     Standard query 0xc9b4 A normandy.cdn.mozilla.net OPT
+
+Frame 16: 95 bytes on wire (760 bits), 95 bytes captured (760 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 41669, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     17 11.236702335   127.0.0.53            127.0.0.1             DNS      206    Standard query response 0xc9b4 A normandy.cdn.mozilla.net CNAME normandy-cdn.services.mozilla.com A 13.224.217.108 A 13.224.217.14 A 13.224.217.43 A 13.224.217.61 OPT
+
+Frame 17: 206 bytes on wire (1648 bits), 206 bytes captured (1648 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 41669
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     18 11.236874901   127.0.0.53            127.0.0.1             DNS      206    Standard query response 0xa394 A normandy.cdn.mozilla.net CNAME normandy-cdn.services.mozilla.com A 13.224.217.108 A 13.224.217.14 A 13.224.217.43 A 13.224.217.61 OPT
+
+Frame 18: 206 bytes on wire (1648 bits), 206 bytes captured (1648 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 59660
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     19 11.241520501   127.0.0.53            127.0.0.1             DNS      142    Standard query response 0xedaa AAAA normandy.cdn.mozilla.net CNAME normandy-cdn.services.mozilla.com OPT
+
+Frame 19: 142 bytes on wire (1136 bits), 142 bytes captured (1136 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 59660
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     20 11.423054663   127.0.0.1             127.0.0.53            DNS      107    Standard query 0xe3ca A classify-client.services.mozilla.com OPT
+
+Frame 20: 107 bytes on wire (856 bits), 107 bytes captured (856 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 60838, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     21 11.423080656   127.0.0.1             127.0.0.53            DNS      107    Standard query 0x81c8 AAAA classify-client.services.mozilla.com OPT
+
+Frame 21: 107 bytes on wire (856 bits), 107 bytes captured (856 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 60838, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     22 11.423268125   127.0.0.1             127.0.0.53            DNS      107    Standard query 0x207f A classify-client.services.mozilla.com OPT
+
+Frame 22: 107 bytes on wire (856 bits), 107 bytes captured (856 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 59757, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     23 11.429437513   127.0.0.53            127.0.0.1             DNS      190    Standard query response 0xe3ca A classify-client.services.mozilla.com CNAME prod-classifyclient.normandy.prod.cloudops.mozgcp.net A 34.98.75.36 OPT
+
+Frame 23: 190 bytes on wire (1520 bits), 190 bytes captured (1520 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 60838
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     24 11.429541749   127.0.0.53            127.0.0.1             DNS      190    Standard query response 0x207f A classify-client.services.mozilla.com CNAME prod-classifyclient.normandy.prod.cloudops.mozgcp.net A 34.98.75.36 OPT
+
+Frame 24: 190 bytes on wire (1520 bits), 190 bytes captured (1520 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 59757
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     25 11.738443594   127.0.0.1             127.0.0.53            DNS      106    Standard query 0xca46 A content-signature-2.cdn.mozilla.net OPT
+
+Frame 25: 106 bytes on wire (848 bits), 106 bytes captured (848 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 58402, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     26 11.738467704   127.0.0.1             127.0.0.53            DNS      106    Standard query 0xaf42 AAAA content-signature-2.cdn.mozilla.net OPT
+
+Frame 26: 106 bytes on wire (848 bits), 106 bytes captured (848 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 58402, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     27 11.738825205   127.0.0.1             127.0.0.53            DNS      106    Standard query 0x5500 A content-signature-2.cdn.mozilla.net OPT
+
+Frame 27: 106 bytes on wire (848 bits), 106 bytes captured (848 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 37646, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     28 11.744263078   127.0.0.53            127.0.0.1             DNS      106    Standard query response 0xaf42 AAAA content-signature-2.cdn.mozilla.net OPT
+
+Frame 28: 106 bytes on wire (848 bits), 106 bytes captured (848 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 58402
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     29 11.745595418   127.0.0.53            127.0.0.1             DNS      210    Standard query response 0xca46 A content-signature-2.cdn.mozilla.net CNAME d2nxq2uap88usk.cloudfront.net A 99.86.112.79 A 99.86.112.17 A 99.86.112.124 A 99.86.112.7 OPT
+
+Frame 29: 210 bytes on wire (1680 bits), 210 bytes captured (1680 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 58402
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     30 11.745693798   127.0.0.53            127.0.0.1             DNS      210    Standard query response 0x5500 A content-signature-2.cdn.mozilla.net CNAME d2nxq2uap88usk.cloudfront.net A 99.86.112.79 A 99.86.112.17 A 99.86.112.124 A 99.86.112.7 OPT
+
+Frame 30: 210 bytes on wire (1680 bits), 210 bytes captured (1680 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 37646
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     31 13.706611464   127.0.0.53            127.0.0.1             DNS      174    Standard query response 0x81c8 AAAA classify-client.services.mozilla.com CNAME prod-classifyclient.normandy.prod.cloudops.mozgcp.net OPT
+
+Frame 31: 174 bytes on wire (1392 bits), 174 bytes captured (1392 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 60838
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     32 49.652028000   127.0.0.1             127.0.0.53            DNS      98     Standard query 0x4ec6 A safebrowsing.googleapis.com OPT
+
+Frame 32: 98 bytes on wire (784 bits), 98 bytes captured (784 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 49334, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     33 49.652051966   127.0.0.1             127.0.0.53            DNS      98     Standard query 0xc9c2 AAAA safebrowsing.googleapis.com OPT
+
+Frame 33: 98 bytes on wire (784 bits), 98 bytes captured (784 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 49334, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     34 49.652784085   127.0.0.1             127.0.0.53            DNS      98     Standard query 0x415c A safebrowsing.googleapis.com OPT
+
+Frame 34: 98 bytes on wire (784 bits), 98 bytes captured (784 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 45450, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     35 49.659262780   127.0.0.53            127.0.0.1             DNS      114    Standard query response 0x4ec6 A safebrowsing.googleapis.com A 216.58.212.234 OPT
+
+Frame 35: 114 bytes on wire (912 bits), 114 bytes captured (912 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 49334
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     36 49.659323770   127.0.0.53            127.0.0.1             DNS      114    Standard query response 0x415c A safebrowsing.googleapis.com A 216.58.212.234 OPT
+
+Frame 36: 114 bytes on wire (912 bits), 114 bytes captured (912 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 45450
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     37 49.659379769   127.0.0.53            127.0.0.1             DNS      98     Standard query response 0xc9c2 AAAA safebrowsing.googleapis.com OPT
+
+Frame 37: 98 bytes on wire (784 bits), 98 bytes captured (784 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 49334
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     38 107.982241410  127.0.0.1             127.0.0.1             TCP      111    45076 → 4000 [PSH, ACK] Seq=1 Ack=27 Win=65536 Len=45 TSval=3211938812 TSecr=3211835993
+
+Frame 38: 111 bytes on wire (888 bits), 111 bytes captured (888 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 1, Ack: 27, Len: 45
+Data (45 bytes)
+
+0000  2a 43 4f 4e 4e 45 43 54 45 44 2c 50 33 5f 47 52   *CONNECTED,P3_GR
+0010  4f 55 50 5f 30 31 2c 31 32 33 2e 31 32 33 2e 31   OUP_01,123.123.1
+0020  32 33 2e 31 32 33 2c 34 30 31 30 23 0a            23.123,4010#.
+
+No.     Time           Source                Destination           Protocol Length Info
+     39 107.982252865  127.0.0.1             127.0.0.1             TCP      66     4000 → 45076 [ACK] Seq=27 Ack=46 Win=65536 Len=0 TSval=3211938812 TSecr=3211938812
+
+Frame 39: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 27, Ack: 46, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     40 122.915288538  127.0.0.1             127.0.0.1             TCP      93     45076 → 4000 [PSH, ACK] Seq=46 Ack=27 Win=65536 Len=27 TSval=3211953745 TSecr=3211938812
+
+Frame 40: 93 bytes on wire (744 bits), 93 bytes captured (744 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 46, Ack: 27, Len: 27
+Data (27 bytes)
+
+0000  2a 51 55 45 52 59 53 45 52 56 45 52 53 2c 50 33   *QUERYSERVERS,P3
+0010  5f 47 52 4f 55 50 5f 30 31 23 0a                  _GROUP_01#.
+
+No.     Time           Source                Destination           Protocol Length Info
+     41 122.915295900  127.0.0.1             127.0.0.1             TCP      66     4000 → 45076 [ACK] Seq=27 Ack=73 Win=65536 Len=0 TSval=3211953745 TSecr=3211953745
+
+Frame 41: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 27, Ack: 73, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     42 122.915368619  127.0.0.1             127.0.0.1             TCP      111    4000 → 45076 [PSH, ACK] Seq=27 Ack=73 Win=65536 Len=45 TSval=3211953745 TSecr=3211953745
+
+Frame 42: 111 bytes on wire (888 bits), 111 bytes captured (888 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 27, Ack: 73, Len: 45
+Data (45 bytes)
+
+0000  2a 43 4f 4e 4e 45 43 54 45 44 2c 50 33 5f 47 52   *CONNECTED,P3_GR
+0010  4f 55 50 5f 30 31 2c 31 32 33 2e 31 32 33 2e 31   OUP_01,123.123.1
+0020  32 33 2e 31 32 33 2c 34 30 31 30 3b 23            23.123,4010;#
+
+No.     Time           Source                Destination           Protocol Length Info
+     43 122.915371163  127.0.0.1             127.0.0.1             TCP      66     45076 → 4000 [ACK] Seq=73 Ack=72 Win=65536 Len=0 TSval=3211953745 TSecr=3211953745
+
+Frame 43: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 73, Ack: 72, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     44 131.230788399  127.0.0.1             127.0.0.53            DNS      108    Standard query 0x1a3e A firefox.settings.services.mozilla.com OPT
+
+Frame 44: 108 bytes on wire (864 bits), 108 bytes captured (864 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 46109, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     45 131.230847644  127.0.0.1             127.0.0.53            DNS      108    Standard query 0xdc3a AAAA firefox.settings.services.mozilla.com OPT
+
+Frame 45: 108 bytes on wire (864 bits), 108 bytes captured (864 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 46109, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     46 131.231057065  127.0.0.1             127.0.0.53            DNS      108    Standard query 0x39d1 A firefox.settings.services.mozilla.com OPT
+
+Frame 46: 108 bytes on wire (864 bits), 108 bytes captured (864 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 55942, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     47 131.241786168  127.0.0.53            127.0.0.1             DNS      172    Standard query response 0x1a3e A firefox.settings.services.mozilla.com A 99.86.112.65 A 99.86.112.127 A 99.86.112.57 A 99.86.112.69 OPT
+
+Frame 47: 172 bytes on wire (1376 bits), 172 bytes captured (1376 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 46109
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     48 131.241838832  127.0.0.53            127.0.0.1             DNS      172    Standard query response 0x39d1 A firefox.settings.services.mozilla.com A 99.86.112.65 A 99.86.112.127 A 99.86.112.57 A 99.86.112.69 OPT
+
+Frame 48: 172 bytes on wire (1376 bits), 172 bytes captured (1376 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 55942
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     49 131.241898834  127.0.0.53            127.0.0.1             DNS      108    Standard query response 0xdc3a AAAA firefox.settings.services.mozilla.com OPT
+
+Frame 49: 108 bytes on wire (864 bits), 108 bytes captured (864 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 46109
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     50 131.533004105  127.0.0.1             127.0.0.53            DNS      115    Standard query 0x6c1d A firefox-settings-attachments.cdn.mozilla.net OPT
+
+Frame 50: 115 bytes on wire (920 bits), 115 bytes captured (920 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 42686, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     51 131.533015001  127.0.0.1             127.0.0.53            DNS      115    Standard query 0xc21a AAAA firefox-settings-attachments.cdn.mozilla.net OPT
+
+Frame 51: 115 bytes on wire (920 bits), 115 bytes captured (920 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 42686, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     52 131.533172638  127.0.0.1             127.0.0.53            DNS      115    Standard query 0x18f9 A firefox-settings-attachments.cdn.mozilla.net OPT
+
+Frame 52: 115 bytes on wire (920 bits), 115 bytes captured (920 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 37723, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     53 131.544169847  127.0.0.53            127.0.0.1             DNS      224    Standard query response 0x6c1d A firefox-settings-attachments.cdn.mozilla.net CNAME fennec-catalog-cdn.prod.mozaws.net A 13.224.217.20 A 13.224.217.33 A 13.224.217.124 A 13.224.217.83 OPT
+
+Frame 53: 224 bytes on wire (1792 bits), 224 bytes captured (1792 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 42686
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     54 131.544363730  127.0.0.53            127.0.0.1             DNS      224    Standard query response 0x18f9 A firefox-settings-attachments.cdn.mozilla.net CNAME fennec-catalog-cdn.prod.mozaws.net A 13.224.217.20 A 13.224.217.33 A 13.224.217.124 A 13.224.217.83 OPT
+
+Frame 54: 224 bytes on wire (1792 bits), 224 bytes captured (1792 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 37723
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     55 131.548556482  127.0.0.53            127.0.0.1             DNS      160    Standard query response 0xc21a AAAA firefox-settings-attachments.cdn.mozilla.net CNAME fennec-catalog-cdn.prod.mozaws.net OPT
+
+Frame 55: 160 bytes on wire (1280 bits), 160 bytes captured (1280 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 42686
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     56 167.959000805  127.0.0.1             127.0.0.1             TCP      79     4000 → 45076 [PSH, ACK] Seq=72 Ack=73 Win=65536 Len=13 TSval=3211998789 TSecr=3211953745
+
+Frame 56: 79 bytes on wire (632 bits), 79 bytes captured (632 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 72, Ack: 73, Len: 13
+Data (13 bytes)
+
+0000  2a 4b 45 45 50 41 4c 49 56 45 2c 30 23            *KEEPALIVE,0#
+
+No.     Time           Source                Destination           Protocol Length Info
+     57 167.959016905  127.0.0.1             127.0.0.1             TCP      66     45076 → 4000 [ACK] Seq=73 Ack=85 Win=65536 Len=0 TSval=3211998789 TSecr=3211998789
+
+Frame 57: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 73, Ack: 85, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     58 196.869728402  127.0.0.1             127.0.0.1             TCP      74     46158 → 4097 [SYN] Seq=0 Win=65495 Len=0 MSS=65495 SACK_PERM=1 TSval=3212027700 TSecr=0 WS=128
+
+Frame 58: 74 bytes on wire (592 bits), 74 bytes captured (592 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 46158, Dst Port: 4097, Seq: 0, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     59 196.869742757  127.0.0.1             127.0.0.1             TCP      74     4097 → 46158 [SYN, ACK] Seq=0 Ack=1 Win=65483 Len=0 MSS=65495 SACK_PERM=1 TSval=3212027700 TSecr=3212027700 WS=128
+
+Frame 59: 74 bytes on wire (592 bits), 74 bytes captured (592 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4097, Dst Port: 46158, Seq: 0, Ack: 1, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     60 196.869750581  127.0.0.1             127.0.0.1             TCP      66     46158 → 4097 [ACK] Seq=1 Ack=1 Win=65536 Len=0 TSval=3212027700 TSecr=3212027700
+
+Frame 60: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 46158, Dst Port: 4097, Seq: 1, Ack: 1, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     61 231.905259450  127.0.0.1             127.0.0.1             TCP      79     4000 → 45076 [PSH, ACK] Seq=85 Ack=73 Win=65536 Len=13 TSval=3212062735 TSecr=3211998789
+
+Frame 61: 79 bytes on wire (632 bits), 79 bytes captured (632 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 85, Ack: 73, Len: 13
+Data (13 bytes)
+
+0000  2a 4b 45 45 50 41 4c 49 56 45 2c 30 23            *KEEPALIVE,0#
+
+No.     Time           Source                Destination           Protocol Length Info
+     62 231.905266577  127.0.0.1             127.0.0.1             TCP      66     45076 → 4000 [ACK] Seq=73 Ack=98 Win=65536 Len=0 TSval=3212062735 TSecr=3212062735
+
+Frame 62: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 73, Ack: 98, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     63 251.238075073  127.0.0.1             127.0.0.53            DNS      98     Standard query 0x9ab0 A services.addons.mozilla.org OPT
+
+Frame 63: 98 bytes on wire (784 bits), 98 bytes captured (784 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 49315, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     64 251.238347739  127.0.0.1             127.0.0.53            DNS      98     Standard query 0xe8b6 AAAA services.addons.mozilla.org OPT
+
+Frame 64: 98 bytes on wire (784 bits), 98 bytes captured (784 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 49315, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     65 251.239118384  127.0.0.1             127.0.0.53            DNS      98     Standard query 0x667a A services.addons.mozilla.org OPT
+
+Frame 65: 98 bytes on wire (784 bits), 98 bytes captured (784 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 47749, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     66 251.245350292  127.0.0.53            127.0.0.1             DNS      232    Standard query response 0x667a A services.addons.mozilla.org CNAME services.prod.mozaws.net A 54.186.25.159 A 52.10.110.144 A 52.32.118.36 A 34.218.7.136 A 54.186.135.223 A 35.162.157.58 OPT
+
+Frame 66: 232 bytes on wire (1856 bits), 232 bytes captured (1856 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 47749
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     67 251.245458663  127.0.0.53            127.0.0.1             DNS      232    Standard query response 0x9ab0 A services.addons.mozilla.org CNAME services.prod.mozaws.net A 54.186.25.159 A 52.10.110.144 A 52.32.118.36 A 34.218.7.136 A 54.186.135.223 A 35.162.157.58 OPT
+
+Frame 67: 232 bytes on wire (1856 bits), 232 bytes captured (1856 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 49315
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     68 251.250826722  127.0.0.53            127.0.0.1             DNS      136    Standard query response 0xe8b6 AAAA services.addons.mozilla.org CNAME services.prod.mozaws.net OPT
+
+Frame 68: 136 bytes on wire (1088 bits), 136 bytes captured (1088 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 49315
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     69 251.436878564  127.0.0.1             127.0.0.1             TCP      93     46158 → 4097 [PSH, ACK] Seq=1 Ack=1 Win=65536 Len=27 TSval=3212082267 TSecr=3212027700
+
+Frame 69: 93 bytes on wire (744 bits), 93 bytes captured (744 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 46158, Dst Port: 4097, Seq: 1, Ack: 1, Len: 27
+Data (27 bytes)
+
+0000  2a 51 55 45 52 59 53 45 52 56 45 52 53 2c 50 33   *QUERYSERVERS,P3
+0010  5f 47 52 4f 55 50 5f 38 35 23 0a                  _GROUP_85#.
+
+No.     Time           Source                Destination           Protocol Length Info
+     70 251.436905337  127.0.0.1             127.0.0.1             TCP      66     4097 → 46158 [ACK] Seq=1 Ack=28 Win=65536 Len=0 TSval=3212082267 TSecr=3212082267
+
+Frame 70: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4097, Dst Port: 46158, Seq: 1, Ack: 28, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     71 251.437084652  127.0.0.1             127.0.0.1             TCP      143    4097 → 46158 [PSH, ACK] Seq=1 Ack=28 Win=65536 Len=77 TSval=3212082267 TSecr=3212082267
+
+Frame 71: 143 bytes on wire (1144 bits), 143 bytes captured (1144 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4097, Dst Port: 46158, Seq: 1, Ack: 28, Len: 77
+Data (77 bytes)
+
+0000  2a 43 4f 4e 4e 45 43 54 45 44 2c 50 33 5f 47 52   *CONNECTED,P3_GR
+0010  4f 55 50 5f 30 31 2c 31 32 33 2e 31 32 33 2e 31   OUP_01,123.123.1
+0020  32 33 2e 31 32 33 2c 34 30 31 30 3b 50 33 5f 47   23.123,4010;P3_G
+0030  52 4f 55 50 5f 38 35 2c 31 33 30 2e 32 30 38 2e   ROUP_85,130.208.
+0040  32 34 33 2e 36 31 2c 34 30 39 37 3b 23            243.61,4097;#
+
+No.     Time           Source                Destination           Protocol Length Info
+     72 251.437089340  127.0.0.1             127.0.0.1             TCP      66     46158 → 4097 [ACK] Seq=28 Ack=78 Win=65536 Len=0 TSval=3212082267 TSecr=3212082267
+
+Frame 72: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 46158, Dst Port: 4097, Seq: 28, Ack: 78, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     73 252.083026967  127.0.0.1             127.0.0.53            DNS      87     Standard query 0x4366 A aus5.mozilla.org OPT
+
+Frame 73: 87 bytes on wire (696 bits), 87 bytes captured (696 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 44738, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     74 252.083061892  127.0.0.1             127.0.0.53            DNS      87     Standard query 0xa160 AAAA aus5.mozilla.org OPT
+
+Frame 74: 87 bytes on wire (696 bits), 87 bytes captured (696 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 44738, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     75 252.083215999  127.0.0.1             127.0.0.53            DNS      87     Standard query 0x65c1 A aus5.mozilla.org OPT
+
+Frame 75: 87 bytes on wire (696 bits), 87 bytes captured (696 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 45159, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     76 252.089577717  127.0.0.53            127.0.0.1             DNS      205    Standard query response 0x4366 A aus5.mozilla.org CNAME balrog-aus5.r53-2.services.mozilla.com CNAME prod.balrog.prod.cloudops.mozgcp.net A 35.244.181.201 OPT
+
+Frame 76: 205 bytes on wire (1640 bits), 205 bytes captured (1640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 44738
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     77 252.089726952  127.0.0.53            127.0.0.1             DNS      205    Standard query response 0x65c1 A aus5.mozilla.org CNAME balrog-aus5.r53-2.services.mozilla.com CNAME prod.balrog.prod.cloudops.mozgcp.net A 35.244.181.201 OPT
+
+Frame 77: 205 bytes on wire (1640 bits), 205 bytes captured (1640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 45159
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     78 253.626538983  127.0.0.53            127.0.0.1             DNS      189    Standard query response 0xa160 AAAA aus5.mozilla.org CNAME balrog-aus5.r53-2.services.mozilla.com CNAME prod.balrog.prod.cloudops.mozgcp.net OPT
+
+Frame 78: 189 bytes on wire (1512 bits), 189 bytes captured (1512 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 44738
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     79 276.972102980  127.0.0.1             127.0.0.1             TCP      122    46158 → 4097 [PSH, ACK] Seq=28 Ack=78 Win=65536 Len=56 TSval=3212107802 TSecr=3212082267
+
+Frame 79: 122 bytes on wire (976 bits), 122 bytes captured (976 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 46158, Dst Port: 4097, Seq: 28, Ack: 78, Len: 56
+Data (56 bytes)
+
+0000  2a 53 45 4e 44 5f 4d 53 47 2c 50 33 5f 47 52 4f   *SEND_MSG,P3_GRO
+0010  55 50 5f 30 31 2c 50 33 5f 47 52 4f 55 50 5f 38   UP_01,P3_GROUP_8
+0020  35 2c 22 54 68 69 73 20 69 73 20 61 20 6d 65 73   5,"This is a mes
+0030  73 61 67 65 2e 22 23 0a                           sage."#.
+
+No.     Time           Source                Destination           Protocol Length Info
+     80 276.972115640  127.0.0.1             127.0.0.1             TCP      66     4097 → 46158 [ACK] Seq=78 Ack=84 Win=65536 Len=0 TSval=3212107802 TSecr=3212107802
+
+Frame 80: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4097, Dst Port: 46158, Seq: 78, Ack: 84, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     81 276.972214030  127.0.0.1             127.0.0.1             TCP      134    4097 → 46158 [PSH, ACK] Seq=78 Ack=84 Win=65536 Len=68 TSval=3212107802 TSecr=3212107802
+
+Frame 81: 134 bytes on wire (1072 bits), 134 bytes captured (1072 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4097, Dst Port: 46158, Seq: 78, Ack: 84, Len: 68
+Data (68 bytes)
+
+0000  4d 65 73 73 61 67 65 20 73 75 63 63 65 73 73 66   Message successf
+0010  75 6c 6c 79 20 73 65 6e 74 2e 20 48 6f 70 65 66   ully sent. Hopef
+0020  75 6c 6c 79 2e 20 57 65 20 64 6f 6e 27 74 20 72   ully. We don't r
+0030  65 61 6c 6c 79 20 6b 6e 6f 77 20 66 6f 72 20 73   eally know for s
+0040  75 72 65 2e                                       ure.
+
+No.     Time           Source                Destination           Protocol Length Info
+     82 276.972216660  127.0.0.1             127.0.0.1             TCP      66     46158 → 4097 [ACK] Seq=84 Ack=146 Win=65536 Len=0 TSval=3212107802 TSecr=3212107802
+
+Frame 82: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 46158, Dst Port: 4097, Seq: 84, Ack: 146, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     83 291.988252055  127.0.0.1             127.0.0.1             TCP      79     4000 → 45076 [PSH, ACK] Seq=98 Ack=73 Win=65536 Len=13 TSval=3212122818 TSecr=3212062735
+
+Frame 83: 79 bytes on wire (632 bits), 79 bytes captured (632 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 98, Ack: 73, Len: 13
+Data (13 bytes)
+
+0000  2a 4b 45 45 50 41 4c 49 56 45 2c 31 23            *KEEPALIVE,1#
+
+No.     Time           Source                Destination           Protocol Length Info
+     84 291.988258716  127.0.0.1             127.0.0.1             TCP      66     45076 → 4000 [ACK] Seq=73 Ack=111 Win=65536 Len=0 TSval=3212122818 TSecr=3212122818
+
+Frame 84: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 73, Ack: 111, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     85 308.966196614  127.0.0.1             127.0.0.53            DNS      100    Standard query 0x2de0 AAAA connectivity-check.ubuntu.com OPT
+
+Frame 85: 100 bytes on wire (800 bits), 100 bytes captured (800 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 47125, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     86 308.969244546  127.0.0.53            127.0.0.1             DNS      100    Standard query response 0x2de0 AAAA connectivity-check.ubuntu.com OPT
+
+Frame 86: 100 bytes on wire (800 bits), 100 bytes captured (800 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 47125
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     87 308.969378538  127.0.0.1             127.0.0.53            DNS      112    Standard query 0x075d AAAA connectivity-check.ubuntu.com.localdomain OPT
+
+Frame 87: 112 bytes on wire (896 bits), 112 bytes captured (896 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 35966, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     88 308.977226452  127.0.0.53            127.0.0.1             DNS      112    Standard query response 0x075d Server failure AAAA connectivity-check.ubuntu.com.localdomain OPT
+
+Frame 88: 112 bytes on wire (896 bits), 112 bytes captured (896 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 35966
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     89 308.977509937  127.0.0.1             127.0.0.53            DNS      112    Standard query 0x075d AAAA connectivity-check.ubuntu.com.localdomain OPT
+
+Frame 89: 112 bytes on wire (896 bits), 112 bytes captured (896 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 49143, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+     90 308.984069548  127.0.0.53            127.0.0.1             DNS      112    Standard query response 0x075d Server failure AAAA connectivity-check.ubuntu.com.localdomain OPT
+
+Frame 90: 112 bytes on wire (896 bits), 112 bytes captured (896 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 49143
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+     91 313.919645593  127.0.0.1             127.0.0.1             TCP      89     45076 → 4000 [PSH, ACK] Seq=73 Ack=111 Win=65536 Len=23 TSval=3212144749 TSecr=3212122818
+
+Frame 91: 89 bytes on wire (712 bits), 89 bytes captured (712 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 73, Ack: 111, Len: 23
+Data (23 bytes)
+
+0000  2a 2a 47 45 54 5f 4d 53 47 2c 50 33 5f 47 52 4f   **GET_MSG,P3_GRO
+0010  55 50 5f 30 31 23 0a                              UP_01#.
+
+No.     Time           Source                Destination           Protocol Length Info
+     92 313.919657576  127.0.0.1             127.0.0.1             TCP      66     4000 → 45076 [ACK] Seq=111 Ack=96 Win=65536 Len=0 TSval=3212144749 TSecr=3212144749
+
+Frame 92: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 111, Ack: 96, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     93 313.919810314  127.0.0.1             127.0.0.1             TCP      242    4000 → 45076 [PSH, ACK] Seq=111 Ack=96 Win=65536 Len=176 TSval=3212144750 TSecr=3212144749
+
+Frame 93: 242 bytes on wire (1936 bits), 242 bytes captured (1936 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 111, Ack: 96, Len: 176
+Data (176 bytes)
+
+0000  43 6f 6d 6d 61 6e 64 20 6e 6f 74 20 72 65 63 6f   Command not reco
+0010  67 6e 69 7a 65 64 2e 20 4f 75 72 20 74 69 6e 79   gnized. Our tiny
+0020  20 63 75 74 65 73 79 20 6c 69 74 74 6c 65 20 73    cutesy little s
+0030  65 72 76 65 72 20 6f 6e 6c 79 20 75 6e 64 65 72   erver only under
+0040  73 74 61 6e 64 73 20 74 68 65 20 62 61 73 65 20   stands the base 
+0050  63 6f 6d 6d 61 6e 64 73 20 69 6e 20 74 68 65 20   commands in the 
+0060  61 73 73 69 67 6e 6d 65 6e 74 2c 20 73 6f 20 70   assignment, so p
+0070  6c 65 61 73 65 20 62 65 20 70 61 74 69 65 6e 74   lease be patient
+0080  20 77 69 74 68 20 69 74 2e 20 48 61 72 61 73 73    with it. Harass
+0090  6d 65 6e 74 20 77 69 6c 6c 20 6f 6e 6c 79 20 73   ment will only s
+00a0  63 61 72 65 20 74 68 65 20 73 65 72 76 65 72 2e   care the server.
+
+No.     Time           Source                Destination           Protocol Length Info
+     94 313.919813113  127.0.0.1             127.0.0.1             TCP      66     45076 → 4000 [ACK] Seq=96 Ack=287 Win=65408 Len=0 TSval=3212144750 TSecr=3212144750
+
+Frame 94: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 96, Ack: 287, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     95 330.581565513  127.0.0.1             127.0.0.1             TCP      88     45076 → 4000 [PSH, ACK] Seq=96 Ack=287 Win=65536 Len=22 TSval=3212161411 TSecr=3212144750
+
+Frame 95: 88 bytes on wire (704 bits), 88 bytes captured (704 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 96, Ack: 287, Len: 22
+Data (22 bytes)
+
+0000  2a 47 45 54 5f 4d 53 47 2c 50 33 5f 47 52 4f 55   *GET_MSG,P3_GROU
+0010  50 5f 30 31 23 0a                                 P_01#.
+
+No.     Time           Source                Destination           Protocol Length Info
+     96 330.581577034  127.0.0.1             127.0.0.1             TCP      66     4000 → 45076 [ACK] Seq=287 Ack=118 Win=65536 Len=0 TSval=3212161411 TSecr=3212161411
+
+Frame 96: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 287, Ack: 118, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     97 330.581656978  127.0.0.1             127.0.0.1             TCP      235    4000 → 45076 [PSH, ACK] Seq=287 Ack=118 Win=65536 Len=169 TSval=3212161411 TSecr=3212161411
+
+Frame 97: 235 bytes on wire (1880 bits), 235 bytes captured (1880 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 287, Ack: 118, Len: 169
+Data (169 bytes)
+
+0000  41 20 6d 65 73 73 61 67 65 20 77 61 73 20 66 6f   A message was fo
+0010  75 6e 64 20 77 69 74 68 20 79 6f 75 72 20 67 72   und with your gr
+0020  6f 75 70 20 49 44 2e 20 43 75 72 72 65 6e 74 6c   oup ID. Currentl
+0030  79 20 77 65 20 63 61 6e 20 6f 6e 6c 79 20 70 75   y we can only pu
+0040  6c 6c 20 6f 6e 65 20 61 74 20 61 20 74 69 6d 65   ll one at a time
+0050  2c 20 61 70 6f 6c 6f 67 69 65 73 20 69 6e 20 61   , apologies in a
+0060  64 76 61 6e 63 65 3a 0a 4d 65 73 73 61 67 65 20   dvance:.Message 
+0070  66 72 6f 6d 3a 20 50 33 5f 47 52 4f 55 50 5f 38   from: P3_GROUP_8
+0080  35 2c 20 4d 65 73 73 61 67 65 20 43 6f 6e 74 65   5, Message Conte
+0090  6e 74 73 3a 20 22 54 68 69 73 20 69 73 20 61 20   nts: "This is a 
+00a0  6d 65 73 73 61 67 65 2e 22                        message."
+
+No.     Time           Source                Destination           Protocol Length Info
+     98 330.581659737  127.0.0.1             127.0.0.1             TCP      66     45076 → 4000 [ACK] Seq=118 Ack=456 Win=65408 Len=0 TSval=3212161411 TSecr=3212161411
+
+Frame 98: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 118, Ack: 456, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+     99 355.608691497  127.0.0.1             127.0.0.1             TCP      79     4000 → 45076 [PSH, ACK] Seq=456 Ack=118 Win=65536 Len=13 TSval=3212186438 TSecr=3212161411
+
+Frame 99: 79 bytes on wire (632 bits), 79 bytes captured (632 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 456, Ack: 118, Len: 13
+Data (13 bytes)
+
+0000  2a 4b 45 45 50 41 4c 49 56 45 2c 30 23            *KEEPALIVE,0#
+
+No.     Time           Source                Destination           Protocol Length Info
+    100 355.608705039  127.0.0.1             127.0.0.1             TCP      66     45076 → 4000 [ACK] Seq=118 Ack=469 Win=65408 Len=0 TSval=3212186439 TSecr=3212186438
+
+Frame 100: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 118, Ack: 469, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+    101 374.177352761  127.0.0.1             127.0.0.1             TCP      110    45076 → 4000 [PSH, ACK] Seq=118 Ack=469 Win=65536 Len=44 TSval=3212205007 TSecr=3212186438
+
+Frame 101: 110 bytes on wire (880 bits), 110 bytes captured (880 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 118, Ack: 469, Len: 44
+Data (44 bytes)
+
+0000  2a 4c 45 41 56 45 2c 50 33 5f 47 52 4f 55 50 2a   *LEAVE,P3_GROUP*
+0010  4c 45 41 56 45 2c 31 32 33 2e 31 32 33 2e 31 32   LEAVE,123.123.12
+0020  33 2e 31 32 33 2c 34 30 31 30 23 0a               3.123,4010#.
+
+No.     Time           Source                Destination           Protocol Length Info
+    102 374.224450705  127.0.0.1             127.0.0.1             TCP      66     4000 → 45076 [ACK] Seq=469 Ack=162 Win=65536 Len=0 TSval=3212205054 TSecr=3212205007
+
+Frame 102: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 469, Ack: 162, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+    103 419.224233140  127.0.0.1             127.0.0.1             TCP      79     4000 → 45076 [PSH, ACK] Seq=469 Ack=162 Win=65536 Len=13 TSval=3212250054 TSecr=3212205007
+
+Frame 103: 79 bytes on wire (632 bits), 79 bytes captured (632 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 469, Ack: 162, Len: 13
+Data (13 bytes)
+
+0000  2a 4b 45 45 50 41 4c 49 56 45 2c 30 23            *KEEPALIVE,0#
+
+No.     Time           Source                Destination           Protocol Length Info
+    104 419.224266046  127.0.0.1             127.0.0.1             TCP      66     45076 → 4000 [ACK] Seq=162 Ack=482 Win=65536 Len=0 TSval=3212250054 TSecr=3212250054
+
+Frame 104: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 162, Ack: 482, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+    105 434.111887824  127.0.0.1             127.0.0.1             TCP      95     45076 → 4000 [PSH, ACK] Seq=162 Ack=482 Win=65536 Len=29 TSval=3212264942 TSecr=3212250054
+
+Frame 105: 95 bytes on wire (760 bits), 95 bytes captured (760 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 162, Ack: 482, Len: 29
+Data (29 bytes)
+
+0000  2a 4c 45 41 56 45 2c 31 32 33 2e 31 32 33 2e 31   *LEAVE,123.123.1
+0010  32 33 2e 31 32 33 2c 34 30 31 30 23 0a            23.123,4010#.
+
+No.     Time           Source                Destination           Protocol Length Info
+    106 434.111900039  127.0.0.1             127.0.0.1             TCP      66     4000 → 45076 [ACK] Seq=482 Ack=191 Win=65536 Len=0 TSval=3212264942 TSecr=3212264942
+
+Frame 106: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 482, Ack: 191, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+    107 434.111980771  127.0.0.1             127.0.0.1             TCP      66     4000 → 45076 [FIN, ACK] Seq=482 Ack=191 Win=65536 Len=0 TSval=3212264942 TSecr=3212264942
+
+Frame 107: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 482, Ack: 191, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+    108 434.112453905  127.0.0.1             127.0.0.1             TCP      66     45076 → 4000 [FIN, ACK] Seq=191 Ack=483 Win=65536 Len=0 TSval=3212264942 TSecr=3212264942
+
+Frame 108: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 45076, Dst Port: 4000, Seq: 191, Ack: 483, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+    109 434.112460477  127.0.0.1             127.0.0.1             TCP      66     4000 → 45076 [ACK] Seq=483 Ack=192 Win=65536 Len=0 TSval=3212264942 TSecr=3212264942
+
+Frame 109: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.1
+Transmission Control Protocol, Src Port: 4000, Dst Port: 45076, Seq: 483, Ack: 192, Len: 0
+
+No.     Time           Source                Destination           Protocol Length Info
+    110 458.966176491  127.0.0.1             127.0.0.53            DNS      92     Standard query 0x03a9 A WORKGROUP.localdomain OPT
+
+Frame 110: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 53276, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    111 458.966237622  127.0.0.1             127.0.0.53            DNS      92     Standard query 0x7ea5 AAAA WORKGROUP.localdomain OPT
+
+Frame 111: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 53276, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    112 461.273083971  127.0.0.53            127.0.0.1             DNS      92     Standard query response 0x7ea5 AAAA WORKGROUP.localdomain OPT
+
+Frame 112: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 53276
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+    113 463.968126674  127.0.0.1             127.0.0.53            DNS      92     Standard query 0x03a9 A WORKGROUP.localdomain OPT
+
+Frame 113: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 53276, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    114 468.972409351  127.0.0.1             127.0.0.53            DNS      92     Standard query 0x03a9 A WORKGROUP.localdomain OPT
+
+Frame 114: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 53276, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    115 473.976670982  127.0.0.1             127.0.0.53            DNS      80     Standard query 0x61c0 A WORKGROUP OPT
+
+Frame 115: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 42506, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    116 473.976880036  127.0.0.53            127.0.0.1             DNS      80     Standard query response 0x61c0 Server failure A WORKGROUP OPT
+
+Frame 116: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 42506
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+    117 478.981705532  127.0.0.1             127.0.0.53            DNS      80     Standard query 0x61c0 A WORKGROUP OPT
+
+Frame 117: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 42506, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    118 478.981911313  127.0.0.53            127.0.0.1             DNS      80     Standard query response 0x61c0 Server failure A WORKGROUP OPT
+
+Frame 118: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 42506
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+    119 485.990409887  127.0.0.1             127.0.0.53            DNS      92     Standard query 0x848f A WORKGROUP.localdomain OPT
+
+Frame 119: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 37868, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    120 485.990482640  127.0.0.1             127.0.0.53            DNS      92     Standard query 0xd581 AAAA WORKGROUP.localdomain OPT
+
+Frame 120: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 37868, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    121 485.996704797  127.0.0.53            127.0.0.1             DNS      92     Standard query response 0xd581 Server failure AAAA WORKGROUP.localdomain OPT
+
+Frame 121: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 37868
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+    122 490.995978554  127.0.0.1             127.0.0.53            DNS      92     Standard query 0x848f A WORKGROUP.localdomain OPT
+
+Frame 122: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 37868, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    123 490.996030111  127.0.0.1             127.0.0.53            DNS      92     Standard query 0xd581 AAAA WORKGROUP.localdomain OPT
+
+Frame 123: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 37868, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    124 491.005643065  127.0.0.53            127.0.0.1             DNS      92     Standard query response 0xd581 Server failure AAAA WORKGROUP.localdomain OPT
+
+Frame 124: 92 bytes on wire (736 bits), 92 bytes captured (736 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 37868
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+    125 496.002035502  127.0.0.1             127.0.0.53            DNS      80     Standard query 0x68b5 A WORKGROUP OPT
+
+Frame 125: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 39419, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    126 496.002065186  127.0.0.1             127.0.0.53            DNS      80     Standard query 0xd1ab AAAA WORKGROUP OPT
+
+Frame 126: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 39419, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    127 496.002176516  127.0.0.53            127.0.0.1             DNS      80     Standard query response 0x68b5 Server failure A WORKGROUP OPT
+
+Frame 127: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 39419
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+    128 496.002229114  127.0.0.53            127.0.0.1             DNS      80     Standard query response 0xd1ab Server failure AAAA WORKGROUP OPT
+
+Frame 128: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 39419
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+    129 496.002273452  127.0.0.1             127.0.0.53            DNS      80     Standard query 0x68b5 A WORKGROUP OPT
+
+Frame 129: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 39419, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    130 496.002279348  127.0.0.1             127.0.0.53            DNS      80     Standard query 0xd1ab AAAA WORKGROUP OPT
+
+Frame 130: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 127.0.0.53
+User Datagram Protocol, Src Port: 39419, Dst Port: 53
+Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    131 496.002331975  127.0.0.53            127.0.0.1             DNS      80     Standard query response 0x68b5 Server failure A WORKGROUP OPT
+
+Frame 131: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 39419
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+    132 496.002375430  127.0.0.53            127.0.0.1             DNS      80     Standard query response 0xd1ab Server failure AAAA WORKGROUP OPT
+
+Frame 132: 80 bytes on wire (640 bits), 80 bytes captured (640 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.53, Dst: 127.0.0.1
+User Datagram Protocol, Src Port: 53, Dst Port: 39419
+Domain Name System (response)
+
+No.     Time           Source                Destination           Protocol Length Info
+    133 497.134059691  127.0.0.1             224.0.0.251           MDNS     160    Standard query 0x0000 PTR _ftp._tcp.local, "QM" question PTR _nfs._tcp.local, "QM" question PTR _afpovertcp._tcp.local, "QM" question PTR _smb._tcp.local, "QM" question PTR _sftp-ssh._tcp.local, "QM" question PTR _webdavs._tcp.local, "QM" question PTR _webdav._tcp.local, "QM" question
+
+Frame 133: 160 bytes on wire (1280 bits), 160 bytes captured (1280 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 224.0.0.251
+User Datagram Protocol, Src Port: 5353, Dst Port: 5353
+Multicast Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    134 498.136302817  127.0.0.1             224.0.0.251           MDNS     160    Standard query 0x0000 PTR _ftp._tcp.local, "QM" question PTR _nfs._tcp.local, "QM" question PTR _afpovertcp._tcp.local, "QM" question PTR _smb._tcp.local, "QM" question PTR _sftp-ssh._tcp.local, "QM" question PTR _webdavs._tcp.local, "QM" question PTR _webdav._tcp.local, "QM" question
+
+Frame 134: 160 bytes on wire (1280 bits), 160 bytes captured (1280 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 224.0.0.251
+User Datagram Protocol, Src Port: 5353, Dst Port: 5353
+Multicast Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    135 500.137640326  127.0.0.1             224.0.0.251           MDNS     160    Standard query 0x0000 PTR _ftp._tcp.local, "QM" question PTR _nfs._tcp.local, "QM" question PTR _afpovertcp._tcp.local, "QM" question PTR _smb._tcp.local, "QM" question PTR _sftp-ssh._tcp.local, "QM" question PTR _webdavs._tcp.local, "QM" question PTR _webdav._tcp.local, "QM" question
+
+Frame 135: 160 bytes on wire (1280 bits), 160 bytes captured (1280 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 224.0.0.251
+User Datagram Protocol, Src Port: 5353, Dst Port: 5353
+Multicast Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    136 504.143446981  127.0.0.1             224.0.0.251           MDNS     160    Standard query 0x0000 PTR _ftp._tcp.local, "QM" question PTR _nfs._tcp.local, "QM" question PTR _afpovertcp._tcp.local, "QM" question PTR _smb._tcp.local, "QM" question PTR _sftp-ssh._tcp.local, "QM" question PTR _webdavs._tcp.local, "QM" question PTR _webdav._tcp.local, "QM" question
+
+Frame 136: 160 bytes on wire (1280 bits), 160 bytes captured (1280 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 224.0.0.251
+User Datagram Protocol, Src Port: 5353, Dst Port: 5353
+Multicast Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    137 512.145894072  127.0.0.1             224.0.0.251           MDNS     160    Standard query 0x0000 PTR _ftp._tcp.local, "QM" question PTR _nfs._tcp.local, "QM" question PTR _afpovertcp._tcp.local, "QM" question PTR _smb._tcp.local, "QM" question PTR _sftp-ssh._tcp.local, "QM" question PTR _webdavs._tcp.local, "QM" question PTR _webdav._tcp.local, "QM" question
+
+Frame 137: 160 bytes on wire (1280 bits), 160 bytes captured (1280 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 224.0.0.251
+User Datagram Protocol, Src Port: 5353, Dst Port: 5353
+Multicast Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    138 521.827545153  127.0.0.1             224.0.0.251           MDNS     82     Standard query 0x0000 PTR _pgpkey-hkp._tcp.local, "QM" question
+
+Frame 138: 82 bytes on wire (656 bits), 82 bytes captured (656 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 224.0.0.251
+User Datagram Protocol, Src Port: 5353, Dst Port: 5353
+Multicast Domain Name System (query)
+
+No.     Time           Source                Destination           Protocol Length Info
+    139 528.149506126  127.0.0.1             224.0.0.251           MDNS     160    Standard query 0x0000 PTR _ftp._tcp.local, "QM" question PTR _nfs._tcp.local, "QM" question PTR _afpovertcp._tcp.local, "QM" question PTR _smb._tcp.local, "QM" question PTR _sftp-ssh._tcp.local, "QM" question PTR _webdavs._tcp.local, "QM" question PTR _webdav._tcp.local, "QM" question
+
+Frame 139: 160 bytes on wire (1280 bits), 160 bytes captured (1280 bits) on interface lo, id 0
+Ethernet II, Src: 00:00:00_00:00:00 (00:00:00:00:00:00), Dst: 00:00:00_00:00:00 (00:00:00:00:00:00)
+Internet Protocol Version 4, Src: 127.0.0.1, Dst: 224.0.0.251
+User Datagram Protocol, Src Port: 5353, Dst Port: 5353
+Multicast Domain Name System (query)
